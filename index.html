@@ -323,11 +323,14 @@
 
 /* ==========================================================================
    ENTRADA POR ROLAGEM
-   ========================================================================== */.ocl .rev{opacity:0;transform:translate3d(0,42px,0);filter:blur(7px);
-  transition:opacity .95s var(--curva-suave), transform .95s var(--curva-suave), filter .95s var(--curva-suave);
-  transition-delay:calc(var(--d,0) * 80ms)}.ocl .rev.on{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+   ========================================================================== */
+/* A pagina NASCE VISIVEL. O estado escondido so existe depois que o script
+   confirma que vai animar (classe .anima). Sem isso, qualquer falha de JS --
+   erro, bloqueio, aba estrangulada pelo navegador -- deixava a pagina inteira
+   em opacity:0, ou seja, uma tela vazia. Numa pagina de vendas isso e fatal. */.ocl .rev{transition:opacity .95s var(--curva-suave), transform .95s var(--curva-suave), filter .95s var(--curva-suave);
+  transition-delay:calc(var(--d,0) * 80ms)}.ocl .anima .rev{opacity:0;transform:translate3d(0,42px,0);filter:blur(7px)}.ocl .anima .rev.on{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ocl *{animation:none!important;transition-duration:.01ms!important;transition-delay:0ms!important}.ocl .rev{opacity:1;transform:none;filter:none}.ocl .ticker{overflow-x:auto}.ocl .ticker__t{width:auto}.ocl .passo:nth-child(2n){transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ocl *{animation:none!important;transition-duration:.01ms!important;transition-delay:0ms!important}.ocl .anima .rev{opacity:1;transform:none;filter:none}.ocl .ticker{overflow-x:auto}.ocl .ticker__t{width:auto}.ocl .passo:nth-child(2n){transform:none}
 }
 </style>
 <div class="ocl">
@@ -1002,16 +1005,26 @@
    -------------------------------------------------------------------------- */
 (function(){
   var alvos = document.querySelectorAll(".rev");
-  if(!("IntersectionObserver" in window)){
+  var raiz = document.querySelector(".ocl") || document.body;
+  if(!alvos.length || !("IntersectionObserver" in window)) return;   // fica visivel
+
+  function mostrarTudo(){
     [].forEach.call(alvos, function(e){ e.classList.add("on"); });
-    return;
   }
+
+  raiz.classList.add("anima");   // so agora vale a pena esconder
   var obs = new IntersectionObserver(function(itens){
     itens.forEach(function(it){
       if(it.isIntersecting){ it.target.classList.add("on"); obs.unobserve(it.target); }
     });
   }, {rootMargin:"0px 0px -12% 0px", threshold:.08});
   [].forEach.call(alvos, function(e){ obs.observe(e); });
+
+  // rede de seguranca: se em 1,5s nada apareceu, o observer nao esta entregando
+  // (aba em segundo plano, estrangulamento do navegador). Mostra tudo.
+  setTimeout(function(){
+    if(!document.querySelector(".rev.on")) mostrarTudo();
+  }, 1500);
 })();
 
 /* --------------------------------------------------------------------------
