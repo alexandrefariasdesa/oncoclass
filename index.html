@@ -27,7 +27,7 @@ fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1606696444389111&ev=PageView&noscript=1"></noscript>
 <script>
-/* Clique no botao de compra: InitiateCheckout com o plano, e repassa UTMs/fbclid pro checkout da Hubla */
+/* Clique no botao de compra: evento CliqueComprar (o InitiateCheckout oficial vem da Hubla), e repassa UTMs/fbclid pro checkout da Hubla */
 document.addEventListener('DOMContentLoaded',function(){
   var planos={'6OI4kesAm4KyQNeaHVfe':{nome:'Oncoclass Mensal',valor:97},'kF2OkFJoac58amiuXLh3':{nome:'Oncoclass Trimestral',valor:247}};
   var qs=location.search.replace(/^\?/,'');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0], p=planos[id];
     if(qs&&a.href.indexOf('?')<0)a.href+='?'+qs;
     a.addEventListener('click',function(){
-      if(window.fbq)fbq('track','InitiateCheckout',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
+      if(window.fbq)fbq('trackCustom','CliqueComprar',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
     });
   });
 });
