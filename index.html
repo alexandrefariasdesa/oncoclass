@@ -15,6 +15,31 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23540C27'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23EAC783' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#540C27">
+<!-- Meta Pixel (Pixel Oncoclass) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1606696444389111');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1606696444389111&ev=PageView&noscript=1"></noscript>
+<script>
+/* Clique no botao de compra: InitiateCheckout com o plano, e repassa UTMs/fbclid pro checkout da Hubla */
+document.addEventListener('DOMContentLoaded',function(){
+  var planos={'6OI4kesAm4KyQNeaHVfe':{nome:'Oncoclass Mensal',valor:97},'kF2OkFJoac58amiuXLh3':{nome:'Oncoclass Trimestral',valor:247}};
+  var qs=location.search.replace(/^\?/,'');
+  document.querySelectorAll('a[href*="pay.hub.la/"]').forEach(function(a){
+    var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0], p=planos[id];
+    if(qs&&a.href.indexOf('?')<0)a.href+='?'+qs;
+    a.addEventListener('click',function(){
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
+    });
+  });
+});
+</script>
 </head>
 <body>
 <style>
