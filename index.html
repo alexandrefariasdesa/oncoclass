@@ -34,8 +34,11 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('a[href*="pay.hub.la/"]').forEach(function(a){
     var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0], p=planos[id];
     if(qs&&a.href.indexOf('?')<0)a.href+='?'+qs;
-    a.addEventListener('click',function(){
-      if(window.fbq)fbq('trackCustom','CliqueComprar',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
+    a.addEventListener('click',function(ev){
+      if(!window.fbq||ev.ctrlKey||ev.metaKey||ev.shiftKey||a.target==='_blank')return;
+      fbq('trackCustom','CliqueComprar',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
+      /* segura a navegacao um instante pro evento sair antes da troca de pagina */
+      ev.preventDefault();var destino=a.href;setTimeout(function(){location.href=destino;},350);
     });
   });
 });
