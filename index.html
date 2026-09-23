@@ -415,6 +415,10 @@ document.addEventListener('DOMContentLoaded',function(){
       <p class="hero__sub rev" style="--d:2">
         Um tema de Oncologia por semana, do fundamento à evolução científica.
       </p>
+      <p class="legenda rev" id="hero-prox" style="--d:2;margin-top:14px" hidden>
+        <svg class="ico"><use href="#i-agenda"/></svg>
+        <span>Próxima aula, <b id="hero-prox-d"></b>: <b id="hero-prox-t"></b></span>
+      </p>
 
       <ul class="deck rev" style="--d:3">
         <li><svg class="ico"><use href="#i-check"/></svg>Toda semana um tema em alta de Oncologia.</li>
@@ -577,6 +581,62 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="nucleo">
           <img src="img/dep3.webp" alt="Print de conversa no WhatsApp: aluna relata a experiência nas aulas como um período de muito aprendizado, que agregou de forma significativa à carreira e à formação profissional." loading="lazy" decoding="async" width="620" height="631">
           <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Aluna da Oncoclass</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:2">
+        <div class="nucleo">
+          <img src="img/dep-chat-27.webp" alt="Print do chat da aula ao vivo: participantes dizem que as aulas do ano passado foram incríveis e que têm certeza de que as aulas serão maravilhosas." loading="lazy" decoding="async" width="512" height="542">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:3">
+        <div class="nucleo">
+          <img src="img/dep-chat-28.webp" alt="Print do chat da aula ao vivo: aluna conta que a aula foi muito importante, que recentemente iniciou um medicamento de gatilho e conseguiu esclarecer várias dúvidas." loading="lazy" decoding="async" width="420" height="260">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:4">
+        <div class="nucleo">
+          <img src="img/dep-chat-29.webp" alt="Print do chat da aula ao vivo: aluno agradece à professora e diz que vai reassistir a aula no dia seguinte." loading="lazy" decoding="async" width="468" height="224">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:2">
+        <div class="nucleo">
+          <img src="img/dep-chat-30.webp" alt="Print do chat da aula ao vivo: aluna diz que a aula deu outra visão da pergunta que fez, que compreendeu o caminho e que sai com vontade de estudar ainda mais, pois existe uma trilha a seguir." loading="lazy" decoding="async" width="431" height="327">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:3">
+        <div class="nucleo">
+          <img src="img/dep-chat-31.webp" alt="Print do chat da aula ao vivo: participantes elogiam a aula como ótima, excelente, e a explicação como muito boa." loading="lazy" decoding="async" width="476" height="354">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:4">
+        <div class="nucleo">
+          <img src="img/dep-chat-32.webp" alt="Print do chat da aula ao vivo: participantes dizem que amanhã já não são a mesma pessoa, elogiam e dão parabéns." loading="lazy" decoding="async" width="451" height="391">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:2">
+        <div class="nucleo">
+          <img src="img/dep-chat-33.webp" alt="Print do chat da aula ao vivo: participantes elogiam a aula como maravilhosa, dizem que a professora é incrível e que ela precisava ter dado aulas na pós em Oncologia." loading="lazy" decoding="async" width="444" height="397">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
+        </div>
+      </figure>
+
+      <figure class="dep casca rev" style="--d:3">
+        <div class="nucleo">
+          <img src="img/dep-chat-34.webp" alt="Print do chat da aula ao vivo: participantes dizem que a aula foi um show e parabenizam a didática da professora." loading="lazy" decoding="async" width="459" height="414">
+          <figcaption class="dep__f"><svg class="ico"><use href="#i-grupo"/></svg>Chat da aula ao vivo</figcaption>
         </div>
       </figure>
     </div>
@@ -1010,6 +1070,12 @@ document.addEventListener('DOMContentLoaded',function(){
   var dia = prox.el.querySelector(".cal__d").firstChild.nodeValue.trim().slice(0,5);
   document.getElementById("urg-data").textContent = "quarta, " + dia + ", 20h";
   tarja.hidden = false;
+  var hp = document.getElementById("hero-prox");
+  if(hp){
+    document.getElementById("hero-prox-d").textContent = "quarta, " + dia + ", 20h";
+    document.getElementById("hero-prox-t").textContent = prox.el.querySelector(".cal__t").textContent;
+    hp.hidden = false;
+  }
 
   var rel = document.getElementById("rel"), caixas = rel.querySelectorAll("span");
   var rotulo = ["d","h","m"];
