@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leads Oncoclass</title>
+<style>
+  :root{--vinho:#540C27;--creme:#FEEEDE;--ouro:#EAC783}
+  *{box-sizing:border-box}
+  body{font:15px/1.4 system-ui,sans-serif;margin:0;padding:16px;background:var(--creme);color:#2a081a}
+  h1{font-size:1.25rem;margin:0 0 4px;color:var(--vinho)} h1 small{font-weight:400;opacity:.7}
+  input,select,button{font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid #c9b8a6;background:#fff}
+  button{background:var(--vinho);color:#fff;border:0;cursor:pointer} button.sec{background:#fff;color:var(--vinho);border:1px solid var(--vinho)}
+  .barra{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .barra input[type=search]{flex:1 1 200px}
+  .tab{overflow:auto;border-radius:12px;box-shadow:0 1px 0 #e6d6c4}
+  table{border-collapse:collapse;width:100%;min-width:820px;background:#fff}
+  th,td{padding:9px 10px;border-bottom:1px solid #f0e4d6;text-align:left;font-size:13px;white-space:nowrap}
+  th{background:#f6e6d3;position:sticky;top:0}
+  .tag{padding:2px 9px;border-radius:99px;font-size:12px}.sim{background:#d8f3dc}.nao{background:#fde2e2}.out{background:#e5e5e5}
+  a{color:var(--vinho)} .msg{color:#b3261e;min-height:1.2em;margin:6px 0}
+  .x{background:none;color:#888;border:1px solid #ddd;padding:3px 8px;font-size:12px}
+</style>
+</head>
+<body>
+<h1>Leads Oncoclass <small id="n"></small></h1>
+<div id="login" class="barra">
+  <input id="s" type="password" placeholder="Senha" autocomplete="current-password">
+  <button id="entrar">Entrar</button>
+</div>
+<div class="msg" id="msg"></div>
+<div id="app" hidden>
+  <div class="barra">
+    <select id="f"><option value="todos">Todos</option><option value="nao">Não compraram</option><option value="sim">Compraram</option><option value="out">Saíram</option></select>
+    <input id="q" type="search" placeholder="Buscar nome, e-mail ou telefone">
+    <button id="csv" class="sec">Exportar CSV</button>
+  </div>
+  <div class="tab"><table><thead><tr><th>Último clique</th><th>Nome</th><th>E-mail</th><th>WhatsApp</th><th>Status</th><th>Origem</th><th>Msgs</th><th></th></tr></thead><tbody id="t"></tbody></table></div>
+</div>
+<script>
+var API='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/painel';
+var dados=[], senha='';
+try{senha=sessionStorage.getItem('s')||'';}catch(e){}
+function $(i){return document.getElementById(i);}
+function h(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function carregar(){
+  return fetch(API,{headers:{'x-senha':senha}}).then(function(r){
+    if(!r.ok){try{sessionStorage.removeItem('s');}catch(e){}return false;}
+    return r.json().then(function(d){dados=d;$('login').hidden=true;$('app').hidden=false;$('msg').textContent='';desenhar();return true;});
+  }).catch(function(){$('msg').textContent='Não consegui conectar.';return false;});
+}
+function entrar(){
+  senha=$('s').value;
+  carregar().then(function(ok){
+    if(ok){try{sessionStorage.setItem('s',senha);}catch(e){}}
+    else if(!$('msg').textContent){$('msg').textContent='Senha incorreta.';}
+  });
+}
+function desenhar(){
+  var f=$('f').value, q=$('q').value.toLowerCase();
+  var l=dados.filter(function(x){
+    if(f==='nao'&&(x.comprou||x.optout))return false;
+    if(f==='sim'&&!x.comprou)return false;
+    if(f==='out'&&!x.optout)return false;
+    return !q||(x.nome+' '+x.email+' '+x.telefone).toLowerCase().indexOf(q)>=0;
+  });
+  $('n').textContent='('+l.length+')';
+  $('t').innerHTML=l.map(function(x){
+    var st=x.comprou?'<span class="tag sim">comprou</span>':x.optout?'<span class="tag out">saiu</span>':'<span class="tag nao">não comprou</span>';
+    var m=[x.email1_em?'e-mail 1':'',x.whats_em?'whats':'',x.email2_em?'e-mail 2':''].filter(Boolean).join(' · ');
+    var u=x.utm||{}, orig=u.utm_campaign||u.utm_source||'';
+    var data=new Date(x.ultimo_clique_em).toLocaleString('pt-BR',{timeZone:'America/Manaus',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+    var btn=(x.comprou||x.optout)?'':'<button class="x" data-sair="'+h(x.id)+'">marcar saiu</button>';
+    return '<tr><td>'+h(data)+'</td><td>'+h(x.nome)+'</td><td>'+h(x.email)+'</td><td><a href="https://wa.me/'+h(x.telefone)+'" target="_blank" rel="noopener">'+h(x.telefone)+'</a></td><td>'+st+'</td><td>'+h(orig)+'</td><td>'+h(m)+'</td><td>'+btn+'</td></tr>';
+  }).join('');
+}
+function baixar(){
+  fetch(API+'?csv=1',{headers:{'x-senha':senha}}).then(function(r){return r.blob();}).then(function(b){
+    var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='leads-oncoclass.csv';a.click();
+  });
+}
+$('entrar').addEventListener('click',entrar);
+$('s').addEventListener('keydown',function(e){if(e.key==='Enter')entrar();});
+$('f').addEventListener('change',desenhar);
+$('q').addEventListener('input',desenhar);
+$('csv').addEventListener('click',baixar);
+$('t').addEventListener('click',function(e){
+  var id=e.target.getAttribute&&e.target.getAttribute('data-sair');
+  if(!id||!confirm('Marcar este lead como saiu? Ele não receberá mais mensagens.'))return;
+  fetch(API+'?optout='+encodeURIComponent(id),{method:'POST',headers:{'x-senha':senha}}).then(function(r){if(r.ok)carregar();});
+});
+if(senha)carregar();
+</script>
+</body>
+</html>
