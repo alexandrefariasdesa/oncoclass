@@ -1,0 +1,92 @@
+/* Sessões 2 a 4 + rodapé. Mobile primeiro. Famílias de layout distintas: grade 2+3 (método), faixa/colunas (provas), foto fixa + texto (Ellen). */
+.sec{padding:56px 0}
+.miolo{width:min(1180px,100% - 32px);margin:0 auto}
+.cab{display:grid;gap:14px;max-width:760px}
+.cab.centro{margin:0 auto;text-align:center;justify-items:center}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(30px,8vw,48px);line-height:1.08;letter-spacing:-.01em;color:var(--vinho-esc);text-wrap:balance}
+h2 em{font-style:italic;color:var(--vinho-med)}
+h3{font-family:var(--display);font-weight:700;font-size:clamp(22px,5.4vw,30px);line-height:1.15;color:var(--vinho-esc)}
+.lead{font-size:clamp(17px,4.4vw,21px);line-height:1.45;color:var(--tinta);font-weight:500;max-width:52ch}
+.corpo{font-size:16px;line-height:1.65;color:var(--tinta-media);max-width:62ch}
+.nega{font-weight:600;color:var(--vinho);font-size:16px;line-height:1.55;max-width:62ch}
+.sub-t{margin:44px 0 18px}
+
+/* revelação ao rolar: só com JS ativo; transform e opacity */
+.js [data-rv]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js [data-rv].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js [data-rv]{opacity:1;transform:none;transition:none}}
+
+/* 5 passos: grade com ritmo (2 + 3) e um cartão vinho */
+.passos{list-style:none;padding:0;display:grid;gap:12px;grid-template-columns:1fr}
+.passo{position:relative;padding:16px 20px 18px;border-radius:var(--r-core);background:var(--papel);border:1px solid rgba(192,149,104,.5);display:grid;gap:6px;align-content:start}
+.passo .num{font-family:var(--display);font-weight:600;font-size:40px;line-height:1;color:var(--ouro);font-variant-numeric:lining-nums}
+.passo h4{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1;color:var(--vinho-esc)}
+.passo p{font-size:15px;line-height:1.55;color:var(--tinta-media)}
+.passo.p3{background:linear-gradient(160deg,var(--vinho-med),var(--vinho-esc));border-color:transparent}
+.passo.p3 .num{color:var(--ouro-luz)}.passo.p3 h4{color:var(--creme-texto)}.passo.p3 p{color:#EBD8C6}
+
+.pratica{display:grid;gap:28px;margin-top:44px}
+.bloco{display:grid;gap:14px;align-content:start}
+.itens{list-style:none;padding:0;display:grid;gap:10px}
+.itens li{position:relative;padding-left:30px;font-size:16px;line-height:1.5;color:var(--tinta)}
+.itens li::before{content:"";position:absolute;left:0;top:.28em;width:18px;height:18px;border-radius:50%;background:var(--vinho);box-shadow:inset 0 0 0 5px var(--ouro-luz)}
+.capas{display:flex;gap:12px;align-items:flex-end}
+.capas img{width:auto;max-width:calc(50% - 6px);height:clamp(150px,44vw,180px);border-radius:16px;box-shadow:0 18px 34px -20px rgba(84,12,39,.7)}
+.temas{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.temas li{padding:8px 14px;border-radius:999px;background:var(--papel);border:1px solid rgba(192,149,104,.6);font-size:14px;font-weight:600;color:var(--vinho)}
+
+.cta{display:grid;gap:12px;max-width:460px}
+.cta .micro{text-align:left}
+
+/* provas: faixa deslizante no celular, colunas no desktop */
+.provas{background:linear-gradient(180deg,transparent,rgba(84,12,39,.05) 20%,rgba(84,12,39,.05) 80%,transparent)}
+.deps{margin-top:30px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 16px 14px;margin-inline:-16px;scrollbar-width:thin}
+.deps figure{flex:0 0 min(78vw,330px);scroll-snap-align:center;margin:0}
+.deps img{width:100%;height:auto;border-radius:16px;border:1px solid rgba(84,12,39,.18);box-shadow:0 16px 30px -22px rgba(84,12,39,.7)}
+
+/* Ellen */
+.ellen-grid{display:grid;gap:28px}
+.ellen .foto{max-width:420px;margin:0 auto;width:100%}
+.ellen .foto img{width:100%;height:auto;border-radius:calc(var(--r-core) - 4px)}
+.ellen .foto .core{padding:8px}
+.nome{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(24px,6vw,32px);color:var(--vinho-med)}
+.texto{display:grid;gap:22px;align-content:start}
+.nums{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.nums li{display:grid;gap:4px;align-content:start}
+.nums b{font-variant-numeric:lining-nums;font-family:var(--display);font-weight:700;font-size:clamp(30px,8vw,46px);line-height:1;color:var(--vinho)}
+.nums span{font-size:12.5px;line-height:1.4;color:var(--tinta-media)}
+.linha{list-style:none;padding:0 0 0 22px;display:grid;gap:16px;border-left:2px solid var(--ouro)}
+.linha li{position:relative;display:grid;gap:2px}
+.linha li::before{content:"";position:absolute;left:-29px;top:.55em;width:12px;height:12px;border-radius:50%;background:var(--vinho);box-shadow:0 0 0 4px var(--creme)}
+.linha b{font-variant-numeric:lining-nums;font-family:var(--display);font-weight:700;font-size:26px;line-height:1;color:var(--vinho)}
+.linha span{font-size:15.5px;line-height:1.5;color:var(--tinta)}
+.casos{display:grid;gap:12px}
+.caso{padding:22px;border-radius:var(--r-core);background:var(--papel);border:1px solid rgba(192,149,104,.5)}
+.caso p{font-size:15.5px;line-height:1.6;color:var(--tinta)}
+.fecho{margin-top:36px;display:grid;gap:20px;padding:28px 22px;border-radius:var(--r-card);background:linear-gradient(160deg,var(--vinho-med),var(--vinho-esc));color:var(--creme-texto);justify-items:start}
+.fecho p{font-family:var(--display);font-weight:600;font-size:clamp(24px,6.2vw,34px);line-height:1.18;max-width:30ch;text-wrap:balance}
+.fecho .btn{max-width:440px}
+.btn.claro{background:linear-gradient(180deg,#FBEFE2,#F0DFCB);color:var(--vinho-esc);box-shadow:inset 0 1px 0 #fff,0 16px 30px -14px rgba(0,0,0,.6)}
+.btn.claro .ic{background:var(--vinho);color:var(--creme-texto)}
+
+.rodape{padding:30px 16px 40px;text-align:center;font-size:12.5px;line-height:1.6;color:var(--tinta-suave);display:grid;gap:4px;background:var(--creme)}
+.rodape p{margin:0}
+.rodape a{color:var(--vinho);font-weight:600}
+
+@media (min-width:900px){
+  .sec{padding:96px 0}
+  .miolo{width:min(1180px,100% - 96px)}
+  .passos{grid-template-columns:repeat(6,1fr);gap:16px}
+  .passo.p1,.passo.p2{grid-column:span 3}.passo.p3,.passo.p4,.passo.p5{grid-column:span 2}
+  .pratica{grid-template-columns:1fr 1.15fr;grid-template-areas:'pr ate' 'cta ate';grid-template-rows:auto 1fr;gap:36px 56px;align-items:start}
+  .pratica .bloco:not(.ate){grid-area:pr}.pratica .ate{grid-area:ate}.pratica .cta{grid-area:cta;align-self:start}
+  .capas img{height:210px}
+  .passo{padding:28px 28px 30px}
+  .deps{display:block;columns:3;column-gap:18px;overflow:visible;padding:0;margin:40px 0 0;scroll-snap-type:none}
+  .deps figure{break-inside:avoid;margin-bottom:18px}
+  .ellen-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:72px;align-items:start}
+  .ellen .foto{position:sticky;top:28px;margin:0}
+  .casos{grid-template-columns:repeat(3,1fr);gap:16px}
+  .fecho{padding:44px 48px;grid-template-columns:1.3fr 1fr;align-items:center;gap:36px;justify-items:stretch}
+  .nums span{font-size:13.5px}
+}

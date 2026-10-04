@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel de leads da Oncoclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/base.css">
+<style>
+[hidden]{display:none!important}
+body{padding:0 0 60px}
+.topo{background:var(--vinho-esc);color:var(--creme-texto);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.topo h1{font-family:var(--display);font-size:24px;font-weight:700}
+.topo button{background:none;border:1px solid rgba(249,235,217,.5);color:var(--creme-texto);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.wrap{width:min(1180px,100% - 24px);margin:0 auto}
+.login{max-width:380px;margin:60px auto 0;display:grid;gap:12px}
+.login h2{font-family:var(--display);font-size:30px;color:var(--vinho-esc)}
+#msg{font-size:13px;font-weight:600;color:var(--erro);min-height:18px}
+h2.sec{font-family:var(--display);font-size:26px;color:var(--vinho-esc);margin:28px 0 10px}
+#funil{display:grid;gap:10px;margin-top:20px}
+.passo{display:grid;grid-template-columns:150px 1fr auto;gap:12px;align-items:center;font-size:14px}
+.passo b{font-weight:600}
+.barra-f{height:26px;border-radius:8px;background:rgba(84,12,39,.1);overflow:hidden}
+.barra-f i{display:block;height:100%;background:linear-gradient(90deg,var(--ouro),var(--vinho-med));border-radius:8px;min-width:2px}
+.passo .n{font-variant-numeric:tabular-nums;font-weight:700;min-width:92px;text-align:right}
+.passo .n small{font-weight:500;color:var(--tinta-suave)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.tools select,.tools input{height:40px;border-radius:12px;border:1px solid rgba(84,12,39,.3);background:#fff;padding:0 12px;font-size:14px}
+.tools button{height:40px;border-radius:999px;border:0;background:var(--vinho);color:var(--creme-texto);padding:0 18px;font-weight:700;font-size:13px;cursor:pointer}
+.tab{overflow-x:auto;border:1px solid rgba(192,149,104,.5);border-radius:14px;background:var(--papel)}
+table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
+th,td{padding:9px 12px;text-align:left}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);background:rgba(84,12,39,.05)}
+tbody tr:nth-child(even){background:rgba(84,12,39,.03)}
+.q{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:12px}
+.q.quente{background:#F7D9C8;color:#7A2A0A}.q.morno{background:#F3E3B6;color:#6B4E00}.q.frio{background:#DCE5EC;color:#2E4A5E}.q.sem{background:#E7E1DA;color:#5A4A44}
+a{color:var(--vinho);font-weight:600}
+@media (max-width:640px){.passo{grid-template-columns:1fr auto;grid-template-areas:"t n" "b b"}.passo b{grid-area:t}.passo .barra-f{grid-area:b}.passo .n{grid-area:n}}
+</style>
+</head>
+<body>
+<header class="topo"><h1>Oncoclass · leads do grupo</h1><button id="sair" hidden>Sair</button></header>
+
+<main class="wrap">
+  <form class="login" id="login">
+    <h2>Entrar</h2>
+    <div class="campo"><label for="senha">Senha do painel</label><input id="senha" type="password" autocomplete="current-password" required></div>
+    <button class="btn" id="entrar" type="submit"><span class="t">ENTRAR</span><span class="ic" aria-hidden="true"></span></button>
+    <p id="msg" role="alert"></p>
+  </form>
+
+  <section id="dados" hidden>
+    <div id="funil" aria-label="Funil"></div>
+    <h2 class="sec">Por criativo</h2>
+    <div class="tab"><table><thead><tr><th>Criativo</th><th>Leads</th><th>Pesquisa completa</th><th>Quentes</th><th>Cliques no grupo</th></tr></thead><tbody id="criativos"></tbody></table></div>
+
+    <h2 class="sec">Leads</h2>
+    <div class="tools">
+      <label for="filtro" class="sr" style="position:absolute;left:-9999px">Filtrar</label>
+      <select id="filtro"><option value="">Todos</option><option value="quente">Quentes</option><option value="morno">Mornos</option><option value="frio">Frios</option><option value="sem">Sem pesquisa</option></select>
+      <input id="busca" type="search" placeholder="Buscar nome, e-mail ou WhatsApp" aria-label="Buscar">
+      <button id="csv" type="button">Exportar CSV</button>
+      <span id="cont" style="font-size:13px;color:var(--tinta-suave)"></span>
+      <p id="aviso" role="alert" hidden style="flex-basis:100%;margin:0;font-size:13px;font-weight:600;color:var(--erro)"></p>
+    </div>
+    <div class="tab"><table><thead><tr><th>Quando</th><th>Nome</th><th>WhatsApp</th><th>E-mail</th><th>Criativo</th><th>Nível</th><th>Renda</th><th>Cartão</th><th>Interesse</th><th>Grupo</th></tr></thead><tbody id="leads"></tbody></table></div>
+  </section>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/pesquisa.js"></script>
+<script src="../js/csv.js"></script>
+<script>
+(function () {
+  var OC = window.OC, P = window.OCPesquisa, dados = null, senha = '';
+  var $ = function (id) { return document.getElementById(id); };
+  function rotulo(k, v) {
+    if (!v) return '';
+    var p = P.PERGUNTAS.filter(function (x) { return x.k === k; })[0];
+    var o = p && p.o.filter(function (y) { return y[0] === v; })[0];
+    return o ? o[1] : v;
+  }
+  function cel(tr, txt, cls) { var td = document.createElement('td'); if (cls) { var s = document.createElement('span'); s.className = cls; s.textContent = txt; td.appendChild(s); } else td.textContent = txt; tr.appendChild(td); return td; }
+  function quando(s) { if (!s) return ''; var d = new Date(s); return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+  function nivel(l) { return l.qualificacao || 'sem'; }
+
+  function pctDe(a, b) { return b ? Math.round(a / b * 100) + '%' : ''; }
+  function desenha() {
+    var f = dados.funil, max = Math.max(f.views, f.leads, 1), box = $('funil'); box.innerHTML = '';
+    [['Visitas', f.views, null], ['Leads', f.leads, f.views], ['Pesquisa completa', f.pesquisa_completa, f.leads], ['Quentes', f.quentes, f.pesquisa_completa], ['Cliques no grupo', f.cliques_grupo, f.leads]].forEach(function (x) {
+      var d = document.createElement('div'); d.className = 'passo';
+      d.innerHTML = '<b></b><div class="barra-f"><i></i></div><span class="n"></span>';
+      d.querySelector('b').textContent = x[0]; d.querySelector('i').style.width = Math.max(x[1] / max * 100, 1) + '%';
+      d.querySelector('.n').innerHTML = x[1] + (x[2] ? ' <small>' + pctDe(x[1], x[2]) + '</small>' : '');
+      box.appendChild(d);
+    });
+    var c = $('criativos'); c.innerHTML = '';
+    dados.por_criativo.forEach(function (r) { var tr = document.createElement('tr'); [r.criativo, r.leads, r.pesquisa_completa, r.quentes, r.cliques_grupo].forEach(function (v) { cel(tr, String(v)); }); c.appendChild(tr); });
+    lista();
+  }
+  function filtrados() {
+    var fl = $('filtro').value, b = $('busca').value.trim().toLowerCase();
+    return dados.leads.filter(function (l) {
+      if (fl && nivel(l) !== fl) return false;
+      return !b || [l.nome, l.email, l.whatsapp].join(' ').toLowerCase().indexOf(b) >= 0;
+    });
+  }
+  function lista() {
+    var t = $('leads'), ls = filtrados(); t.innerHTML = ''; $('cont').textContent = ls.length + ' de ' + dados.leads.length;
+    var corte = dados.total > dados.leads.length; $('aviso').hidden = !corte;
+    if (corte) $('aviso').textContent = 'Atenção: o painel mostra os ' + dados.leads.length + ' leads mais recentes de ' + dados.total + '. Os mais antigos não aparecem aqui nem no CSV.';
+    ls.forEach(function (l) {
+      var tr = document.createElement('tr');
+      cel(tr, quando(l.criado_em)); cel(tr, l.nome || '');
+      var td = cel(tr, ''); var a = document.createElement('a'); a.href = 'https://wa.me/' + l.whatsapp; a.target = '_blank'; a.rel = 'noopener'; a.textContent = l.whatsapp; td.appendChild(a);
+      cel(tr, l.email || ''); cel(tr, l.criativo || ''); cel(tr, nivel(l) === 'sem' ? 'sem pesquisa' : nivel(l), 'q ' + nivel(l));
+      cel(tr, rotulo('renda', l.renda)); cel(tr, rotulo('cartao', l.cartao)); cel(tr, rotulo('interesse', l.interesse)); cel(tr, l.clicou_grupo_em ? 'sim' : '');
+      t.appendChild(tr);
+    });
+  }
+  function csv() {
+    var cols = ['criado_em', 'nome', 'whatsapp', 'email', 'criativo', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'qualificacao', 'conhecia_ellen', 'atuacao', 'momento', 'renda', 'cartao', 'interesse', 'viu_obrigado_em', 'pesquisa_completa_em', 'clicou_grupo_em'];
+    var perg = { conhecia_ellen: 1, atuacao: 1, momento: 1, renda: 1, cartao: 1, interesse: 1 };
+    var linhas = filtrados().map(function (l) { var o = {}; cols.forEach(function (c) { o[c] = perg[c] ? rotulo(c, l[c]) : l[c]; }); return o; });
+    var blob = new Blob(['﻿' + OCCsv.montaCsv(linhas, cols)], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'leads-oncoclass.csv'; document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  function entra(s, silencioso) {
+    $('entrar').disabled = true; $('msg').textContent = '';
+    return fetch(OC.painelUrl, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: OC.key, Authorization: 'Bearer ' + OC.key }, body: JSON.stringify({ p_senha: s }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.leads) { if (!silencioso) $('msg').textContent = 'Senha incorreta.'; try { sessionStorage.removeItem('oc_painel'); } catch (e) {} return; }
+        senha = s; dados = d; try { sessionStorage.setItem('oc_painel', s); } catch (e) {}
+        $('login').hidden = true; $('dados').hidden = false; $('sair').hidden = false; desenha();
+      })
+      .catch(function () { $('msg').textContent = 'Não foi possível carregar. Tente de novo.'; })
+      .finally(function () { $('entrar').disabled = false; });
+  }
+  $('login').addEventListener('submit', function (e) { e.preventDefault(); entra($('senha').value); });
+  $('filtro').addEventListener('change', lista); $('busca').addEventListener('input', lista); $('csv').addEventListener('click', csv);
+  $('sair').addEventListener('click', function () { try { sessionStorage.removeItem('oc_painel'); } catch (e) {} location.reload(); });
+  var salva = null; try { salva = sessionStorage.getItem('oc_painel'); } catch (e) {}
+  if (salva) entra(salva, true);
+})();
+</script>
+</body>
+</html>

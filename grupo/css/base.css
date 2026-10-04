@@ -1,0 +1,58 @@
+/* Oncoclass · base: tokens, tipografia, moldura dupla, botão, campos, revelação. Tema único (claro), sem inversão por seção. */
+:root{
+  --vinho:#540C27; --vinho-esc:#3A0819; --vinho-med:#7A1F45;
+  --creme:#F5E9DD; --papel:#FCF5EC; --creme-texto:#F9EBD9;
+  --ouro:#C09568; --ouro-luz:#EAC783; --ouro-texto:#8A6340;
+  --tinta:#2A1219; --tinta-media:#5A3A44; --tinta-suave:#6B4A54;
+  --erro:#A3122F;
+  --display:"Cormorant","Cormorant Garamond",Georgia,serif;
+  --corpo:"Montserrat",system-ui,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+  --r-card:26px; --r-core:20px; --r-field:14px;   /* escala única de cantos: cartão 26, miolo 20, campo 14, botão pílula */
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--corpo);background:var(--creme);color:var(--tinta);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
+img{display:block;max-width:100%}
+button,input{font:inherit;color:inherit}
+
+/* moldura dupla: casca + miolo com cantos concêntricos */
+.shell{padding:6px;border-radius:var(--r-card);background:rgba(84,12,39,.06);border:1px solid rgba(192,149,104,.55);
+  box-shadow:0 30px 60px -34px rgba(84,12,39,.45)}
+.core{border-radius:var(--r-core);background:var(--papel);box-shadow:inset 0 1px 0 rgba(255,255,255,.9);padding:14px}
+
+/* campos: rótulo acima, 16px para não dar zoom no iOS */
+.campo{display:grid;gap:5px;min-width:0}
+.campo label{font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--tinta-media)}
+.campo input{width:100%;height:48px;border-radius:var(--r-field);border:1px solid rgba(84,12,39,.28);background:#fff;color:var(--tinta);
+  font-size:16px;font-weight:500;padding:0 14px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.campo input::placeholder{color:#7C5C66}
+@media (hover:hover) and (pointer:fine){.campo input:hover{border-color:rgba(84,12,39,.5)}}
+.campo input:focus{outline:0;border-color:var(--vinho);box-shadow:0 0 0 3px rgba(192,149,104,.45)}
+.campo input[aria-invalid="true"]{border-color:var(--erro);box-shadow:0 0 0 3px rgba(163,18,47,.14)}
+.campo input:-webkit-autofill{-webkit-text-fill-color:var(--tinta);box-shadow:0 0 0 40px #fff inset}
+.erro{display:none;font-size:12px;font-weight:600;color:var(--erro)}
+.campo.tem-erro .erro{display:block}
+
+/* botão pílula vinho; seta num círculo dourado nivelado à direita */
+.btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;height:58px;padding:0 8px 0 20px;border:0;border-radius:999px;cursor:pointer;
+  color:var(--creme-texto);font-weight:700;font-size:clamp(12.5px,3.5vw,15px);letter-spacing:.03em;white-space:nowrap;text-decoration:none;
+  background:linear-gradient(180deg,var(--vinho-med),var(--vinho));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 30px -14px rgba(84,12,39,.8);
+  transition:transform .16s var(--ease),box-shadow .25s var(--ease),filter .25s var(--ease)}
+.btn .t{flex:1;text-align:center}
+.btn .ic{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--ouro-luz);color:var(--vinho-esc);flex:none;transition:transform .35s var(--ease)}
+.btn .ic svg{width:20px;height:20px}
+.btn:focus-visible{outline:3px solid var(--ouro);outline-offset:3px}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{filter:saturate(.6);cursor:wait}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{filter:brightness(1.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 20px 36px -14px rgba(84,12,39,.9)}
+  .btn:hover .ic{transform:translate(3px,-1px) scale(1.06)}
+}
+
+/* entrada: só transform e opacity */
+@media (prefers-reduced-motion:no-preference){
+  .rv{animation:rv .8s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+  @keyframes rv{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+}

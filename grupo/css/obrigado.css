@@ -1,0 +1,56 @@
+/* Obrigado: pesquisa em uma pergunta por vez + passo do grupo. Mobile primeiro; no desktop a foto da Ellen fica ao lado. */
+[hidden]{display:none!important}
+.pagina{display:block}
+.faixa{display:block;height:clamp(110px,16dvh,150px)}
+.faixa img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;
+  -webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
+.coluna{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:6px 16px 36px;max-width:640px;margin:0 auto}
+.lado{display:none}
+
+.prog{display:grid;gap:8px}
+.prog-t{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ouro-texto)}
+.trilho{height:8px;border-radius:999px;background:rgba(84,12,39,.12);overflow:hidden}
+.trilho i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--ouro),var(--vinho-med))}
+#passo1,#passo2{display:grid;gap:14px}
+.ob h1{font-size:clamp(28px,7.4vw,40px)}
+.ob .sub{font-size:14.5px;max-width:52ch}
+
+.qn{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:8px}
+fieldset.q{border:0;padding:0;min-width:0}
+fieldset.q:focus{outline:0}
+legend{font-family:var(--display);font-weight:700;font-size:clamp(22px,5.8vw,28px);line-height:1.15;color:var(--vinho-esc);padding:0;margin-bottom:14px}
+.ops{display:grid;gap:8px}
+.op{position:relative;display:block}
+.op input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.op span{display:flex;align-items:center;gap:12px;min-height:52px;padding:12px 14px;border-radius:var(--r-field);background:#fff;border:1px solid rgba(84,12,39,.28);
+  font-size:15px;font-weight:500;line-height:1.35;color:var(--tinta);transition:border-color .2s var(--ease),background .2s var(--ease),transform .16s var(--ease)}
+.op span::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;border:2px solid rgba(84,12,39,.45);background:#fff;transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease)}
+.op input:checked + span{border-color:var(--vinho);background:#FBEFE2}
+.op input:checked + span::before{border-color:var(--vinho);background:var(--vinho);box-shadow:inset 0 0 0 4px #FBEFE2}
+.op input:focus-visible + span{outline:3px solid var(--ouro);outline-offset:2px}
+.op input:active + span{transform:scale(.985)}
+@media (hover:hover) and (pointer:fine){.op span:hover{border-color:var(--vinho)}}
+
+#enviar{margin-top:16px}
+.voltar{margin-top:10px;background:none;border:0;padding:8px 4px;font-size:14px;font-weight:600;color:var(--vinho);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.voltar:focus-visible{outline:3px solid var(--ouro);outline-offset:2px;border-radius:6px}
+.aviso{padding:14px 16px;border-radius:var(--r-field);background:rgba(192,149,104,.2);border:1px solid rgba(192,149,104,.6);font-size:14px;line-height:1.5;color:var(--tinta);font-weight:500}
+#passo2 .btn{max-width:460px}
+
+@media (min-width:900px){
+  .faixa{display:none}
+  .pagina{display:grid;grid-template-columns:minmax(0,640px) minmax(0,380px);justify-content:center;align-items:center;gap:72px;min-height:calc(100dvh - 40px);padding:40px 48px}
+  .coluna{padding:0;margin:0;gap:18px;max-width:none}
+  .lado{display:block;margin:0}
+  .lado img{width:100%;height:auto;border-radius:calc(var(--r-core) - 4px);max-height:70dvh;object-fit:cover;object-position:50% 20%}
+  .lado .core{padding:8px}
+  .ob .sub{font-size:16px}
+  .op span{font-size:16px}
+}
+
+/* foco programático (título do passo 2, pergunta): sem contorno, o foco serve só para leitores de tela */
+h1[tabindex="-1"]:focus,fieldset.q:focus{outline:0}
+@media (min-width:900px){.coluna .micro{text-align:left}}
+
+.continuar{margin-top:14px;justify-content:center}
+.continuar .t{flex:none}
