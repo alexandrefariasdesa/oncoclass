@@ -27,19 +27,70 @@ fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1606696444389111&ev=PageView&noscript=1"></noscript>
 <script>
-/* Clique no botao de compra: evento CliqueComprar (o InitiateCheckout oficial vem da Hubla), e repassa UTMs/fbclid pro checkout da Hubla */
+/* Clique no botao de compra: abre o pop-up de lead (nome/e-mail/WhatsApp), grava o lead e SO ENTAO leva ao
+   checkout da Hubla. Mantem o evento CliqueComprar do pixel (o InitiateCheckout oficial vem da Hubla) e o
+   repasse de UTMs/fbclid. Falha de gravacao NUNCA bloqueia a compra: espera no maximo 3 s e segue pro checkout. */
 document.addEventListener('DOMContentLoaded',function(){
+  var LEAD_URL='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/lead';
+  var PARAMS_HUBLA={nome:'name',email:'email',telefone:'phone'}; /* pre-preenchimento: melhor palpite, nao confirmado */
   var planos={'6OI4kesAm4KyQNeaHVfe':{nome:'Oncoclass Mensal',valor:97},'kF2OkFJoac58amiuXLh3':{nome:'Oncoclass Trimestral',valor:247}};
   var qs=location.search.replace(/^\?/,'');
+  var sp=new URLSearchParams(location.search), utm={};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','src'].forEach(function(k){if(sp.get(k))utm[k]=sp.get(k);});
+  var dlg=document.getElementById('ocl-lead'), form=document.getElementById('ocl-lead-form');
+  var atual=null, enviando=false;
+
+  function telDigitos(v){var d=(v||'').replace(/\D/g,'');if((d.length===12||d.length===13)&&d.indexOf('55')===0)d=d.slice(2);return d;}
+  function telValido(v){var d=telDigitos(v);if(d.length!==10&&d.length!==11)return false;var ddd=+d.slice(0,2);if(ddd<11||ddd>99)return false;
+    if(d.length===11&&d[2]!=='9')return false;if(d.length===10&&!/[2-5]/.test(d[2]))return false;return true;}
+  function mascara(v){var d=telDigitos(v).slice(0,11);if(d.length<=2)return d?'('+d:'';
+    if(d.length<=6)return '('+d.slice(0,2)+') '+d.slice(2);if(d.length<=10)return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);
+    return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);}
+  function erro(campo,msg){var e=dlg.querySelector('[data-erro="'+campo+'"]');e.textContent=msg;e.classList.toggle('erro',!!msg);e.hidden=!msg;}
+
+  function destino(l){
+    var u=new URL(l.href), q=new URLSearchParams(qs);
+    q.forEach(function(v,k){if(!u.searchParams.has(k))u.searchParams.set(k,v);});
+    u.searchParams.set(PARAMS_HUBLA.nome,form.nome.value.trim());
+    u.searchParams.set(PARAMS_HUBLA.email,form.email.value.trim().toLowerCase());
+    u.searchParams.set(PARAMS_HUBLA.telefone,'55'+telDigitos(form.telefone.value));
+    return u.toString();
+  }
+
   document.querySelectorAll('a[href*="pay.hub.la/"]').forEach(function(a){
     var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0], p=planos[id];
-    if(qs&&a.href.indexOf('?')<0)a.href+='?'+qs;
     a.addEventListener('click',function(ev){
-      if(!window.fbq||ev.ctrlKey||ev.metaKey||ev.shiftKey||a.target==='_blank')return;
-      fbq('trackCustom','CliqueComprar',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
-      /* segura a navegacao um instante pro evento sair antes da troca de pagina */
-      ev.preventDefault();var destino=a.href;setTimeout(function(){location.href=destino;},350);
+      if(ev.ctrlKey||ev.metaKey||ev.shiftKey||a.target==='_blank')return;
+      ev.preventDefault();
+      if(window.fbq)fbq('trackCustom','CliqueComprar',{content_name:p?p.nome:id,content_ids:[id],value:p?p.valor:0,currency:'BRL'});
+      atual=a; enviando=false; form.querySelector('button[type=submit]').disabled=false;
+      erro('nome','');erro('email','');erro('telefone','');
+      dlg.querySelector('[data-plano]').textContent=p?p.nome+' · R$ '+p.valor:'';
+      if(typeof dlg.showModal==='function')dlg.showModal();else dlg.setAttribute('open','');
+      form.nome.focus();
     });
+  });
+
+  form.telefone.addEventListener('input',function(){form.telefone.value=mascara(form.telefone.value);});
+  dlg.querySelector('[data-fechar]').addEventListener('click',function(){dlg.close();});
+  dlg.addEventListener('click',function(ev){if(ev.target===dlg)dlg.close();});
+
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(enviando||!atual)return;
+    var ok=true, nome=form.nome.value.trim(), email=form.email.value.trim();
+    erro('nome',nome.length<2?'Digite seu nome.':''); if(nome.length<2)ok=false;
+    var emOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email); erro('email',emOk?'':'Digite um e-mail válido.'); if(!emOk)ok=false;
+    var tOk=telValido(form.telefone.value); erro('telefone',tOk?'':'Digite o WhatsApp com DDD. Ex.: (92) 99123-4567'); if(!tOk)ok=false;
+    if(!ok)return;
+    enviando=true; form.querySelector('button[type=submit]').disabled=true;
+    var ir=destino(atual), feito=false;
+    function seguir(){if(feito)return;feito=true;location.href=ir;}
+    if(window.fbq)fbq('track','Lead');
+    var ctl=window.AbortController?new AbortController():null, t=setTimeout(function(){if(ctl)ctl.abort();seguir();},3000);
+    fetch(LEAD_URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,signal:ctl?ctl.signal:undefined,
+      body:JSON.stringify({nome:nome,email:email,telefone:form.telefone.value,checkout_url:atual.href.split('?')[0],utm:utm,website:form.website.value})})
+      .then(function(){clearTimeout(t);seguir();}).catch(function(){clearTimeout(t);seguir();});
   });
 });
 </script>
@@ -360,6 +411,22 @@ document.addEventListener('DOMContentLoaded',function(){
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ocl *{animation:none!important;transition-duration:.01ms!important;transition-delay:0ms!important}.ocl .anima .rev{opacity:1;transform:none;filter:none}.ocl .ticker{overflow-x:auto}.ocl .ticker__t{width:auto}.ocl .passo:nth-child(2n){transform:none}
 }
+
+/* Pop-up de lead (nome, e-mail, WhatsApp) antes do checkout */
+.ocl #ocl-lead{border:0;border-radius:22px;padding:0;width:min(92vw,420px);max-height:92dvh;overflow:auto;background:var(--creme,#FEEEDE);color:var(--vinho,#540C27);box-shadow:0 30px 80px -20px rgba(42,8,26,.7)}
+.ocl #ocl-lead::backdrop{background:rgba(42,8,26,.62);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.ocl #ocl-lead form{position:relative;padding:28px 22px 22px;display:grid;gap:14px}
+.ocl #ocl-lead h3{margin:0;padding-right:28px;font-family:var(--display);font-size:1.45rem;line-height:1.15;font-weight:700}
+.ocl #ocl-lead [data-plano]{margin:0;font-size:.8rem;opacity:.7}
+.ocl #ocl-lead label{display:grid;gap:6px;font-size:.82rem;font-weight:600}
+.ocl #ocl-lead input{font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid rgba(84,12,39,.25);border-radius:12px;width:100%;box-sizing:border-box;background:#fff;color:#2a081a}
+.ocl #ocl-lead input:focus{outline:2px solid var(--vinho,#540C27);outline-offset:1px}
+.ocl #ocl-lead .erro{color:#b3261e;font-size:.76rem;font-weight:500;margin:0}
+.ocl #ocl-lead .lgpd{font-size:.7rem;opacity:.65;line-height:1.35;margin:0}
+.ocl #ocl-lead .fechar{position:absolute;top:6px;right:8px;border:0;background:none;font-size:1.7rem;line-height:1;cursor:pointer;padding:6px 10px;color:inherit}
+.ocl #ocl-lead .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.ocl #ocl-lead button[type=submit]{justify-content:center;border:0;cursor:pointer;font:inherit}
+.ocl #ocl-lead button[type=submit]:disabled{opacity:.6;cursor:progress}
 </style>
 <div class="ocl">
 
@@ -1047,6 +1114,20 @@ document.addEventListener('DOMContentLoaded',function(){
   <p class="fixa__t"><b>R$ 97/mês</b>ou R$ 247 no trimestral · 7 dias de garantia</p>
   <a class="btn" href="#oferta">Quero entrar<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
 </div>
+
+<dialog id="ocl-lead" aria-labelledby="ocl-lead-t">
+  <form id="ocl-lead-form" novalidate>
+    <button type="button" class="fechar" data-fechar aria-label="Fechar">&times;</button>
+    <h3 id="ocl-lead-t">Quase lá! Para qual e-mail e WhatsApp enviamos seu acesso?</h3>
+    <p data-plano></p>
+    <label>Nome<input name="nome" id="ocl-lead-nome" autocomplete="name" required><span data-erro="nome" hidden></span></label>
+    <label>E-mail<input name="email" id="ocl-lead-email" type="email" inputmode="email" autocomplete="email" required><span data-erro="email" hidden></span></label>
+    <label>WhatsApp<input name="telefone" id="ocl-lead-tel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(92) 99123-4567" required><span data-erro="telefone" hidden></span></label>
+    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" class="btn btn--largo">Ir para o pagamento</button>
+    <p class="lgpd">Ao continuar, aceito receber mensagens da Oncoclass por e-mail e WhatsApp.</p>
+  </form>
+</dialog>
 </div>
 
 <script>
