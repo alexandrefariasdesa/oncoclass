@@ -11,6 +11,21 @@
     document.querySelectorAll('[data-rv]').forEach(function (e) { io.observe(e); });
   } else document.querySelectorAll('[data-rv]').forEach(function (e) { e.classList.add('in'); });
 
+  // depoimentos: setas rolam a faixa; o estado das setas vem de IntersectionObserver (sem ouvir 'scroll')
+  var deps = document.getElementById('deps'), ant = document.getElementById('dep-ant'), prox = document.getElementById('dep-prox');
+  if (deps && ant && prox) {
+    var fig = deps.querySelectorAll('figure'), passo = function () { return fig[0].getBoundingClientRect().width + 18; };
+    var reduz = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    ant.addEventListener('click', function () { deps.scrollBy({ left: -passo() * 2, behavior: reduz ? 'auto' : 'smooth' }); });
+    prox.addEventListener('click', function () { deps.scrollBy({ left: passo() * 2, behavior: reduz ? 'auto' : 'smooth' }); });
+    if ('IntersectionObserver' in window) {
+      var ioD = new IntersectionObserver(function (es) {
+        es.forEach(function (x) { var vis = x.intersectionRatio > 0.6; if (x.target === fig[0]) ant.disabled = vis; if (x.target === fig[fig.length - 1]) prox.disabled = vis; });
+      }, { root: deps, threshold: [0, 0.6, 1] });
+      ioD.observe(fig[0]); ioD.observe(fig[fig.length - 1]);
+    }
+  }
+
   // botões das sessões levam ao formulário do topo
   document.querySelectorAll('[data-cta]').forEach(function (a) {
     a.addEventListener('click', function (ev) {
