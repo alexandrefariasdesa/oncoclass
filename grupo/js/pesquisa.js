@@ -27,9 +27,9 @@
     return -1;
   }
 
-  // mesma regra da função SQL: quente = interesse "sim" + renda acima de 5 mil + cartão (próprio ou de familiar)
+  // mesma regra da função SQL: quente = interesse "sim" + renda acima de 3 mil + cartão (próprio ou de familiar)
   function qualifica(r) {
-    if (r.interesse === 'a' && 'def'.indexOf(r.renda) >= 0 && r.renda && 'ab'.indexOf(r.cartao) >= 0 && r.cartao) return 'quente';
+    if (r.interesse === 'a' && 'cdef'.indexOf(r.renda) >= 0 && r.renda && 'ab'.indexOf(r.cartao) >= 0 && r.cartao) return 'quente';
     if (r.interesse === 'a' || r.interesse === 'b') return 'morno';
     return 'frio';
   }
