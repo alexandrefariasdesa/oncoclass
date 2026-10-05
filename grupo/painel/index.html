@@ -54,6 +54,7 @@ a{color:var(--vinho);font-weight:600}
 
   <section id="dados" hidden>
     <div id="funil" aria-label="Funil"></div>
+    <p id="azimute" hidden style="margin:14px 0 0;font-size:13px;color:var(--tinta-suave)"></p>
     <h2 class="sec">Por criativo</h2>
     <div class="tab"><table><thead><tr><th>Criativo</th><th>Leads</th><th>Pesquisa completa</th><th>Quentes</th><th>Cliques no grupo</th></tr></thead><tbody id="criativos"></tbody></table></div>
 
@@ -129,6 +130,20 @@ a{color:var(--vinho);font-weight:600}
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'leads-oncoclass.csv'; document.body.appendChild(a); a.click(); a.remove();
   }
 
+  function azimute() {
+    fetch(OC.painelUrl.replace('oc_painel', 'oc_painel_azimute'), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: OC.key, Authorization: 'Bearer ' + OC.key }, body: JSON.stringify({ p_senha: senha }) })
+      .then(function (r) { return r.json(); })
+      .then(function (a) {
+        var el = $('azimute'); if (!a || a.ativo === undefined) return;
+        var st = a.status || {}, n = function (k) { return st[k] || 0; };
+        var fila = n('pendente') + n('enviado'), erro = n('falhou');
+        el.textContent = a.ativo
+          ? 'Espelho no Azimute: ' + n('ok') + ' enviados, ' + fila + ' na fila, ' + erro + ' com erro' + (n('skipped') ? ', ' + n('skipped') + ' descartados (teste ou recusados pelo Azimute)' : '') + (erro && a.ultimo_erro ? '. Último erro: ' + a.ultimo_erro : '.')
+          : 'Espelho no Azimute: desligado.';
+        el.style.color = erro ? 'var(--erro)' : ''; el.style.fontWeight = erro ? '600' : ''; el.hidden = false;
+      }).catch(function () {});
+  }
+
   function entra(s, silencioso) {
     $('entrar').disabled = true; $('msg').textContent = '';
     return fetch(OC.painelUrl, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: OC.key, Authorization: 'Bearer ' + OC.key }, body: JSON.stringify({ p_senha: s }) })
@@ -136,7 +151,7 @@ a{color:var(--vinho);font-weight:600}
       .then(function (d) {
         if (!d || !d.leads) { if (!silencioso) $('msg').textContent = 'Senha incorreta.'; try { sessionStorage.removeItem('oc_painel'); } catch (e) {} return; }
         senha = s; dados = d; try { sessionStorage.setItem('oc_painel', s); } catch (e) {}
-        $('login').hidden = true; $('dados').hidden = false; $('sair').hidden = false; desenha();
+        $('login').hidden = true; $('dados').hidden = false; $('sair').hidden = false; desenha(); azimute();
       })
       .catch(function () { $('msg').textContent = 'Não foi possível carregar. Tente de novo.'; })
       .finally(function () { $('entrar').disabled = false; });
