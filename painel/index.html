@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Leads Oncoclass</title>
+<title>Painel Oncoclass</title>
 <style>
   :root{--vinho:#540C27;--creme:#FEEEDE;--ouro:#EAC783}
   *{box-sizing:border-box}
+  [hidden]{display:none!important}
   body{font:15px/1.4 system-ui,sans-serif;margin:0;padding:16px;background:var(--creme);color:#2a081a}
   h1{font-size:1.25rem;margin:0 0 4px;color:var(--vinho)} h1 small{font-weight:400;opacity:.7}
   input,select,button{font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid #c9b8a6;background:#fff}
@@ -21,22 +22,51 @@
   .tag{padding:2px 9px;border-radius:99px;font-size:12px}.sim{background:#d8f3dc}.nao{background:#fde2e2}.out{background:#e5e5e5}
   a{color:var(--vinho)} .msg{color:#b3261e;min-height:1.2em;margin:6px 0}
   .x{background:none;color:#888;border:1px solid #ddd;padding:3px 8px;font-size:12px}
+  .abas{display:flex;gap:6px;margin:10px 0}
+  .abas button{background:#fff;color:var(--vinho);border:1px solid var(--vinho)} .abas button.on{background:var(--vinho);color:#fff}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+  @media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
+  .card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 0 #e6d6c4}
+  .card b{display:block;font-size:1.35rem;color:var(--vinho)} .card span{font-size:12px;opacity:.75}
+  .bloco{background:#fff;border-radius:12px;padding:12px 14px;margin:12px 0;box-shadow:0 1px 0 #e6d6c4}
+  .bloco h2{font-size:1rem;margin:0 0 8px;color:var(--vinho)} .bloco p.n{font-size:12px;opacity:.7;margin:8px 0 0}
+  .fun{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:7px 0;border-bottom:1px solid #f0e4d6;font-size:14px}
+  .fun:last-child{border-bottom:0} .fun em{font-style:normal;opacity:.65;font-size:12px}
+  .fun .b{grid-column:1/3;height:6px;border-radius:3px;background:#f0e4d6;overflow:hidden} .fun .b i{display:block;height:100%;background:var(--vinho)}
+  .fun.sub{padding-left:14px;font-size:13px}
+  .dias{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 </style>
 </head>
 <body>
-<h1>Leads Oncoclass <small id="n"></small></h1>
+<h1>Oncoclass <small id="n"></small></h1>
 <div id="login" class="barra">
   <input id="s" type="password" placeholder="Senha" autocomplete="current-password">
   <button id="entrar">Entrar</button>
 </div>
 <div class="msg" id="msg"></div>
 <div id="app" hidden>
+  <div class="abas"><button id="aba-leads" class="on">Leads</button><button id="aba-rec">Recuperação</button></div>
+  <div id="rec" hidden>
+    <div class="dias"><label for="dias">Cadastros dos últimos</label>
+      <select id="dias"><option value="7">7 dias</option><option value="14">14 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select>
+      <button id="atualizar" class="sec">Atualizar</button> <span id="gerado" style="font-size:12px;opacity:.7"></span></div>
+    <div class="cards" id="cards"></div>
+    <div class="bloco"><h2>WhatsApp: funil do fluxo</h2><div id="f-whats"></div>
+      <p class="n">Entregue e lido vêm da Meta e contam só a partir do primeiro envio real. Quem desligou a confirmação de leitura no WhatsApp nunca aparece como lido.</p></div>
+    <div class="bloco"><h2>WhatsApp: cada mensagem</h2><div id="f-msgs"></div></div>
+    <div class="bloco"><h2>E-mail</h2><div id="f-email"></div>
+      <p class="n">Abertura é aproximada (Gmail e Apple Mail carregam a imagem por proxy).</p></div>
+    <div class="bloco"><h2>Vendas dos leads: o último toque antes da compra</h2><div id="f-vendas"></div></div>
+    <div class="bloco"><h2>Por dia (últimos 14)</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Dia</th><th>Cadastros</th><th>Vendas</th></tr></thead><tbody id="f-dia"></tbody></table></div></div>
+  </div>
+  <div id="leads">
   <div class="barra">
     <select id="f"><option value="todos">Todos</option><option value="nao">Não compraram</option><option value="sim">Compraram</option><option value="out">Saíram</option></select>
     <input id="q" type="search" placeholder="Buscar nome, e-mail ou telefone">
     <button id="csv" class="sec">Exportar CSV</button>
   </div>
   <div class="tab"><table><thead><tr><th>Último clique</th><th>Nome</th><th>E-mail</th><th>WhatsApp</th><th>Status</th><th>Origem</th><th>Msgs</th><th></th></tr></thead><tbody id="t"></tbody></table></div>
+  </div>
 </div>
 <script>
 var API='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/painel';
@@ -90,6 +120,59 @@ $('t').addEventListener('click',function(e){
   if(!id||!confirm('Marcar este lead como saiu? Ele não receberá mais mensagens.'))return;
   fetch(API+'?optout='+encodeURIComponent(id),{method:'POST',headers:{'x-senha':senha}}).then(function(r){if(r.ok)carregar();});
 });
+
+function pct(a,b){return b>0?Math.round(a*1000/b)/10+'%':'–';}
+function brl(v){return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function linha(rot,n,base,dica,sub){
+  var w=base>0?Math.min(100,Math.round(n*100/base)):0;
+  return '<div class="fun'+(sub?' sub':'')+'"><span>'+h(rot)+(dica?' <em>'+h(dica)+'</em>':'')+'</span><b>'+n+(base>0?' <em>('+pct(n,base)+')</em>':'')+'</b><div class="b"><i style="width:'+w+'%"></i></div></div>';
+}
+function desenharRec(r){
+  var l=r.leads,w=r.whats,e=r.email,v=r.vendas;
+  $('cards').innerHTML=[['Cadastros',l.total,l.popup+' pop-up · '+l.quiz+' quiz'],['Compraram',l.comprou,pct(l.comprou,l.total)+' dos cadastros'],
+    ['Receita',brl(v.valor),'dos leads que compraram'],['Saíram',l.optout,pct(l.optout,l.total)+' dos cadastros']]
+    .map(function(c){return '<div class="card"><span>'+c[0]+'</span><b>'+c[1]+'</b><span>'+h(c[2])+'</span></div>';}).join('');
+  $('f-whats').innerHTML=
+    linha('Template 1 enviado',w.t1_enviados,w.t1_enviados)+
+    linha('Entregue',w.t1_entregues,w.t1_enviados,'do enviado',1)+
+    linha('Lido',w.t1_lidos,w.t1_enviados,'do enviado',1)+
+    linha('Tocou em “CLIQUE AQUI”',w.tocou,w.t1_enviados,'do enviado')+
+    linha('Clicou em “GARANTIR MINHA VAGA”',w.clicou,w.tocou,'de quem tocou')+
+    linha('Template 2 enviado',w.t2_enviados,w.t2_enviados,'24 h depois, p/ quem não tocou')+
+    linha('Entregue',w.t2_entregues,w.t2_enviados,'do enviado',1)+
+    linha('Lido',w.t2_lidos,w.t2_enviados,'do enviado',1);
+  $('f-msgs').innerHTML=
+    linha('Mensagem 1 enviada',w.m1_enviados,w.tocou,'de quem tocou')+
+    linha('Lida',w.m1_lidos,w.m1_enviados,'',1)+linha('Clicou no botão',w.m1_cliques,w.m1_enviados,'',1)+
+    linha('Mensagem 2 enviada',w.m2_enviados,w.tocou,'quem não clicou na 1')+
+    linha('Lida',w.m2_lidos,w.m2_enviados,'',1)+linha('Clicou no botão',w.m2_cliques,w.m2_enviados,'',1)+
+    linha('Mensagem 3 enviada',w.m3_enviados,w.tocou,'quem não clicou na 2')+
+    linha('Lida',w.m3_lidos,w.m3_enviados,'',1)+linha('Clicou no botão',w.m3_cliques,w.m3_enviados,'',1);
+  $('f-email').innerHTML=
+    linha('E-mail 1 enviado',e.e1_enviados,e.e1_enviados)+linha('Abriu',e.e1_abertos,e.e1_enviados,'',1)+linha('Clicou',e.e1_cliques,e.e1_enviados,'',1)+
+    linha('E-mail 2 enviado',e.e2_enviados,e.e2_enviados)+linha('Abriu',e.e2_abertos,e.e2_enviados,'',1)+linha('Clicou',e.e2_cliques,e.e2_enviados,'',1);
+  var pt=v.por_toque||[];
+  $('f-vendas').innerHTML=pt.length?pt.map(function(x){return '<div class="fun"><span>'+h(x.toque)+'</span><b>'+x.vendas+' <em>('+brl(x.valor)+')</em></b></div>';}).join('')
+    :'<p class="n">Nenhuma venda no período.</p>';
+  $('f-dia').innerHTML=(r.por_dia||[]).slice().reverse().map(function(d){
+    var dt=d.dia.split('-');return '<tr><td>'+dt[2]+'/'+dt[1]+'</td><td>'+d.leads+'</td><td>'+d.vendas+'</td></tr>';}).join('');
+  $('gerado').textContent='atualizado '+new Date(r.gerado_em).toLocaleTimeString('pt-BR',{timeZone:'America/Manaus',hour:'2-digit',minute:'2-digit'});
+}
+function carregarRec(){
+  $('gerado').textContent='carregando…';
+  fetch(API+'?resumo='+$('dias').value,{headers:{'x-senha':senha}}).then(function(r){
+    if(!r.ok)throw 0;return r.json();}).then(desenharRec).catch(function(){$('gerado').textContent='não consegui carregar';});
+}
+function aba(qual){
+  var rec=qual==='rec';
+  $('rec').hidden=!rec;$('leads').hidden=rec;
+  $('aba-rec').className=rec?'on':'';$('aba-leads').className=rec?'':'on';
+  if(rec)carregarRec();
+}
+$('aba-leads').addEventListener('click',function(){aba('leads');});
+$('aba-rec').addEventListener('click',function(){aba('rec');});
+$('dias').addEventListener('change',carregarRec);
+$('atualizar').addEventListener('click',carregarRec);
 if(senha)carregar();
 </script>
 </body>
