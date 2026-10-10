@@ -362,6 +362,13 @@ document.addEventListener('DOMContentLoaded',function(){
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ocl *{animation:none!important;transition-duration:.01ms!important;transition-delay:0ms!important}.ocl .anima .rev{opacity:1;transform:none;filter:none}.ocl .ticker{overflow-x:auto}.ocl .ticker__t{width:auto}.ocl .passo:nth-child(2n){transform:none}
 }
 
+/* timer de urgencia 24h */.ocl .urg{display:flex;align-items:center;justify-content:center;gap:12px 18px;flex-wrap:wrap;
+  margin:0 0 30px;padding:14px 20px;border-radius:var(--r-min);
+  background:var(--vinho);border:1px solid var(--fio-ouro-forte);color:var(--creme-texto);box-shadow:var(--sombra)}.ocl .urg[hidden]{display:none}.ocl .urg__t{font-size:.84rem;font-weight:600;letter-spacing:.02em;text-align:center}.ocl .urg__t b{color:var(--ouro-luz)}.ocl .urg__rel{display:flex;gap:6px;font-variant-numeric:tabular-nums}.ocl .urg__rel span{display:flex;flex-direction:column;align-items:center;min-width:56px;padding:6px 8px;border-radius:10px;
+  background:rgba(234,199,131,.11);border:1px solid var(--fio-ouro);color:var(--ouro-luz);font-size:1.25rem;font-weight:700;line-height:1.1}.ocl .urg__rel small{font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(249,235,217,.7);margin-top:2px}
+.ocl .legenda--urg{color:var(--ouro-luz)}.ocl .legenda--urg[hidden]{display:none}.ocl .legenda--urg b{font-variant-numeric:tabular-nums}
+@media (max-width:480px){.ocl .urg{padding:12px 14px}.ocl .urg__rel span{min-width:50px;font-size:1.1rem}}
+
 </style>
 <div class="ocl">
 
@@ -430,6 +437,10 @@ document.addEventListener('DOMContentLoaded',function(){
 
       <div class="hero__cta rev" style="--d:4">
         <a class="btn" href="#oferta">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
+        <p class="legenda legenda--urg" data-urg-linha hidden>
+          <svg class="ico"><use href="#i-relogio"/></svg>
+          Condição especial termina em <b data-urg-txt>24:00:00</b>
+        </p>
         <p class="legenda">
           <svg class="ico"><use href="#i-selo"/></svg>
           Mensal R$ 67 · Trimestral R$ 197 · 7 dias de garantia
@@ -824,6 +835,15 @@ document.addEventListener('DOMContentLoaded',function(){
     <h2 class="rev" style="--d:1">Garanta sua vaga agora</h2>
     <div class="prosa rev" style="--d:2;margin:20px 0 42px"><p>Os dois planos dão acesso à aula ao vivo, à gravação, ao PDF, ao Mapa da aula e ao grupo de assinantes. A diferença está no prazo e no acervo.</p></div>
 
+    <div class="urg rev" style="--d:2" data-urg-bloco hidden role="timer" aria-label="Tempo restante da condição especial">
+      <p class="urg__t">Condição especial liberada para você. <b>Termina em</b></p>
+      <div class="urg__rel" aria-hidden="true">
+        <span><b data-urg-h>24</b><small>horas</small></span>
+        <span><b data-urg-m>00</b><small>min</small></span>
+        <span><b data-urg-s>00</b><small>seg</small></span>
+      </div>
+    </div>
+
     <div class="oferta">
       <article class="plano plano--forte casca casca--ouro rev" style="--d:1">
         <div class="nucleo">
@@ -1151,6 +1171,44 @@ document.addEventListener('DOMContentLoaded',function(){
   new IntersectionObserver(function(e){
     naOferta = e[0].isIntersecting; aplicar();
   }, {threshold:.2}).observe(oferta);
+})();
+
+/* --------------------------------------------------------------------------
+   Timer de urgencia de 24h. Comeca na primeira visita e fica salvo no
+   navegador (localStorage), entao recarregar a pagina nao reinicia a contagem.
+   Ao zerar, os blocos somem em vez de recomecar.
+   -------------------------------------------------------------------------- */
+(function(){
+  var CHAVE = "ocl_condicao_fim", DURACAO = 24*60*60*1000;
+  var blocos = [].slice.call(document.querySelectorAll("[data-urg-bloco],[data-urg-linha]"));
+  if(!blocos.length) return;
+
+  var fim = 0;
+  try{ fim = parseInt(localStorage.getItem(CHAVE), 10) || 0; }catch(e){}
+  if(!fim || fim > Date.now() + DURACAO){   // sem registro (ou valor invalido): comeca agora
+    fim = Date.now() + DURACAO;
+    try{ localStorage.setItem(CHAVE, String(fim)); }catch(e){}
+  }
+
+  function dois(n){ return (n < 10 ? "0" : "") + n; }
+  function pintar(){
+    var falta = fim - Date.now();
+    if(falta <= 0){
+      blocos.forEach(function(b){ b.hidden = true; });
+      return true;
+    }
+    var s = Math.floor(falta/1000);
+    var h = dois(Math.floor(s/3600)), m = dois(Math.floor(s%3600/60)), seg = dois(s%60);
+    [].forEach.call(document.querySelectorAll("[data-urg-h]"), function(e){ e.textContent = h; });
+    [].forEach.call(document.querySelectorAll("[data-urg-m]"), function(e){ e.textContent = m; });
+    [].forEach.call(document.querySelectorAll("[data-urg-s]"), function(e){ e.textContent = seg; });
+    [].forEach.call(document.querySelectorAll("[data-urg-txt]"), function(e){ e.textContent = h + ":" + m + ":" + seg; });
+    blocos.forEach(function(b){ b.hidden = false; });
+    return false;
+  }
+  if(!pintar()){
+    var iv = setInterval(function(){ if(pintar()) clearInterval(iv); }, 1000);
+  }
 })();
 </script>
 
