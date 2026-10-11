@@ -1,7 +1,7 @@
 // Config pública. A chave anon só consegue chamar oc_registrar e oc_painel (RLS fechada nas tabelas).
 window.OC = {
   vagas: 17,
-  grupo: "https://chat.whatsapp.com/L56ZxlonI47KlZZ9WC7lxH",
+  grupo: "https://chat.whatsapp.com/Dzdmroj4p5sA5urgBt811o",
   aula: { diaSemana: 3, hora: "19:30", duracaoMin: 90 },   // quarta, 19h30 de Brasília
   pixel: "1606696444389111",
   privacidade: "",                                          // URL da política; vazio = link não aparece
