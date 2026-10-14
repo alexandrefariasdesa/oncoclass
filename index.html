@@ -373,7 +373,9 @@ document.addEventListener('DOMContentLoaded',function(){
 /* Ellen */.ocl .ellen{display:grid;grid-template-columns:.68fr 1.32fr;gap:clamp(28px,4vw,60px);align-items:start}.ocl .ellen .nucleo{overflow:hidden}.ocl .ellen img{width:100%;height:auto;display:block}.ocl .nums{list-style:none;margin:30px 0 0;padding:24px 0 0;border-top:1px solid var(--fio-ouro);
   display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.ocl .nums b{display:block;font-family:var(--display)!important;font-size:2.15rem;font-weight:700;
   color:var(--ouro-luz);line-height:1;letter-spacing:-.01em}.ocl .nums span{font-size:.75rem;color:rgba(249,235,217,.74);line-height:1.35;display:block;margin-top:5px}
-@media (max-width:820px){.ocl .ellen{grid-template-columns:1fr}.ocl .nums{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:820px){.ocl .ellen{grid-template-columns:minmax(0,1fr);gap:30px}.ocl .ellen > figure.casca{width:100%;max-width:320px;justify-self:center;
+    padding:0;border:0;border-radius:20px;overflow:hidden;box-shadow:none}.ocl .ellen > figure .nucleo{border-radius:20px;box-shadow:none}.ocl .ellen img{aspect-ratio:4/5;object-fit:cover;object-position:center top}.ocl .nums{grid-template-columns:repeat(2,1fr)}
+}
 
 /* FAQ */.ocl .faq{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}.ocl .faq details{border-bottom:1px solid var(--fio)}.ocl .faq summary{cursor:pointer;list-style:none;padding:18px 40px 18px 0;position:relative;
   font-weight:600;font-size:.96rem;line-height:1.4;color:var(--vinho)}.ocl .faq summary::-webkit-details-marker{display:none}.ocl .faq summary::after{content:"";position:absolute;right:8px;top:24px;width:9px;height:9px;
@@ -394,7 +396,12 @@ document.addEventListener('DOMContentLoaded',function(){
   box-shadow:0 26px 54px -26px rgba(42,8,26,.8);
   -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
   transition:transform .7s var(--curva)}.ocl .fixa.on{transform:translate(-50%,0)}.ocl .fixa__t{color:rgba(249,235,217,.8);font-size:.72rem;line-height:1.3;white-space:nowrap}.ocl .fixa__t b{display:block;font-family:var(--display)!important;font-size:1.28rem;color:var(--ouro-luz);font-weight:700}.ocl .fixa .btn{padding:9px 9px 9px 20px;font-size:.68rem;gap:11px}.ocl .fixa .btn__i{width:32px;height:32px;font-size:.95rem}
-@media (max-width:560px){.ocl .fixa__t{display:none}}
+@media (max-width:560px){.ocl .fixa{width:calc(100% - 32px);max-width:360px;gap:0;padding:0;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    border:0;background:none;box-shadow:none;
+    -webkit-backdrop-filter:none;backdrop-filter:none}.ocl .fixa__t{display:none}.ocl .fixa .btn{width:100%;min-height:54px;justify-content:space-between;
+    padding:9px 10px 9px 24px;white-space:nowrap;font-size:.75rem;gap:16px}.ocl .fixa .btn__i{flex:0 0 36px;width:36px;height:36px}.ocl .rod{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+}
 
 /* ==========================================================================
    ENTRADA POR ROLAGEM
@@ -572,10 +579,10 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="cal__l" data-d="2026-09-16"><p class="cal__d">16/09/2026</p><p class="cal__n">01</p><p class="cal__t">Como se tornar um verdadeiro expert em Oncologia?</p></div>
         <div class="cal__l" data-d="2026-09-23"><p class="cal__d">23/09/2026</p><p class="cal__n">02</p><p class="cal__t">Uma visão panorâmica dos principais grupos farmacológicos da Oncologia.</p></div>
         <div class="cal__l" data-d="2026-09-30"><p class="cal__d">30/09/2026</p><p class="cal__n">03</p><p class="cal__t">CAR-T e terapias celulares: a revolução que está ganhando novas indicações.</p></div>
-        <div class="cal__l" data-d="2026-10-07"><p class="cal__d">07/10/2026</p><p class="cal__n">04</p><p class="cal__t">Onco-hematologia: conceitos, principais doenças e tratamentos.</p></div>
-        <div class="cal__l" data-d="2026-10-21"><p class="cal__d">21/10/2026</p><p class="cal__n">05</p><p class="cal__t">Principais cálculos em Oncologia: um guia prático para o seu dia a dia.</p></div>
-        <div class="cal__l" data-d="2026-10-28"><p class="cal__d">28/10/2026</p><p class="cal__n">06</p><p class="cal__t">Pesquisa clínica em Oncologia: tipos de estudos clínicos e principais endpoints.</p></div>
-        <div class="cal__l" data-d="2026-11-04"><p class="cal__d">04/11/2026</p><p class="cal__n">07</p><p class="cal__t">Anticorpos conjugados à droga: a nova geração de tratamentos inteligentes.</p></div>
+        <div class="cal__l" data-d="2026-10-21"><p class="cal__d">21/10/2026</p><p class="cal__n">04</p><p class="cal__t">Principais cálculos em Oncologia: um guia prático para o seu dia a dia.</p></div>
+        <div class="cal__l" data-d="2026-10-28"><p class="cal__d">28/10/2026</p><p class="cal__n">05</p><p class="cal__t">Pesquisa clínica em Oncologia: tipos de estudos clínicos e principais endpoints.</p></div>
+        <div class="cal__l" data-d="2026-11-04"><p class="cal__d">04/11/2026</p><p class="cal__n">06</p><p class="cal__t">Anticorpos conjugados à droga: a nova geração de tratamentos inteligentes.</p></div>
+        <div class="cal__l" data-d="2026-11-11"><p class="cal__d">11/11/2026</p><p class="cal__n">07</p><p class="cal__t">Onco-hematologia: conceitos, principais doenças e tratamentos.</p></div>
         <div class="cal__l" data-d="2026-11-18"><p class="cal__d">18/11/2026</p><p class="cal__n">08</p><p class="cal__t">Anticorpos biespecíficos: como recrutar o sistema imune contra o tumor.</p></div>
         <div class="cal__l" data-d="2026-11-25"><p class="cal__d">25/11/2026</p><p class="cal__n">09</p><p class="cal__t">Emergências oncológicas: o que todo profissional precisa reconhecer rápido?</p></div>
         <div class="cal__l" data-d="2026-12-02"><p class="cal__d">02/12/2026</p><p class="cal__n">10</p><p class="cal__t">Vacinas de mRNA contra o câncer: mito, promessa ou realidade?</p></div>
@@ -586,7 +593,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <p class="legenda rev" style="--d:4;margin-top:20px">
       <svg class="ico"><use href="#i-agenda"/></svg>
-      Não há aula em 14/10 e 11/11.
+      Não há aula em 07/10 e 14/10.
     </p>
   </div>
 </section>
@@ -601,10 +608,10 @@ document.addEventListener('DOMContentLoaded',function(){
       <li><svg class="ico"><use href="#i-check"/></svg><span>Por que os farmacêuticos mais reconhecidos da Oncologia não são os que mais decoraram, e o caminho que eles seguiram. <u>aula 1</u></span></li>
       <li><svg class="ico"><use href="#i-check"/></svg><span>Como enxergar os grupos farmacológicos da Oncologia como um mapa, e não como uma lista de nomes para memorizar. <u>aula 2</u></span></li>
       <li><svg class="ico"><use href="#i-check"/></svg><span>O que uma célula CAR-T faz dentro do paciente, por que ela está ganhando novas indicações e o que o farmacêutico precisa vigiar. <u>aula 3</u></span></li>
-      <li><svg class="ico"><use href="#i-check"/></svg><span>As doenças onco-hematológicas que mais aparecem no serviço, e por que os tratamentos delas seguem outra lógica. <u>aula 4</u></span></li>
-      <li><svg class="ico"><use href="#i-check"/></svg><span>Os cálculos que você faz no plantão, na ordem certa, sem errar quando o tempo aperta. <u>aula 5</u></span></li>
-      <li><svg class="ico"><use href="#i-check"/></svg><span>Como ler um estudo clínico em Oncologia e saber, pelo endpoint, se aquele resultado muda a conduta ou só a manchete. <u>aula 6</u></span></li>
-      <li><svg class="ico"><use href="#i-check"/></svg><span>O que muda quando um anticorpo carrega o quimioterápico até a célula, e o que isso faz com a toxicidade. <u>aula 7</u></span></li>
+      <li><svg class="ico"><use href="#i-check"/></svg><span>Os cálculos que você faz no plantão, na ordem certa, sem errar quando o tempo aperta. <u>aula 4</u></span></li>
+      <li><svg class="ico"><use href="#i-check"/></svg><span>Como ler um estudo clínico em Oncologia e saber, pelo endpoint, se aquele resultado muda a conduta ou só a manchete. <u>aula 5</u></span></li>
+      <li><svg class="ico"><use href="#i-check"/></svg><span>O que muda quando um anticorpo carrega o quimioterápico até a célula, e o que isso faz com a toxicidade. <u>aula 6</u></span></li>
+      <li><svg class="ico"><use href="#i-check"/></svg><span>As doenças onco-hematológicas que mais aparecem no serviço, e por que os tratamentos delas seguem outra lógica. <u>aula 7</u></span></li>
       <li><svg class="ico"><use href="#i-check"/></svg><span>Por que um anticorpo biespecífico é diferente de tudo que veio antes, e o que o farmacêutico intercepta nele. <u>aula 8</u></span></li>
       <li><svg class="ico"><use href="#i-check"/></svg><span>As emergências oncológicas que você precisa reconhecer em minutos, antes de virar dano. <u>aula 9</u></span></li>
       <li><svg class="ico"><use href="#i-check"/></svg><span>Vacinas de mRNA contra o câncer: o que já é realidade, o que ainda é promessa e como responder quando o paciente perguntar. <u>aula 10</u></span></li>
@@ -1055,7 +1062,7 @@ document.addEventListener('DOMContentLoaded',function(){
     <span class="selo chapeu rev">Dúvidas</span>
     <h2 class="rev" style="--d:1">Perguntas frequentes</h2>
     <div class="faq rev" style="--d:2;margin-top:36px">
-      <details><summary>Quando são as aulas?</summary><p>Toda quarta-feira, das 20h às 21h30, ao vivo. A gravação entra na área de membros no dia seguinte. Não há aula em 14/10 e 11/11.</p></details>
+      <details><summary>Quando são as aulas?</summary><p>Toda quarta-feira, das 20h às 21h30, ao vivo. A gravação entra na área de membros no dia seguinte. Não há aula em 07/10 e 14/10.</p></details>
       <details><summary>Não vou conseguir assistir ao vivo. Perco a aula?</summary><p>Não. A gravação e o PDF ficam na sua área de membros enquanto você for assinante. Só as perguntas ao vivo são exclusivas de quem está lá.</p></details>
       <details><summary>Se eu entrar em outubro, vejo as aulas de setembro?</summary><p>Sim. Enquanto a assinatura estiver ativa, você acessa todas as aulas do período.</p></details>
       <details><summary>Como cancelo o mensal?</summary><p>Na área de membros, a qualquer momento, sem multa. Você mantém o acesso até o fim do ciclo pago.</p></details>
