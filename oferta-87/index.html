@@ -44,6 +44,42 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 });
 </script>
+<script>
+/* Rastreio de comportamento (funil da pagina): visita, rolagem 25/50/75/100% e clique em comprar.
+   Um visitante = um id guardado no navegador (oc_vid). Falha de rede nunca afeta a pagina. Painel: /painel/ > aba Pagina. */
+(function(){
+  var URL='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/evento', LP='oferta87';
+  var PLANOS={'6OI4kesAm4KyQNeaHVfe':'mensal','kF2OkFJoac58amiuXLh3':'trimestral','Jpe1ROzDGo6GUmGfzUGm':'mensal','XmsrCNKPkvKiGWDnY8jJ':'trimestral'};
+  var vid='';
+  try{vid=localStorage.getItem('oc_vid')||'';if(!vid){vid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2);localStorage.setItem('oc_vid',vid);}}catch(e){vid='';}
+  if(!vid)return;
+  var sp=new URLSearchParams(location.search);
+  function envia(tipo,plano){
+    try{
+      var b={lp:LP,vid:vid,tipo:tipo,pagina:location.href.split('#')[0]};
+      ['utm_source','utm_campaign','utm_content','src'].forEach(function(k){if(sp.get(k))b[k]=sp.get(k);});
+      if(plano)b.plano=plano;
+      fetch(URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify(b)}).catch(function(){});
+    }catch(e){}
+  }
+  envia('visita');
+  var feitos={},agendado=false;
+  function rola(){
+    agendado=false;
+    var el=document.documentElement,alt=el.scrollHeight-el.clientHeight;
+    if(alt<=0)return;
+    var p=100*(window.pageYOffset||el.scrollTop||0)/alt;
+    [25,50,75,100].forEach(function(x){if(p>=x-1&&!feitos[x]){feitos[x]=1;envia('scroll_'+x);}});
+  }
+  window.addEventListener('scroll',function(){if(!agendado){agendado=true;(window.requestAnimationFrame||setTimeout)(rola);}},{passive:true});
+  document.addEventListener('click',function(ev){
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href*="pay.hub.la/"]'):null;
+    if(!a)return;
+    var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0];
+    envia('clicou_comprar',PLANOS[id]||id);
+  },true);
+})();
+</script>
 </head>
 <body>
 <style>

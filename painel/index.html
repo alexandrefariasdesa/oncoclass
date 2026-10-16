@@ -45,7 +45,7 @@
 </div>
 <div class="msg" id="msg"></div>
 <div id="app" hidden>
-  <div class="abas"><button id="aba-leads" class="on">Leads</button><button id="aba-rec">Recuperação</button></div>
+  <div class="abas"><button id="aba-leads" class="on">Leads</button><button id="aba-rec">Recuperação</button><button id="aba-pag">Página</button></div>
   <div id="rec" hidden>
     <div class="dias"><label for="dias">Cadastros dos últimos</label>
       <select id="dias"><option value="7">7 dias</option><option value="14">14 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select>
@@ -58,6 +58,18 @@
       <p class="n">Abertura é aproximada (Gmail e Apple Mail carregam a imagem por proxy).</p></div>
     <div class="bloco"><h2>Vendas dos leads: o último toque antes da compra</h2><div id="f-vendas"></div></div>
     <div class="bloco"><h2>Por dia (últimos 14)</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Dia</th><th>Cadastros</th><th>Vendas</th></tr></thead><tbody id="f-dia"></tbody></table></div></div>
+  </div>
+  <div id="pag" hidden>
+    <div class="dias"><label for="pdias">Visitas dos últimos</label>
+      <select id="pdias"><option value="1">1 dia</option><option value="7" selected>7 dias</option><option value="14">14 dias</option><option value="30">30 dias</option><option value="90">90 dias</option></select>
+      <select id="plp" aria-label="Página"><option value="vendas">Página de vendas (R$ 97)</option><option value="oferta87">Oferta R$ 87</option></select>
+      <button id="patualizar" class="sec">Atualizar</button> <span id="pgerado" style="font-size:12px;opacity:.7"></span></div>
+    <div class="cards" id="pcards"></div>
+    <div class="bloco"><h2>Funil da página</h2><div id="p-funil"></div>
+      <p class="n">Conta visitantes únicos (um navegador = um visitante). “Preencheu” e “Comprou” vêm do pop-up e da Hubla e só existem na página de vendas. Vale a partir de quando o rastreio entrou no ar.</p></div>
+    <div class="bloco"><h2>Por criativo</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Criativo</th><th>Visitantes</th><th>Rolaram 50%</th><th>Clicaram em comprar</th><th>Preencheram</th><th>Compraram</th><th>Visita → compra</th></tr></thead><tbody id="p-cri"></tbody></table></div></div>
+    <div class="bloco"><h2>Plano que clicaram</h2><div id="p-planos"></div></div>
+    <div class="bloco"><h2>Por dia</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Dia</th><th>Visitantes</th><th>Clicaram em comprar</th><th>Clique ÷ visita</th></tr></thead><tbody id="p-dia"></tbody></table></div></div>
   </div>
   <div id="leads">
   <div class="barra">
@@ -163,14 +175,42 @@ function carregarRec(){
   fetch(API+'?resumo='+$('dias').value,{headers:{'x-senha':senha}}).then(function(r){
     if(!r.ok)throw 0;return r.json();}).then(desenharRec).catch(function(){$('gerado').textContent='não consegui carregar';});
 }
+function desenharPag(r){
+  if(!r||!r.ativo){$('pcards').innerHTML='';$('p-funil').innerHTML='<p class="n">Sem dados ainda nesse período: o rastreio começa a contar a partir da publicação.</p>';
+    $('p-cri').innerHTML='';$('p-planos').innerHTML='';$('p-dia').innerHTML='';$('pgerado').textContent='';return;}
+  var v=r.visitantes, ro=r.rolagem, vendas=$('plp').value==='vendas';
+  $('pcards').innerHTML=[['Visitantes',v,r.visitas+' carregamentos'],['Clicaram em comprar',r.clicaram_comprar,pct(r.clicaram_comprar,v)+' dos visitantes'],
+    vendas?['Compraram',r.compraram,pct(r.compraram,v)+' dos visitantes']:['Compraram','–','não medido nesta página'],
+    ['Rolaram até o fim',ro.s100,pct(ro.s100,v)+' dos visitantes']]
+    .map(function(c){return '<div class="card"><span>'+c[0]+'</span><b>'+c[1]+'</b><span>'+h(c[2])+'</span></div>';}).join('');
+  $('p-funil').innerHTML=linha('Visitaram',v,v)+linha('Rolaram 25%',ro.s25,v,'dos visitantes',1)+linha('Rolaram 50%',ro.s50,v,'dos visitantes',1)+
+    linha('Rolaram 75%',ro.s75,v,'dos visitantes',1)+linha('Rolaram até o fim',ro.s100,v,'dos visitantes',1)+
+    linha('Clicaram em comprar',r.clicaram_comprar,v,'dos visitantes')+
+    (vendas?linha('Preencheram o pop-up',r.preencheram,r.clicaram_comprar,'de quem clicou')+linha('Compraram',r.compraram,r.preencheram,'de quem preencheu'):'');
+  $('p-cri').innerHTML=(r.criativos||[]).map(function(c){
+    return '<tr><td>'+h(c.criativo)+'</td><td>'+c.visitantes+'</td><td>'+c.s50+' <em>('+pct(c.s50,c.visitantes)+')</em></td><td>'+c.clicaram+' <em>('+pct(c.clicaram,c.visitantes)+')</em></td><td>'+(vendas?c.preencheram:'–')+'</td><td>'+(vendas?c.compraram:'–')+'</td><td>'+(vendas?pct(c.compraram,c.visitantes):'–')+'</td></tr>';}).join('');
+  $('p-planos').innerHTML=(r.planos&&r.planos.length)?r.planos.map(function(p){return linha(p.plano,p.cliques,r.clicaram_comprar,'dos cliques');}).join(''):'<p class="n">Sem cliques no período.</p>';
+  $('p-dia').innerHTML=(r.dias||[]).map(function(d){var dt=d.dia.split('-');return '<tr><td>'+dt[2]+'/'+dt[1]+'</td><td>'+d.visitantes+'</td><td>'+d.clicaram+'</td><td>'+pct(d.clicaram,d.visitantes)+'</td></tr>';}).join('');
+  $('pgerado').textContent='desde '+new Date(r.desde).toLocaleString('pt-BR',{timeZone:'America/Manaus',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' (Manaus)';
+}
+function carregarPag(){
+  $('pgerado').textContent='carregando…';
+  fetch(API+'?pagina='+$('pdias').value+'&lp='+$('plp').value,{headers:{'x-senha':senha}}).then(function(r){
+    if(!r.ok)throw 0;return r.json();}).then(desenharPag).catch(function(){$('pgerado').textContent='não consegui carregar';});
+}
 function aba(qual){
-  var rec=qual==='rec';
-  $('rec').hidden=!rec;$('leads').hidden=rec;
-  $('aba-rec').className=rec?'on':'';$('aba-leads').className=rec?'':'on';
+  var rec=qual==='rec', pag=qual==='pag';
+  $('rec').hidden=!rec;$('pag').hidden=!pag;$('leads').hidden=rec||pag;
+  $('aba-rec').className=rec?'on':'';$('aba-pag').className=pag?'on':'';$('aba-leads').className=(rec||pag)?'':'on';
   if(rec)carregarRec();
+  if(pag)carregarPag();
 }
 $('aba-leads').addEventListener('click',function(){aba('leads');});
 $('aba-rec').addEventListener('click',function(){aba('rec');});
+$('aba-pag').addEventListener('click',function(){aba('pag');});
+$('pdias').addEventListener('change',carregarPag);
+$('plp').addEventListener('change',carregarPag);
+$('patualizar').addEventListener('click',carregarPag);
 $('dias').addEventListener('change',carregarRec);
 $('atualizar').addEventListener('click',carregarRec);
 if(senha)carregar();
