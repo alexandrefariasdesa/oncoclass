@@ -35,6 +35,8 @@
   .fun .b{grid-column:1/3;height:6px;border-radius:3px;background:#f0e4d6;overflow:hidden} .fun .b i{display:block;height:100%;background:var(--vinho)}
   .fun.sub{padding-left:14px;font-size:13px}
   .dias{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .q{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:12px}
+  .q.quente{background:#F7D9C8;color:#7A2A0A}.q.morno{background:#F3E3B6;color:#6B4E00}.q.frio{background:#DCE5EC;color:#2E4A5E}.q.sem{background:#E7E1DA;color:#5A4A44}
 </style>
 </head>
 <body>
@@ -45,7 +47,7 @@
 </div>
 <div class="msg" id="msg"></div>
 <div id="app" hidden>
-  <div class="abas"><button id="aba-leads" class="on">Leads</button><button id="aba-rec">Recuperação</button><button id="aba-pag">Página</button></div>
+  <div class="abas"><button id="aba-leads" class="on">Leads</button><button id="aba-rec">Recuperação</button><button id="aba-pag">Página</button><button id="aba-grp">Grupo</button></div>
   <div id="rec" hidden>
     <div class="dias"><label for="dias">Cadastros dos últimos</label>
       <select id="dias"><option value="7">7 dias</option><option value="14">14 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select>
@@ -70,6 +72,27 @@
     <div class="bloco"><h2>Por criativo</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Criativo</th><th>Visitantes</th><th>Rolaram 50%</th><th>Clicaram em comprar</th><th>Preencheram</th><th>Compraram</th><th>Visita → compra</th></tr></thead><tbody id="p-cri"></tbody></table></div></div>
     <div class="bloco"><h2>Plano que clicaram</h2><div id="p-planos"></div></div>
     <div class="bloco"><h2>Por dia</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Dia</th><th>Visitantes</th><th>Clicaram em comprar</th><th>Clique ÷ visita</th></tr></thead><tbody id="p-dia"></tbody></table></div></div>
+  </div>
+  <div id="grp" hidden>
+    <div id="g-login" class="barra" hidden>
+      <input id="g-senha" type="password" placeholder="Senha do painel do grupo (só uma vez)" autocomplete="off">
+      <button id="g-entrar">Entrar no grupo</button>
+    </div>
+    <div class="msg" id="g-msg"></div>
+    <div id="g-dados" hidden>
+      <div class="dias"><button id="g-atualizar" class="sec">Atualizar</button> <span id="g-az" style="font-size:12px;opacity:.7"></span></div>
+      <div class="bloco"><h2>Funil da captura do grupo</h2><div id="g-funil"></div></div>
+      <div class="bloco"><h2>Por criativo</h2><div class="tab"><table style="min-width:0"><thead><tr><th>Criativo</th><th>Leads</th><th>Pesquisa completa</th><th>Quentes</th><th>Cliques no grupo</th></tr></thead><tbody id="g-cri"></tbody></table></div></div>
+      <div class="bloco"><h2>Leads do grupo</h2>
+        <div class="barra">
+          <select id="g-f"><option value="">Todos</option><option value="quente">Quentes</option><option value="morno">Mornos</option><option value="frio">Frios</option><option value="sem">Sem pesquisa</option></select>
+          <input id="g-q" type="search" placeholder="Buscar nome, e-mail ou WhatsApp">
+          <button id="g-csv" class="sec">Exportar CSV</button> <span id="g-cont" style="font-size:12px;opacity:.7;align-self:center"></span>
+        </div>
+        <p id="g-aviso" class="msg" hidden></p>
+        <div class="tab"><table style="min-width:900px"><thead><tr><th>Quando</th><th>Nome</th><th>WhatsApp</th><th>E-mail</th><th>Criativo</th><th>Nível</th><th>Renda</th><th>Cartão</th><th>Interesse</th><th>Grupo</th></tr></thead><tbody id="g-t"></tbody></table></div>
+      </div>
+    </div>
   </div>
   <div id="leads">
   <div class="barra">
@@ -199,20 +222,102 @@ function carregarPag(){
     if(!r.ok)throw 0;return r.json();}).then(desenharPag).catch(function(){$('pgerado').textContent='não consegui carregar';});
 }
 function aba(qual){
-  var rec=qual==='rec', pag=qual==='pag';
-  $('rec').hidden=!rec;$('pag').hidden=!pag;$('leads').hidden=rec||pag;
-  $('aba-rec').className=rec?'on':'';$('aba-pag').className=pag?'on':'';$('aba-leads').className=(rec||pag)?'':'on';
+  var rec=qual==='rec', pag=qual==='pag', grp=qual==='grp';
+  $('rec').hidden=!rec;$('pag').hidden=!pag;$('grp').hidden=!grp;$('leads').hidden=rec||pag||grp;
+  $('aba-rec').className=rec?'on':'';$('aba-pag').className=pag?'on':'';$('aba-grp').className=grp?'on':'';$('aba-leads').className=(rec||pag||grp)?'':'on';
   if(rec)carregarRec();
   if(pag)carregarPag();
+  if(grp)carregarGrp();
 }
 $('aba-leads').addEventListener('click',function(){aba('leads');});
 $('aba-rec').addEventListener('click',function(){aba('rec');});
 $('aba-pag').addEventListener('click',function(){aba('pag');});
+$('aba-grp').addEventListener('click',function(){aba('grp');});
 $('pdias').addEventListener('change',carregarPag);
 $('plp').addEventListener('change',carregarPag);
 $('patualizar').addEventListener('click',carregarPag);
 $('dias').addEventListener('change',carregarRec);
 $('atualizar').addEventListener('click',carregarRec);
+
+/* ===== Aba Grupo: dados da captura do grupo (outro projeto Supabase, com a senha própria dele) ===== */
+var GRP={rpc:'https://dbususnqmikxfllvtitl.supabase.co/rest/v1/rpc/',
+ key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidXN1c25xbWlreGZsbHZ0aXRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExNDI2MzcsImV4cCI6MjEwNjcxODYzN30.0TjGZ5ao1dY3TJOfzNuS4vDzc55lAUFdzYntqDw79gU'};
+var gSenha='', gDados=null;
+try{gSenha=sessionStorage.getItem('gs')||'';}catch(e){}
+var ROT={
+ conhecia_ellen:{a:'Sim, já fui aluna ou mentorada dela',b:'Sim, já acompanho nas redes',c:'Não, conheci agora'},
+ atuacao:{a:'Farmácia oncológica hospitalar ou clínica de Oncologia',b:'Farmácia hospitalar em outra área',c:'Drogaria ou farmácia de manipulação',d:'Pesquisa clínica',e:'Indústria farmacêutica',f:'Sou estudante de Farmácia',g:'Outra profissão da saúde',h:'Não atuo na área da saúde'},
+ momento:{a:'Ainda não atuo, mas quero entrar na área',b:'Estou começando agora na Oncologia',c:'Já atuo há algum tempo, mas sinto que confiro mais do que decido',d:'Já tenho pós ou experiência e quero me atualizar e ser referência'},
+ renda:{a:'Sem renda no momento',b:'Até R$ 3.000',c:'De R$ 3.001 a R$ 5.000',d:'De R$ 5.001 a R$ 7.000',e:'De R$ 7.001 a R$ 10.000',f:'Acima de R$ 10.000'},
+ cartao:{a:'Sim, tenho cartão próprio',b:'Sim, posso usar o de um familiar',c:'Não tenho acesso a cartão'},
+ interesse:{a:'Sim, quero garantir minha vaga assim que abrir',b:'Talvez, quero ver a condição antes',c:'Não, por enquanto só quero acompanhar'}};
+function grot(k,v){return v?((ROT[k]||{})[v]||v):'';}
+function gnivel(l){return l.qualificacao||'sem';}
+function gquando(s){return s?new Date(s).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'';}
+function grpc(fn,sn){
+  return fetch(GRP.rpc+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:GRP.key,Authorization:'Bearer '+GRP.key},body:JSON.stringify({p_senha:sn})}).then(function(r){return r.json();});
+}
+function grupoEntrar(sn,silencioso){
+  return grpc('oc_painel',sn).then(function(d){
+    if(!d||!d.leads){try{sessionStorage.removeItem('gs');}catch(e){} if(!silencioso)$('g-msg').textContent='Senha incorreta.'; return false;}
+    gSenha=sn;gDados=d;try{sessionStorage.setItem('gs',sn);}catch(e){}
+    $('g-login').hidden=true;$('g-msg').textContent='';$('g-dados').hidden=false;grupoDesenhar();grupoAzimute();return true;
+  }).catch(function(){$('g-msg').textContent='Não consegui conectar.';return false;});
+}
+function carregarGrp(){
+  // tenta a senha do grupo já guardada, depois a senha deste painel; se nenhuma servir, pede a do grupo uma vez
+  var tent=[gSenha,senha].filter(function(x,i,a){return x&&a.indexOf(x)===i;});
+  (function prox(i){
+    if(i>=tent.length){$('g-dados').hidden=true;$('g-login').hidden=false;return;}
+    grupoEntrar(tent[i],true).then(function(ok){if(!ok)prox(i+1);});
+  })(0);
+}
+function gpct(a,b){return b?Math.round(a/b*100)+'%':'';}
+function grupoDesenhar(){
+  var f=gDados.funil, max=Math.max(f.views,f.leads,1);
+  $('g-funil').innerHTML=[['Visitas',f.views,0],['Leads',f.leads,f.views],['Pesquisa completa',f.pesquisa_completa,f.leads],['Quentes',f.quentes,f.pesquisa_completa],['Cliques no grupo',f.cliques_grupo,f.leads]].map(function(x){
+    var w=Math.max(x[1]/max*100,1);
+    return '<div class="fun"><span>'+h(x[0])+(x[2]?' <em>'+gpct(x[1],x[2])+'</em>':'')+'</span><b>'+x[1]+'</b><div class="b"><i style="width:'+w+'%"></i></div></div>';}).join('');
+  $('g-cri').innerHTML=(gDados.por_criativo||[]).map(function(r){return '<tr><td>'+h(r.criativo)+'</td><td>'+r.leads+'</td><td>'+r.pesquisa_completa+'</td><td>'+r.quentes+'</td><td>'+r.cliques_grupo+'</td></tr>';}).join('');
+  grupoLista();
+}
+function grupoFiltrados(){
+  var fl=$('g-f').value,b=$('g-q').value.trim().toLowerCase();
+  return gDados.leads.filter(function(l){
+    if(fl&&gnivel(l)!==fl)return false;
+    return !b||[l.nome,l.email,l.whatsapp].join(' ').toLowerCase().indexOf(b)>=0;});
+}
+function grupoLista(){
+  var ls=grupoFiltrados();
+  $('g-cont').textContent=ls.length+' de '+gDados.leads.length;
+  var corte=gDados.total>gDados.leads.length; $('g-aviso').hidden=!corte;
+  if(corte)$('g-aviso').textContent='Atenção: o painel mostra os '+gDados.leads.length+' leads mais recentes de '+gDados.total+'. Os mais antigos não aparecem aqui nem no CSV.';
+  $('g-t').innerHTML=ls.map(function(l){
+    var n=gnivel(l);
+    return '<tr><td>'+h(gquando(l.criado_em))+'</td><td>'+h(l.nome)+'</td><td><a href="https://wa.me/'+h(l.whatsapp)+'" target="_blank" rel="noopener">'+h(l.whatsapp)+'</a></td><td>'+h(l.email)+'</td><td>'+h(l.criativo)+'</td><td><span class="q '+n+'">'+(n==='sem'?'sem pesquisa':n)+'</span></td><td>'+h(grot('renda',l.renda))+'</td><td>'+h(grot('cartao',l.cartao))+'</td><td>'+h(grot('interesse',l.interesse))+'</td><td>'+(l.clicou_grupo_em?'sim':'')+'</td></tr>';}).join('');
+}
+function gcel(v){v=v==null?'':String(v); if(/^[=+\-@\t\r]/.test(v))v="'"+v; return /[";\n\r,]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function grupoCsv(){
+  var cols=['criado_em','nome','whatsapp','email','criativo','utm_source','utm_medium','utm_campaign','utm_term','qualificacao','conhecia_ellen','atuacao','momento','renda','cartao','interesse','viu_obrigado_em','pesquisa_completa_em','clicou_grupo_em'];
+  var perg={conhecia_ellen:1,atuacao:1,momento:1,renda:1,cartao:1,interesse:1};
+  var linhas=grupoFiltrados().map(function(l){return cols.map(function(c){return gcel(perg[c]?grot(c,l[c]):l[c]);}).join(';');});
+  var blob=new Blob(['﻿'+[cols.join(';')].concat(linhas).join('\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='leads-grupo-oncoclass.csv';document.body.appendChild(a);a.click();a.remove();
+}
+function grupoAzimute(){
+  grpc('oc_painel_azimute',gSenha).then(function(a){
+    var el=$('g-az'); if(!a||a.ativo===undefined){el.textContent='';return;}
+    var st=a.status||{}, n=function(k){return st[k]||0;}, erro=n('falhou');
+    el.textContent=a.ativo?'Espelho no Azimute: '+n('ok')+' enviados, '+(n('pendente')+n('enviado'))+' na fila, '+erro+' com erro'+(erro&&a.ultimo_erro?'. Último erro: '+a.ultimo_erro:''):'Espelho no Azimute: desligado.';
+    el.style.color=erro?'#b3261e':'';
+  }).catch(function(){});
+}
+$('g-entrar').addEventListener('click',function(){grupoEntrar($('g-senha').value,false);});
+$('g-senha').addEventListener('keydown',function(e){if(e.key==='Enter')grupoEntrar($('g-senha').value,false);});
+$('g-f').addEventListener('change',function(){if(gDados)grupoLista();});
+$('g-q').addEventListener('input',function(){if(gDados)grupoLista();});
+$('g-csv').addEventListener('click',function(){if(gDados)grupoCsv();});
+$('g-atualizar').addEventListener('click',function(){grupoEntrar(gSenha,true);});
 if(senha)carregar();
 </script>
 </body>
