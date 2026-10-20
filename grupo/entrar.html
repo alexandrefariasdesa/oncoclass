@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entrando no grupo da Oncoclass</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#3A0819">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #3A0819; color: #fff;
+         font: 500 17px/1.5 Montserrat, system-ui, -apple-system, sans-serif; text-align: center; }
+  main { padding: 32px 16px; max-width: 420px; }
+  a { display: inline-block; margin-top: 18px; padding: 16px 24px; border-radius: 12px; background: #25D366; color: #0b2b16;
+      font-weight: 700; text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <p>Abrindo o grupo da Oncoclass no WhatsApp…</p>
+  <a id="grupo" href="#">Entrar no grupo</a>
+</main>
+<script src="js/config.js"></script>
+<script>
+// Link dos lembretes (e-mail e WhatsApp): registra o clique e manda para o grupo atual (OC.grupo).
+// Assim o link do lembrete não muda quando o grupo trocar. ?l=<lead_id>&c=e1|e2|w1|w2
+(function () {
+  var q = new URLSearchParams(location.search), id = q.get('l') || '', c = (q.get('c') || '').slice(0, 2);
+  var a = document.getElementById('grupo'); a.href = OC.grupo;
+  var foi = false;
+  function ir() { if (!foi) { foi = true; location.replace(OC.grupo); } }
+  if (/^[0-9a-f-]{36}$/i.test(id)) {
+    try {
+      fetch(OC.url, { method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: OC.key, Authorization: 'Bearer ' + OC.key },
+        body: JSON.stringify({ p: { tipo: 'clicou_grupo', lead_id: id, pergunta: 'lembrete', resposta: c } }) })
+        .then(ir, ir);
+    } catch (e) { ir(); }
+    setTimeout(ir, 1200);
+  } else { ir(); }
+})();
+</script>
+</body>
+</html>
