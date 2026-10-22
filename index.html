@@ -382,13 +382,13 @@ document.addEventListener('DOMContentLoaded',function(){
   text-transform:uppercase;padding-top:3px}
 @media (max-width:430px){.ocl .semana li{grid-template-columns:1fr;gap:4px}}
 
-/* bento: o que voce recebe */.ocl .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}.ocl .bento .casca{display:flex}.ocl .bento .nucleo{padding:30px 28px;display:flex;flex-direction:column;gap:12px;width:100%}.ocl .bento .ico{font-size:1.85rem;color:var(--ouro-texto);stroke-width:1.15}.ocl .bento h3{color:var(--vinho)}.ocl .bento p{font-size:.91rem;line-height:1.55;color:var(--tinta-media)}.ocl .b-1{grid-column:span 3}.ocl .b-2{grid-column:span 3}.ocl .b-3{grid-column:span 2}.ocl .b-4{grid-column:span 2}.ocl .b-5{grid-column:span 2}.ocl .b-6{grid-column:span 6}.ocl .b-6 .nucleo{background:linear-gradient(150deg,var(--vinho),var(--vinho-esc));
+/* bento: o que voce recebe */.ocl .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}.ocl .bento .casca{display:flex}.ocl .bento .nucleo{padding:30px 28px;display:flex;flex-direction:column;gap:12px;width:100%}.ocl .bento .ico{font-size:1.85rem;color:var(--ouro-texto);stroke-width:1.15}.ocl .bento h3{color:var(--vinho)}.ocl .bento p{font-size:.91rem;line-height:1.55;color:var(--tinta-media)}.ocl .b-1{grid-column:span 6}.ocl .b-2{grid-column:span 2}.ocl .b-3{grid-column:span 2}.ocl .b-4{grid-column:span 2}.ocl .b-5{grid-column:span 2}.ocl .b-6{grid-column:span 4}.ocl .b-1 .nucleo{display:grid;grid-template-columns:auto auto 1fr;align-items:center;column-gap:22px}.ocl .b-6 .nucleo{flex-direction:row;align-items:center;gap:28px}.ocl .b-6__txt{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}.ocl .cel{margin:10px auto 0;width:100%;max-width:220px;aspect-ratio:390/844;border-radius:30px;padding:7px;background:#16070e;box-shadow:0 18px 40px -18px rgba(42,8,26,.55),inset 0 0 0 1px rgba(234,199,131,.18)}.ocl .cel video{display:block;width:100%;height:100%;object-fit:cover;border-radius:23px;background:#0b0b0d}.ocl .b-6 .cel{margin:0;flex:none;width:220px}.ocl .b-6 .nucleo{background:linear-gradient(150deg,var(--vinho),var(--vinho-esc));
   box-shadow:inset 0 1px 0 rgba(234,199,131,.14)}.ocl .b-6 .ico{color:var(--ouro-luz)}.ocl .b-6 h3{color:var(--creme-texto)}.ocl .b-6 p{color:rgba(249,235,217,.82);max-width:60ch}.ocl .marca-bonus{align-self:flex-start;display:inline-flex;border-radius:var(--r-pill);
   padding:5px 13px;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
   background:var(--ouro-barra);color:#38071A}
-@media (max-width:900px){.ocl .bento{grid-template-columns:repeat(2,1fr)}.ocl .b-1,.ocl .b-2,.ocl .b-3,.ocl .b-4,.ocl .b-5{grid-column:span 1}.ocl .b-6{grid-column:span 2}
+@media (max-width:900px){.ocl .bento{grid-template-columns:repeat(2,1fr)}.ocl .b-2,.ocl .b-3,.ocl .b-4,.ocl .b-5{grid-column:span 1}.ocl .b-1,.ocl .b-6{grid-column:span 2}
 }
-@media (max-width:600px){.ocl .bento{grid-template-columns:1fr}.ocl .b-1,.ocl .b-2,.ocl .b-3,.ocl .b-4,.ocl .b-5,.ocl .b-6{grid-column:span 1}
+@media (max-width:600px){.ocl .bento{grid-template-columns:1fr}.ocl .b-1,.ocl .b-2,.ocl .b-3,.ocl .b-4,.ocl .b-5,.ocl .b-6{grid-column:span 1}.ocl .b-1 .nucleo{display:flex}.ocl .b-6 .nucleo{flex-direction:column;align-items:stretch}.ocl .b-6 .cel{margin:10px auto 0;width:100%}
 }
 
 /* oferta */.ocl .oferta{display:grid;grid-template-columns:1.06fr .94fr;gap:22px;align-items:stretch}.ocl .plano .nucleo{padding:34px 32px;display:flex;flex-direction:column;gap:17px;height:100%}.ocl .plano__topo{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.ocl .plano__tipo{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;
@@ -899,27 +899,34 @@ document.addEventListener('DOMContentLoaded',function(){
         <svg class="ico"><use href="#i-play"/></svg>
         <h3>Gravação na área de membros</h3>
         <p>Todas as aulas do seu período, disponíveis enquanto a assinatura estiver ativa.</p>
+        <figure class="cel"><video muted loop playsinline preload="none" poster="video/entrega-gravacao.webp" data-src="video/entrega-gravacao.mp4" width="480" height="1038" aria-label="Vídeo de celular: a área de membros da Oncoclass, abrindo a trilha 2026 e a aula rodando no player"></video></figure>
       </div></article>
       <article class="casca b-3 rev" style="--d:3"><div class="nucleo">
         <svg class="ico"><use href="#i-pdf"/></svg>
         <h3>Material em PDF</h3>
         <p>O PDF de cada aula, para acelerar o seu resultado sem copiar tudo ao vivo.</p>
+        <figure class="cel"><video muted loop playsinline preload="none" poster="video/entrega-pdf.webp" data-src="video/entrega-pdf.mp4" width="480" height="1038" aria-label="Vídeo de celular: folheando o PDF da aula de Câncer de Mama e ampliando o fluxograma dos subtipos"></video></figure>
       </div></article>
       <article class="casca b-4 rev" style="--d:4"><div class="nucleo">
         <svg class="ico"><use href="#i-grafico"/></svg>
         <h3>Mapa da aula</h3>
         <p>Resumo de 1 página com o esquema do tema, para revisar no plantão em minutos.</p>
+        <figure class="cel"><video muted loop playsinline preload="none" poster="video/entrega-mapa.webp" data-src="video/entrega-mapa.mp4" width="480" height="1038" aria-label="Vídeo de celular: o Mapa da aula de Câncer de Mama em uma página, ampliado bloco a bloco"></video></figure>
       </div></article>
       <article class="casca b-5 rev" style="--d:5"><div class="nucleo">
         <svg class="ico"><use href="#i-grupo"/></svg>
         <h3>Grupo de assinantes</h3>
         <p>Dúvidas respondidas pela Ellen e networking com outros farmacêuticos de Oncologia.</p>
+        <figure class="cel"><video muted loop playsinline preload="none" poster="video/entrega-grupo.webp" data-src="video/entrega-grupo.mp4" width="480" height="1038" aria-label="Vídeo de celular: prints do grupo de alunos no WhatsApp com enquete e respostas da Ellen; nomes dos alunos borrados"></video></figure>
       </div></article>
       <article class="casca b-6 rev" style="--d:2"><div class="nucleo">
+        <div class="b-6__txt">
         <span class="marca-bonus">Só no trimestral</span>
         <svg class="ico"><use href="#i-selo"/></svg>
         <h3>Acervo Oncoclass 2025</h3>
         <p>As 5 aulas gravadas de 2025: Mieloma Múltiplo, Câncer de Mama, Próstata, Pulmão e Colorretal. Com o calendário de 12 temas, você entra no clube já com um acervo atrás de você.</p>
+        </div>
+        <figure class="cel"><video muted loop playsinline preload="none" poster="video/entrega-acervo.webp" data-src="video/entrega-acervo.mp4" width="480" height="1038" aria-label="Vídeo de celular: as 5 capas do acervo Oncoclass 2025 e a aula de Câncer de Mama com o PDF anexo"></video></figure>
       </div></article>
     </div>
   </div>
@@ -1222,6 +1229,31 @@ document.addEventListener('DOMContentLoaded',function(){
     return false;
   }
   if(!pintar()) setInterval(pintar, 30000);
+})();
+
+/* --------------------------------------------------------------------------
+   Videos da entrega (celular): so baixam quando o cartao chega perto da tela,
+   tocam enquanto visiveis e pausam fora dela. Sem autoplay de 5 MB no load.
+   -------------------------------------------------------------------------- */
+(function(){
+  var videos = document.querySelectorAll(".cel video[data-src]");
+  if(!videos.length) return;
+  if(!("IntersectionObserver" in window)){
+    [].forEach.call(videos, function(v){ v.src = v.dataset.src; v.controls = true; });
+    return;
+  }
+  var calmo = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var obs = new IntersectionObserver(function(itens){
+    itens.forEach(function(it){
+      var v = it.target;
+      if(it.isIntersecting){
+        if(!v.src){ v.src = v.dataset.src; }
+        if(calmo){ v.controls = true; return; }
+        var p = v.play(); if(p && p.catch) p.catch(function(){ v.controls = true; });
+      } else if(!v.paused){ v.pause(); }
+    });
+  }, {rootMargin:"200px 0px 200px 0px", threshold:.25});
+  [].forEach.call(videos, function(v){ obs.observe(v); });
 })();
 
 /* --------------------------------------------------------------------------
