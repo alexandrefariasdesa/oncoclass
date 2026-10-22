@@ -382,6 +382,9 @@ document.addEventListener('DOMContentLoaded',function(){
   text-transform:uppercase;padding-top:3px}
 @media (max-width:430px){.ocl .semana li{grid-template-columns:1fr;gap:4px}}
 
+/* mecanismo guiado: prescricao -> 4 passos -> bandeira */.ocl .mec{margin:52px 0 0;display:grid;grid-template-columns:262px auto 1fr;gap:22px;align-items:stretch}.ocl .mec__rx{position:relative;background:#FBF4EA;color:var(--tinta-media);border-radius:18px;padding:26px 24px 22px;box-shadow:0 22px 50px -26px rgba(0,0,0,.6);transform:rotate(-1.4deg);align-self:center}.ocl .mec__rx:before{content:"";position:absolute;inset:10px;border:1px dashed rgba(138,99,64,.35);border-radius:12px;pointer-events:none}.ocl .mec__rot,.ocl .mec__seta span{font-size:.64rem;font-weight:700;letter-spacing:.15em;white-space:nowrap;text-transform:uppercase}.ocl .mec__rot{color:var(--ouro-texto)}.ocl .mec__rx-tit{font-family:var(--display)!important;font-size:1.7rem;font-weight:600;color:var(--vinho);margin-top:8px;line-height:1}.ocl .mec__rx-pac{font-size:.8rem;margin-top:6px}.ocl .mec__rx-med{display:flex;flex-direction:column;margin:16px 0 0;padding:12px 0;border-block:1px solid rgba(138,99,64,.25)}.ocl .mec__rx-med b{font-family:var(--display)!important;font-size:1.55rem;color:var(--vinho-esc);line-height:1.1}.ocl .mec__rx-med span{font-size:.8rem}.ocl .mec__rx-pe{font-size:.82rem;margin-top:12px;font-style:italic;color:var(--ouro-texto)}.ocl .mec__seta{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ouro-luz)}.ocl .mec__seta span{writing-mode:vertical-rl;transform:rotate(180deg)}.ocl .mec__seta .ico{font-size:1.6rem}.ocl .mec__trilho{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.ocl .mec__p{position:relative;background:rgba(42,8,26,.55);border:1px solid var(--fio-ouro);border-radius:16px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:9px}.ocl .mec__p:not(:last-child):after{content:"";position:absolute;right:-13px;top:52px;width:12px;height:1px;background:var(--ouro-luz);opacity:.6}.ocl .mec__fig{width:100%;height:76px;fill:none;stroke:var(--ouro-luz);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;background:var(--vinho-esc);border-radius:10px;padding:6px 0}.ocl .mec__fig .f{fill:rgba(234,199,131,.22)}.ocl .mec__fig .p{fill:var(--ouro-luz);stroke:none}.ocl .mec__fig .x{stroke-dasharray:3 3;opacity:.7}.ocl .mec__fig .c{stroke-width:2.4}.ocl .mec__p b{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro-luz)}.ocl .mec__p p{font-size:.88rem;line-height:1.55;color:rgba(249,235,217,.82)}.ocl .mec__p strong{color:var(--creme-texto)}.ocl .mec__bandeira{grid-column:1/-1;justify-self:center;display:flex;align-items:center;gap:16px;margin-top:10px;padding:16px 50px 16px 44px;background:var(--ouro-barra);color:var(--vinho-esc);clip-path:polygon(0 0,100% 0,calc(100% - 22px) 50%,100% 100%,0 100%,22px 50%)}.ocl .mec__bandeira .ico{font-size:2rem;stroke:var(--vinho-esc);stroke-width:1.6;fill:none}.ocl .mec__bandeira span{display:flex;flex-direction:column;font-family:var(--display)!important;font-size:clamp(1.4rem,2.6vw,1.95rem);font-weight:700;line-height:1.05}.ocl .mec__bandeira small{font-family:var(--corpo)!important;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.75;margin-bottom:3px}
+@media (max-width:1023px){.ocl .mec{grid-template-columns:1fr}.ocl .mec__rx{max-width:360px;justify-self:center;width:100%}.ocl .mec__seta{flex-direction:row}.ocl .mec__seta span{writing-mode:horizontal-tb;transform:none}.ocl .mec__seta .ico{transform:rotate(90deg)}.ocl .mec__trilho{grid-template-columns:1fr 1fr}.ocl .mec__p:after{display:none}}
+@media (max-width:600px){.ocl .mec__trilho{grid-template-columns:1fr}.ocl .mec__bandeira{padding:14px 36px 14px 32px;gap:12px}}
 /* bento: o que voce recebe */.ocl .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}.ocl .bento .casca{display:flex}.ocl .bento .nucleo{padding:30px 28px;display:flex;flex-direction:column;gap:12px;width:100%}.ocl .bento .ico{font-size:1.85rem;color:var(--ouro-texto);stroke-width:1.15}.ocl .bento h3{color:var(--vinho)}.ocl .bento p{font-size:.91rem;line-height:1.55;color:var(--tinta-media)}.ocl .b-1{grid-column:span 6}.ocl .b-2{grid-column:span 2}.ocl .b-3{grid-column:span 2}.ocl .b-4{grid-column:span 2}.ocl .b-5{grid-column:span 2}.ocl .b-6{grid-column:span 4}.ocl .b-1 .nucleo{display:grid;grid-template-columns:auto auto 1fr;align-items:center;column-gap:22px}.ocl .b-6 .nucleo{flex-direction:row;align-items:center;gap:28px}.ocl .b-6__txt{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}.ocl .cel{margin:10px auto 0;width:100%;max-width:220px;aspect-ratio:390/844;border-radius:30px;padding:7px;background:#16070e;box-shadow:0 18px 40px -18px rgba(42,8,26,.55),inset 0 0 0 1px rgba(234,199,131,.18)}.ocl .cel video{display:block;width:100%;height:100%;object-fit:cover;border-radius:23px;background:#0b0b0d}.ocl .b-6 .cel{margin:0;flex:none;width:220px}.ocl .b-6 .nucleo{background:linear-gradient(150deg,var(--vinho),var(--vinho-esc));
   box-shadow:inset 0 1px 0 rgba(234,199,131,.14)}.ocl .b-6 .ico{color:var(--ouro-luz)}.ocl .b-6 h3{color:var(--creme-texto)}.ocl .b-6 p{color:rgba(249,235,217,.82);max-width:60ch}.ocl .marca-bonus{align-self:flex-start;display:inline-flex;border-radius:var(--r-pill);
   padding:5px 13px;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
@@ -821,6 +824,47 @@ document.addEventListener('DOMContentLoaded',function(){
         sempre na mesma ordem.
       </p>
     </div>
+
+    <!-- do protocolo ao mecanismo: um exemplo guiado (tamoxifeno, do material de Câncer de mama) -->
+    <figure class="mec" aria-label="Exemplo: do protocolo ao mecanismo do tamoxifeno, até a segurança">
+      <div class="mec__rx rev" style="--d:1">
+        <span class="mec__rot">O protocolo diz o quê</span>
+        <p class="mec__rx-tit">Prescrição</p>
+        <p class="mec__rx-pac">Câncer de mama RH+ · pré-menopausa</p>
+        <p class="mec__rx-med"><b>Tamoxifeno</b><span>uso contínuo</span></p>
+        <p class="mec__rx-pe">Quem só decorou para aqui: “é o padrão”.</p>
+      </div>
+
+      <div class="mec__seta rev" style="--d:2" aria-hidden="true"><span>O mecanismo diz por quê</span><svg class="ico"><use href="#i-seta"/></svg></div>
+
+      <ol class="mec__trilho">
+        <li class="mec__p rev" style="--d:2">
+          <svg class="mec__fig" viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="48" rx="40" ry="26"/><circle cx="60" cy="50" r="9" class="f"/><path d="M30 26v-8m-5-5 5 5 5-5M60 22v-8m-5-5 5 5 5-5M90 26v-8m-5-5 5 5 5-5"/><circle cx="25" cy="8" r="3" class="p"/><circle cx="65" cy="5" r="3" class="p"/><circle cx="95" cy="8" r="3" class="p"/></svg>
+          <b>1 · Na célula</b>
+          <p>O tumor RH+ expõe muitos <strong>receptores de estrogênio</strong>. O hormônio que circula no corpo encaixa ali e manda a célula crescer.</p>
+        </li>
+        <li class="mec__p rev" style="--d:3">
+          <svg class="mec__fig" viewBox="0 0 120 80" aria-hidden="true"><path d="M60 74V42m-16-16 16 16 16-16"/><rect x="47" y="12" width="26" height="16" rx="4" class="f"/><circle cx="100" cy="20" r="5" class="p"/><path d="M92 26l-10 8" class="x"/></svg>
+          <b>2 · O fármaco</b>
+          <p>O tamoxifeno tem forma parecida com a do estrogênio e <strong>ocupa o receptor</strong> no lugar dele. O hormônio chega e não tem onde encaixar.</p>
+        </li>
+        <li class="mec__p rev" style="--d:4">
+          <svg class="mec__fig" viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="42" rx="40" ry="28"/><rect x="50" y="30" width="7" height="24" rx="2" class="f"/><rect x="63" y="30" width="7" height="24" rx="2" class="f"/></svg>
+          <b>3 · O efeito</b>
+          <p>Sem o estímulo do hormônio, a célula tumoral <strong>perde o sinal</strong> para crescer, proliferar e se dividir.</p>
+        </li>
+        <li class="mec__p rev" style="--d:5">
+          <svg class="mec__fig" viewBox="0 0 120 80" aria-hidden="true"><path d="M60 8 86 18v20c0 17-11 28-26 34-15-6-26-17-26-34V18z"/><path d="m48 40 8 8 16-17" class="c"/></svg>
+          <b>4 · A decisão</b>
+          <p>Na pré-menopausa o ovário produz hormônio: bloquear <strong>no receptor</strong> preserva o resto do corpo. Na pós, o inibidor de aromatase corta a formação, e aí <strong>você vigia o osso</strong>.</p>
+        </li>
+      </ol>
+
+      <div class="mec__bandeira rev" style="--d:3">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 19 6v5.6c0 4.5-2.9 7.6-7 9.2-4.1-1.6-7-4.7-7-9.2V6z"/><path d="m8.9 12 2.2 2.2 4.1-4.4"/></svg>
+        <span><small>O mecanismo vira</small>Segurança em Oncologia</span>
+      </div>
+    </figure>
 
     <div class="passos" style="margin-top:44px">
       <article class="passo casca rev" style="--d:1"><div class="nucleo"><b>01</b><h3>Fundamento</h3><p>O que é, como funciona e por que importa. A base que a pós passou por cima.</p></div></article>
