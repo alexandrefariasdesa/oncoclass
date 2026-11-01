@@ -431,7 +431,41 @@ document.addEventListener('DOMContentLoaded',function(){
 .ocl .ancoragem .forte-v .preco-aula,.ocl .ancoragem .forte-v p{color:var(--creme-texto)}
 .ocl .ancoragem .forte-v small{color:var(--ouro-luz)}
 @media (max-width:860px){.ocl .ancoragem{grid-template-columns:1fr}}
+/* depoimentos em carrossel lateral que passa sozinho (pedido 01/11), em todas as larguras */
+.ocl .provas{columns:auto!important;display:flex!important;align-items:flex-start;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;margin-inline:calc(-1 * var(--gutter));padding:4px var(--gutter) 14px;scroll-padding-inline:var(--gutter);scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--gutter),#000 calc(100% - var(--gutter)),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 var(--gutter),#000 calc(100% - var(--gutter)),transparent 100%)}
+.ocl .provas::-webkit-scrollbar{display:none}
+.ocl .provas .dep{flex:0 0 300px;margin:0!important;scroll-snap-align:start}
+.ocl .provas__dica{display:flex!important}
+@media (max-width:600px){.ocl .provas .dep{flex-basis:80%}}
 </style>
+<script>
+/* Carrossel dos depoimentos: avança 1 card a cada 3,2 s; pausa ao tocar/passar o mouse; volta ao início no fim;
+   só roda com a seção visível; respeita "reduzir movimento". */
+document.addEventListener('DOMContentLoaded',function(){
+  var t=document.querySelector('.provas'); if(!t) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var parado=false, visivel=false, volta=null;
+  function passo(){
+    if(parado||!visivel||document.hidden) return;
+    var cards=t.querySelectorAll('.dep'); if(cards.length<2) return;
+    if(t.scrollLeft+t.clientWidth>=t.scrollWidth-8){ t.scrollTo({left:0}); return; }
+    var base=t.getBoundingClientRect().left, pad=parseFloat(getComputedStyle(t).paddingLeft)||0;
+    for(var i=0;i<cards.length;i++){
+      var x=cards[i].getBoundingClientRect().left-base-pad;
+      if(x>8){ t.scrollBy({left:x}); return; }
+    }
+  }
+  function pausa(){ parado=true; clearTimeout(volta); }
+  function retoma(){ clearTimeout(volta); volta=setTimeout(function(){ parado=false; },4000); }
+  ['pointerenter','touchstart','focusin','wheel'].forEach(function(e){ t.addEventListener(e,pausa,{passive:true}); });
+  ['pointerleave','touchend','focusout'].forEach(function(e){ t.addEventListener(e,retoma,{passive:true}); });
+  t.addEventListener('wheel',retoma,{passive:true});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ visivel=es[0].isIntersecting; },{threshold:.25}).observe(t);
+  } else { visivel=true; }
+  setInterval(passo,3200);
+});
+</script>
 </head>
 <body>
 <div class="ocl">
