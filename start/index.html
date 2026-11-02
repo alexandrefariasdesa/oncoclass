@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded',function(){
     enviando=true; form.querySelector('button[type=submit]').disabled=true;
     var ir=destino(atual), feito=false;
     function seguir(){if(feito)return;feito=true;location.href=ir;}
-    if(window.fbq)fbq('track','Lead');
+    if(window.fbq){fbq('track','Lead');fbq('track','InitiateCheckout',{content_name:'Onco Start',content_ids:['O0YTLKsLctLSnrqFcG3I'],content_type:'product',value:37,currency:'BRL'});}
     var ctl=window.AbortController?new AbortController():null, t=setTimeout(function(){if(ctl)ctl.abort();seguir();},3000);
     fetch(LEAD_URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,signal:ctl?ctl.signal:undefined,
       body:JSON.stringify({nome:nome,email:email,telefone:form.telefone.value,checkout_url:atual.href.split('?')[0],utm:utm,website:form.website.value})})
