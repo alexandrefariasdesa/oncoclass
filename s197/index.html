@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Oncoclass</title>
+<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#FEEEDE;color:#540C27;font:16px/1.5 Georgia,serif;text-align:center;padding:24px}</style>
+</head>
+<body>
+<p id="m">Abrindo sua página...</p>
+<script>
+// Fluxo Onco Start -> Trimestral: ?area=1 vai para a área de membros; ?f=<epoch> vai para R$ 197 até o prazo e para R$ 247 depois.
+(function () {
+  var q = new URLSearchParams(location.search), f = Number(q.get("f")) || 0, area = q.get("area");
+  var CONDICAO = "https://pay.hub.la/BGYisRtukyHcBcxu2KKh", CHEIO = "https://pay.hub.la/kF2OkFJoac58amiuXLh3", AREA = "https://app.hub.la/m/O0YTLKsLctLSnrqFcG3I";
+  q.delete("f"); q.delete("area");
+  var extra = q.toString() ? "?" + q.toString() : "";
+  location.replace(area ? AREA : (Date.now() <= f * 1000 ? CONDICAO + extra : CHEIO + extra));
+})();
+</script>
+</body>
+</html>
