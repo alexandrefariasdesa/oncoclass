@@ -11,12 +11,13 @@
 <p id="m">Abrindo sua página...</p>
 <script>
 // Fluxo Onco Start -> Trimestral: ?area=1 vai para a área de membros; ?f=<epoch> vai para R$ 197 até o prazo e para R$ 247 depois.
+// ?p=150 (último toque, 15/11): Trimestral Migração R$ 150 até o prazo, e R$ 247 depois.
 (function () {
-  var q = new URLSearchParams(location.search), f = Number(q.get("f")) || 0, area = q.get("area");
-  var CONDICAO = "https://pay.hub.la/BGYisRtukyHcBcxu2KKh", CHEIO = "https://pay.hub.la/kF2OkFJoac58amiuXLh3", AREA = "https://app.hub.la/m/O0YTLKsLctLSnrqFcG3I";
-  q.delete("f"); q.delete("area");
+  var q = new URLSearchParams(location.search), f = Number(q.get("f")) || 0, area = q.get("area"), p150 = q.get("p") === "150";
+  var CONDICAO = "https://pay.hub.la/BGYisRtukyHcBcxu2KKh", CHEIO = "https://pay.hub.la/kF2OkFJoac58amiuXLh3", AREA = "https://app.hub.la/m/O0YTLKsLctLSnrqFcG3I", R150 = "https://pay.hub.la/3sBMhFS7f3ABj8AZJYKP";
+  q.delete("f"); q.delete("area"); q.delete("p");
   var extra = q.toString() ? "?" + q.toString() : "";
-  location.replace(area ? AREA : (Date.now() <= f * 1000 ? CONDICAO + extra : CHEIO + extra));
+  location.replace(area ? AREA : (Date.now() <= f * 1000 ? (p150 ? R150 : CONDICAO) + extra : CHEIO + extra));
 })();
 </script>
 </body>
