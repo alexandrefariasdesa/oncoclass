@@ -567,7 +567,13 @@ body{background:var(--bg)}
     var ir = function(){ var p = new URLSearchParams(location.search); p.set('lid', lid); location.href = 'obrigado/?' + p.toString(); };
     if (!window.ocbEnvia || !C.url) { ir(); return; }
     var travou = setTimeout(ir, 2500);
-    ocbEnvia(dados).finally(function(){ clearTimeout(travou); ir(); });
+    // WhatsApp já cadastrado: o banco devolve o lead_id existente; o obrigado passa a usar esse id
+    ocbEnvia(dados).then(function(r){ return r && r.ok ? r.json() : null; }).then(function(j){
+      if (j && j.lead_id && j.lead_id !== lid) {
+        lid = j.lead_id;
+        try { var lj2 = JSON.stringify({lead_id: lid, nome: dados.nome, whatsapp: dados.whatsapp}); sessionStorage.setItem('ocb_lead', lj2); localStorage.setItem('ocb_lead', lj2); } catch(e){}
+      }
+    }).catch(function(){}).finally(function(){ clearTimeout(travou); ir(); });
   });
 })();
 </script>
