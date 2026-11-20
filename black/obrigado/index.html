@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Faltam 2 passos | Black Oncoclass 2.0</title>
+<meta name="theme-color" content="#14060a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<style>
+
+:root{--bg:#14060a;--bg-2:#1e0a10;--ink:#f6f1e9;--soft:#dccdc4;--gold:#d2a85e;--gold-2:#ecd29b;--gold-3:#a87d36;--hair:rgba(236,210,155,.16);--ease:cubic-bezier(.23,1,.32,1)}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.page{min-height:100dvh;position:relative;isolation:isolate;display:grid;align-items:center;padding:18px 16px 28px;overflow:hidden}
+.page::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 40% at 85% 8%,rgba(210,168,94,.22),transparent 70%),radial-gradient(50% 35% at 5% 100%,rgba(168,125,54,.16),transparent 70%)}
+.box{width:100%;max-width:600px;margin:0 auto}
+.shell{padding:5px;border-radius:26px;background:rgba(255,255,255,.04);border:1px solid var(--hair);box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+.core{border-radius:21px;background:linear-gradient(180deg,#2a0d15,#16070b);box-shadow:inset 0 1px 0 rgba(236,210,155,.14);overflow:hidden}
+.core picture{display:block}
+.core img{display:block;width:100%;height:clamp(290px,36dvh,320px);object-fit:cover;object-position:50% 0%}
+.txt{padding:18px 18px 22px;display:grid;gap:14px}
+.selo{justify-self:start;display:inline-flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:999px;border:1px solid rgba(210,168,94,.55);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}
+.selo b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#2a0a10;font-size:14px;line-height:1;letter-spacing:0}
+h1{font-size:clamp(24px,6.8vw,34px);line-height:1.1;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+h1 em{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;color:var(--gold-2);letter-spacing:0}
+
+/* passos */
+.passos{display:grid;gap:8px;list-style:none;padding:0}
+.passo{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--hair);background:rgba(255,255,255,.04);
+  font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.25;text-transform:uppercase;transition:opacity .4s var(--ease),border-color .4s var(--ease),background .4s var(--ease)}
+.passo i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);font-size:13px;transition:background .4s var(--ease),color .4s var(--ease)}
+.passo svg{width:16px;height:16px;display:none}
+.passo.ativo{border-color:rgba(210,168,94,.6);background:rgba(210,168,94,.08)}
+.passo.ativo i{background:var(--gold);color:#2a0a10}
+.passo.feito i{background:#2fbf71;color:#0d2a1a}
+.passo.feito i span{display:none}.passo.feito svg{display:block}
+.passo.trava{opacity:.55}
+
+/* check-in */
+.quiz{display:grid;gap:12px}
+.topo{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11.5px;font-weight:600;color:var(--soft);letter-spacing:.04em}
+.barra{height:4px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
+.barra>span{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--gold),var(--gold-2));transition:transform .5s var(--ease)}
+.voltar{background:none;border:0;color:var(--soft);font:600 12px 'Montserrat',sans-serif;cursor:pointer;padding:6px 0;min-height:36px}
+.voltar[hidden]{display:none}
+.voltar:focus-visible,.op:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{font-size:clamp(17px,4.8vw,20px);font-weight:700;line-height:1.25;margin-bottom:12px;padding:0}
+.ops{display:grid;gap:8px}
+.op{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:center;text-align:left;width:100%;min-height:52px;padding:8px 14px 8px 10px;border-radius:14px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--ink);font:500 14.5px/1.3 'Montserrat',sans-serif;
+  transition:transform .18s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.op b{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.1);font-size:12px;font-weight:700;transition:background .2s,color .2s}
+.op:active{transform:scale(.98)}
+.op[aria-checked="true"]{border-color:var(--gold);background:rgba(210,168,94,.13)}
+.op[aria-checked="true"] b{background:var(--gold);color:#2a0a10}
+@media (hover:hover) and (pointer:fine){.op:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)}}
+.slide{animation:none}
+@media (prefers-reduced-motion:no-preference){
+  .slide{animation:slide .45s var(--ease) both}
+  @keyframes slide{from{opacity:0;transform:translateX(18px);filter:blur(4px)}to{opacity:1;transform:none;filter:blur(0)}}
+  .rv{animation:rv .9s var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
+  @keyframes rv{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+}
+
+/* passo 2 */
+.grupo{display:grid;gap:12px}
+.grupo[hidden],.quiz[hidden]{display:none}
+.grupo p{font-size:14.5px;line-height:1.5;color:var(--soft)}
+.grupo p strong{color:var(--ink)}
+.btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:62px;padding:0 9px 0 22px;border-radius:999px;text-decoration:none;color:#2a0a10;font-weight:800;font-size:15.5px;letter-spacing:.03em;
+  background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-3));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 16px 36px -12px rgba(210,168,94,.7);
+  transition:transform .25s var(--ease),filter .25s var(--ease)}
+.btn span.t{flex:1;text-align:center;padding:10px 0}
+.btn .ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(26,18,6,.88);color:var(--gold-2);flex:none;transition:transform .35s var(--ease)}
+.btn .ic svg{width:22px;height:22px}
+.btn:active{transform:scale(.975)}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.aviso{padding:10px 12px;border-radius:12px;background:rgba(255,138,165,.1);border:1px solid rgba(255,138,165,.35);font-size:12.5px;color:#ffc9d6}
+@media (hover:hover) and (pointer:fine){.btn:hover{filter:brightness(1.07)}.btn:hover .ic{transform:translate(3px,-1px) scale(1.06)}}
+@media (min-width:700px){.op{font-size:15px}.ops.duas{grid-template-columns:1fr 1fr}}
+@media (max-width:699px){
+  .page{padding:0 0 28px;align-items:start}.box{max-width:none}
+  .shell{padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+  .core{border-radius:0;background:none;box-shadow:none}
+  .core img{height:clamp(290px,38dvh,330px);object-position:50% 0%;-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
+  .txt{padding:0 16px;margin-top:-22px}
+}
+
+h1 em{font-size:1.1em;font-variant-numeric:lining-nums}
+.core img,.core img{height:auto!important;aspect-ratio:16/9;object-position:50% 50%!important}
+@media (max-width:699px){.txt{margin-top:-6px}}
+</style>
+<script src="../campanha.js?v=20261119"></script>
+</head>
+<body>
+<main class="page">
+  <div class="box">
+    <div class="shell rv" style="--i:0">
+      <div class="core">
+        <picture><img src="../img/banner.jpg?v=20261119" width="1600" height="900" alt="Ellen Mayara de blazer vinho: Black Oncoclass 2.0"></picture>
+        <div class="txt">
+          <span class="selo"><b aria-hidden="true">∞</b>Cadastro recebido</span>
+          <h1>Faltam <em>APENAS 2 PASSOS</em> para você entrar na Black Oncoclass 2.0</h1>
+
+          <ol class="passos">
+            <li class="passo ativo" id="p1"><i><span>1</span><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66 77.66l-128 128a8 8 0 0 1-11.32 0l-56-56a8 8 0 0 1 11.32-11.32L96 188.69 218.34 66.34a8 8 0 0 1 11.32 11.32Z"/></svg></i>Responda o check-in da Black</li>
+            <li class="passo trava" id="p2"><i><span>2</span><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66 77.66l-128 128a8 8 0 0 1-11.32 0l-56-56a8 8 0 0 1 11.32-11.32L96 188.69 218.34 66.34a8 8 0 0 1 11.32 11.32Z"/></svg></i>Entre no grupo VIP para saber em primeira mão</li>
+          </ol>
+
+          <section class="quiz" id="quiz" aria-live="polite">
+            <div class="topo"><span id="cont">Pergunta 1 de 6</span><button type="button" class="voltar" id="voltar" hidden>Voltar</button></div>
+            <div class="barra" aria-hidden="true"><span id="prog"></span></div>
+            <fieldset id="q" class="slide"></fieldset>
+          </section>
+
+          <section class="grupo slide" id="grupo" hidden>
+            <p><strong>Check-in concluído.</strong> Agora falta só entrar no grupo VIP do WhatsApp. É lá que as vagas abrem primeiro<span id="quando"></span>, e os <strong>20 primeiros</strong> garantem a imersão presencial com a Ellen em São Paulo.</p>
+            <a class="btn" id="link" href="#">
+              <span class="t">ENTRAR NO GRUPO VIP</span>
+              <span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span>
+            </a>
+            <p class="aviso" id="semGrupo" hidden>O link do grupo ainda não foi configurado (campanha.js, campo <code>grupo</code>).</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var C = window.OCB || {};
+  if (C.dataTexto) document.getElementById('quando').innerHTML = ', dia <strong>' + C.dataTexto + '</strong>';
+  var linkEl = document.getElementById('link');
+  if (C.grupo) linkEl.href = C.grupo; else document.getElementById('semGrupo').hidden = false;
+
+  // id, texto, opções [valor, rótulo]. Valores em letra (a..h), como na pesquisa do grupo da Oncoclass.
+  var PERGUNTAS = [
+    {id:'relacao', t:'Qual é a sua relação com a Ellen hoje?', o:[
+      ['a','Sou aluno(a) da Oncoclass hoje'],['b','Já comprei outro produto dela (Onco Start, aulas avulsas)'],['c','Acompanho nas redes, mas nunca comprei'],['d','Conheci agora']]},
+    {id:'atuacao', t:'Onde você atua hoje?', o:[
+      ['a','Farmácia oncológica hospitalar ou clínica de Oncologia'],['b','Farmácia hospitalar em outra área'],['c','Drogaria ou farmácia de manipulação'],['d','Pesquisa clínica'],['e','Indústria farmacêutica'],['f','Sou estudante de Farmácia'],['g','Outra profissão da saúde'],['h','Não atuo na área da saúde']]},
+    {id:'momento', t:'Em que momento você está na Oncologia?', o:[
+      ['a','Ainda não atuo, mas quero entrar na área'],['b','Estou começando agora na Oncologia'],['c','Já atuo, mas sinto que confiro mais do que decido'],['d','Já tenho pós ou experiência e quero ser referência']]},
+    {id:'renda', t:'Qual é a sua renda mensal hoje?', o:[
+      ['a','Sem renda no momento'],['b','Até R$ 3.000'],['c','De R$ 3.001 a R$ 5.000'],['d','De R$ 5.001 a R$ 7.000'],['e','De R$ 7.001 a R$ 10.000'],['f','Acima de R$ 10.000']]},
+    {id:'cartao', t:'Você tem acesso a cartão de crédito para compras online?', o:[
+      ['a','Sim, tenho cartão próprio'],['b','Sim, posso usar o de um familiar'],['c','Não tenho acesso a cartão']]},
+    {id:'interesse', t:'Você quer garantir sua vaga na Black Oncoclass 2.0 na abertura, dia 30/11?', o:[
+      ['a','Sim, quero estar entre os 20 primeiros'],['b','Talvez, quero ver a condição antes'],['c','Não, por enquanto só quero acompanhar']]}
+  ];
+
+  var S = window.sessionStorage, L = window.localStorage;
+  function lê(k){ try { return JSON.parse(S.getItem(k) || L.getItem(k) || 'null'); } catch(e){ return null; } }
+  var q = new URLSearchParams(location.search);
+  var lead = lê('ocb_lead') || {};
+  var lead_id = q.get('lid') || lead.lead_id || null;
+  var atrib = lê('ocb_atrib') || {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src'].forEach(function(k){ if (q.get(k)) atrib[k] = q.get(k); });
+
+  var resp = lê('ocb_resp_' + lead_id) || {};
+  var i = 0;
+  var el = {q:document.getElementById('q'), cont:document.getElementById('cont'), prog:document.getElementById('prog'), voltar:document.getElementById('voltar'),
+            quiz:document.getElementById('quiz'), grupo:document.getElementById('grupo'), p1:document.getElementById('p1'), p2:document.getElementById('p2')};
+
+  function envia(corpo){
+    if (!lead_id) return;
+    corpo.lead_id = lead_id;
+    for (var k in atrib) corpo[k] = atrib[k];
+    if (window.ocbEnvia) ocbEnvia(corpo);
+  }
+
+  function desenha(){
+    var p = PERGUNTAS[i], marcado = resp[p.id];
+    el.cont.textContent = 'Pergunta ' + (i+1) + ' de ' + PERGUNTAS.length;
+    el.prog.style.transform = 'scaleX(' + (i / PERGUNTAS.length) + ')';
+    el.voltar.hidden = i === 0;
+    var h = '<legend>' + p.t + '</legend><div class="ops" role="radiogroup" aria-label="' + p.t.replace(/"/g,'') + '">';
+    p.o.forEach(function(o, n){
+      h += '<button type="button" class="op" role="radio" aria-checked="' + (marcado === o[0]) + '" data-v="' + o[0] + '"><b>' + 'ABCDEFGHI'[n] + '</b><span>' + o[1] + '</span></button>';
+    });
+    el.q.innerHTML = h + '</div>';
+    el.q.classList.remove('slide'); void el.q.offsetWidth; el.q.classList.add('slide');
+  }
+
+  el.q.addEventListener('click', function(e){
+    var b = e.target.closest('.op'); if (!b) return;
+    var p = PERGUNTAS[i], v = b.dataset.v;
+    resp[p.id] = v;
+    try { var s = JSON.stringify(resp); S.setItem('ocb_resp_' + lead_id, s); L.setItem('ocb_resp_' + lead_id, s); } catch(e){}
+    envia({tipo:'checkin', pergunta:p.id, resposta:v});
+    [].forEach.call(el.q.querySelectorAll('.op'), function(x){ x.setAttribute('aria-checked', x === b); });
+    setTimeout(function(){ if (i < PERGUNTAS.length - 1) { i++; desenha(); } else { termina(true); } }, 260);
+  });
+  el.voltar.addEventListener('click', function(){ if (i > 0) { i--; desenha(); } });
+
+  function termina(novo){
+    if (novo && window.ocbTrack) {
+      ocbTrack('CompleteRegistration', lead_id + '-checkin');
+      // quente: quer entrar (sim/talvez) + renda acima de R$ 3 mil + cartão (mesma regra do grupo da Oncoclass, que prevê comprador)
+      if ((resp.interesse === 'a' || resp.interesse === 'b') && 'cdef'.indexOf(resp.renda) >= 0 && resp.cartao !== 'c') ocbTrack('LeadQuente', lead_id + '-quente');
+    }
+    el.prog.style.transform = 'scaleX(1)';
+    el.quiz.hidden = true; el.grupo.hidden = false;
+    el.p1.classList.remove('ativo'); el.p1.classList.add('feito');
+    el.p2.classList.remove('trava'); el.p2.classList.add('ativo');
+    el.grupo.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  linkEl.addEventListener('click', function(){ envia({tipo:'clicou_grupo'}); if (window.ocbTrack) ocbTrack('ClicouGrupo', lead_id + '-grupo'); });
+
+  envia({tipo:'viu_obrigado'});
+  if (PERGUNTAS.every(function(p){ return resp[p.id]; })) termina(); else desenha();
+})();
+</script>
+</body>
+</html>

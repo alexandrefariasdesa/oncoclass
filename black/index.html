@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Black Oncoclass 2.0 · Acesso Vitalício</title>
+<meta name="description" content="A Oncoclass 2.0 com acesso vitalício: aulas com convidados de referência, aulas técnicas e mentoria de carreira ao vivo com a Ellen. Abertura 30/11 no grupo VIP.">
+<meta name="theme-color" content="#14060a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/banner.jpg?v=20261119">
+<style>
+
+:root{
+  --bg:#14060a;
+  --bg-2:#1e0a10;
+  --ink:#f6f1e9;
+  --soft:#dccdc4;
+  --gold:#d2a85e;
+  --gold-2:#ecd29b;
+  --gold-3:#a87d36;
+  --hair:rgba(236,210,155,.16);
+  --ease:cubic-bezier(.23,1,.32,1);
+  --font:'Montserrat',system-ui,sans-serif;
+  --serif:'Cormorant Garamond',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+img{max-width:100%}
+
+/* grão fixo, só textura */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* barra do topo: contador */
+.topo{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  padding:max(7px,env(safe-area-inset-top)) 12px 7px;background:linear-gradient(180deg,#2a0b13,#16060a);border-bottom:1px solid var(--hair)}
+.topo .t{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-2);text-align:center;line-height:1.2}
+.cont{display:flex;gap:5px}
+.cont div{min-width:42px;padding:3px 4px 2px;border-radius:8px;text-align:center;background:rgba(236,210,155,.08);border:1px solid var(--hair)}
+.cont b{display:block;font-size:16px;line-height:1.1;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.cont small{display:block;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.cont[hidden]{display:none}
+
+.sec{position:relative;isolation:isolate;overflow:hidden}
+.sec::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* DOBRA 1 */
+.hero::before{background:radial-gradient(70% 40% at 85% 0%,rgba(210,168,94,.22),transparent 70%),radial-gradient(60% 35% at 0% 100%,rgba(168,125,54,.16),transparent 70%)}
+.banner{position:relative;margin:0 -16px;height:clamp(300px,47svh,430px);overflow:hidden}
+.banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 24%;
+  -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 62%,transparent 100%)}
+.desk-img{display:none}
+.copy{display:grid;gap:12px;margin-top:-34px;position:relative;padding-bottom:26px}
+
+.selo{justify-self:start;display:inline-flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:999px;
+  border:1px solid rgba(210,168,94,.55);background:rgba(20,6,10,.7);
+  font-size:10.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-2)}
+.selo b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#2a0a10;font-size:14px;line-height:1;letter-spacing:0}
+.logo{font-size:13px;font-weight:800;letter-spacing:.2em;color:var(--gold)}
+.dataline{font-size:12px;font-weight:600;color:var(--soft);letter-spacing:.03em}
+.dataline span{color:var(--gold-2)}
+
+h1{font-size:clamp(25px,7.2vw,32px);line-height:1.1;font-weight:800;letter-spacing:-.02em;text-wrap:balance;text-shadow:0 2px 18px rgba(0,0,0,.6)}
+h1 em{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--gold-2);letter-spacing:0}
+.sub{font-size:14.5px;line-height:1.45;color:var(--soft)}
+.sub strong{color:var(--ink);font-weight:700}
+
+.urgencia{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;padding:9px 14px 9px 12px;border-radius:16px;
+  background:linear-gradient(100deg,#4a1220,#24080f);border:1px solid rgba(210,168,94,.35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 14px 40px -20px rgba(210,168,94,.6);font-size:13px;line-height:1.35;font-weight:500}
+.urgencia .n{font-size:32px;font-weight:800;line-height:1;color:var(--gold-2);padding-right:12px;border-right:1px solid rgba(236,210,155,.25);letter-spacing:-.02em}
+
+/* botão */
+.btn{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:58px;padding:0 8px 0 22px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;
+  color:#2a0a10;font:800 14.5px var(--font);letter-spacing:.03em;
+  background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-3));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 16px 36px -12px rgba(210,168,94,.7);
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),filter .25s var(--ease)}
+.btn .t{flex:1;text-align:center;padding:10px 0;line-height:1.15}
+.btn .ic{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(26,18,6,.88);color:var(--gold-2);flex:none;transition:transform .35s var(--ease)}
+.btn .ic svg{width:20px;height:20px}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.btn:active{transform:scale(.975)}
+.btn[disabled]{filter:saturate(.6);cursor:wait}
+@media (hover:hover) and (pointer:fine){.btn:hover{filter:brightness(1.07)}.btn:hover .ic{transform:translate(3px,-1px) scale(1.06)}}
+.btn.pulso{animation:pulso 2.6s var(--ease) infinite}
+@keyframes pulso{0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 16px 36px -12px rgba(210,168,94,.7)}50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 16px 46px -6px rgba(236,210,155,.95)}}
+@media (prefers-reduced-motion:reduce){.btn.pulso{animation:none}}
+
+/* DOBRA 2 */
+.prep{padding:30px 0 34px;background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+.prep::before{background:radial-gradient(60% 35% at 50% 0%,rgba(210,168,94,.14),transparent 70%)}
+.prep .wrap{display:grid;gap:18px;justify-items:center;text-align:center}
+.prep h2{font-size:clamp(30px,9vw,44px);font-weight:800;letter-spacing:.06em;line-height:1;background:linear-gradient(180deg,var(--gold-2),var(--gold-3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.prep .tx{font-size:14.5px;line-height:1.5;color:var(--soft);max-width:520px}
+.prep .tx strong{color:var(--ink)}
+.faixa{width:100%;margin:0;padding:10px 16px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;color:#2a0a10;
+  background:linear-gradient(90deg,var(--gold-3),var(--gold-2),var(--gold-3))}
+
+.shell{width:100%;max-width:520px;padding:5px;border-radius:28px;background:rgba(255,255,255,.04);border:1px solid var(--hair);box-shadow:0 30px 80px -30px rgba(0,0,0,.9);text-align:left}
+.core{border-radius:23px;background:linear-gradient(180deg,#2a0d15,#16070b);box-shadow:inset 0 1px 0 rgba(236,210,155,.14);padding:18px 16px 16px;display:grid;gap:14px}
+.oferta{display:grid;gap:5px;text-align:center;padding-bottom:14px;border-bottom:1px dashed var(--hair)}
+.oferta .lg{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--gold)}
+.oferta .tot{font-size:13px;color:var(--soft)}
+.oferta .tot s{color:#ff9d9d;text-decoration-thickness:2px;font-weight:600}
+.oferta .tot[hidden]{display:none}
+.oferta .pr{font-size:12px;font-weight:600;color:var(--soft)}
+.oferta .pr span{display:inline-block;margin-left:6px;font-size:26px;font-weight:800;color:var(--gold-2);letter-spacing:-.01em;filter:blur(7px);user-select:none}
+.oferta .pr i{display:block;width:max-content;margin:4px auto 0;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(210,168,94,.4);border-radius:99px;padding:2px 8px;vertical-align:3px}
+.presente{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:rgba(210,168,94,.08);border:1px solid rgba(210,168,94,.3);font-size:13px;line-height:1.35}
+.presente svg{width:30px;height:30px;padding:6px;border-radius:50%;background:rgba(210,168,94,.18);color:var(--gold-2)}
+.presente strong{color:var(--gold-2)}
+.vagas{font-size:12.5px;line-height:1.4;color:var(--soft);text-align:center}
+.vagas strong{color:var(--ink)}
+.chamada{font-size:15px;font-weight:700;line-height:1.3;text-align:center}
+
+form{display:grid;gap:9px}
+.campo{display:grid;gap:4px;min-width:0}
+label{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--soft)}
+input{width:100%;height:50px;border-radius:13px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--ink);
+  font:500 16px var(--font);padding:0 14px;transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+input::placeholder{color:#8f8672}
+input:hover{border-color:rgba(255,255,255,.26)}
+input:focus{outline:0;border-color:var(--gold);background:rgba(255,255,255,.09);box-shadow:0 0 0 3px rgba(210,168,94,.25)}
+input[aria-invalid="true"]{border-color:#ff8aa5;box-shadow:0 0 0 3px rgba(255,138,165,.2)}
+input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 40px #2c1016 inset}
+.erro{display:none;font-size:11px;font-weight:600;color:#ffb3c4}
+.campo.tem-erro .erro{display:block}
+.micro{font-size:11.5px;line-height:1.4;color:var(--soft);text-align:center}
+
+/* DOBRA 3 */
+.quem{padding:34px 0 40px;background:var(--bg-2)}
+.quem::before{background:radial-gradient(60% 40% at 100% 100%,rgba(210,168,94,.16),transparent 70%)}
+.quem .wrap{display:grid;gap:14px;max-width:720px}
+.quem h2{font-size:clamp(26px,7.4vw,36px);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.quem h2 em{font-family:var(--serif);font-style:italic;color:var(--gold-2)}
+.quem p{font-size:15px;line-height:1.6;color:var(--soft)}
+.quem p strong{color:var(--ink)}
+.quem p.fecho{padding:14px 16px;border-left:3px solid var(--gold);background:rgba(210,168,94,.07);border-radius:0 14px 14px 0;color:var(--ink);font-weight:600}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0}
+.nums div{padding:12px 6px;border-radius:14px;text-align:center;background:rgba(255,255,255,.04);border:1px solid var(--hair)}
+.nums b{display:block;white-space:nowrap;font-size:clamp(18px,5.6vw,26px);font-weight:800;color:var(--gold-2);line-height:1.1}
+.nums span{display:block;margin-top:3px;font-size:10px;line-height:1.25;color:var(--soft);letter-spacing:.04em}
+.rodape{padding:18px 16px max(22px,env(safe-area-inset-bottom));text-align:center;font-size:11px;line-height:1.5;color:#8f8672;background:#0c0306}
+
+@media (prefers-reduced-motion:no-preference){
+  .rv{animation:rv .9s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+  @keyframes rv{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+}
+
+@media (max-width:359px){.cont div{min-width:38px}.cont b{font-size:14px}h1{font-size:23px}.btn{font-size:13px}}
+
+/* DESKTOP */
+@media (min-width:900px){
+  .topo{gap:18px;padding:9px 16px}
+  .topo .t{font-size:12px}
+  .cont div{min-width:58px;padding:5px 6px 3px}.cont b{font-size:21px}.cont small{font-size:9px}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,4.5vw,72px);align-items:center;padding:34px 48px;min-height:calc(100svh - 60px)}
+  .banner{display:none}
+  .desk-img{display:block;padding:6px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--hair);box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+  .desk-img img{display:block;width:100%;height:auto;border-radius:24px}
+  .copy{margin-top:0;gap:16px;padding-bottom:0}
+  .logo{font-size:15px}
+  h1{font-size:clamp(34px,3.4vw,50px);text-shadow:none}
+  .sub{font-size:18px}
+  .urgencia{font-size:15.5px;padding:12px 20px 12px 14px;gap:16px}
+  .urgencia .n{font-size:44px;padding-right:16px}
+  .selo{font-size:11.5px}
+  .btn{max-width:440px;min-height:66px;font-size:16px;padding-left:30px}
+  .btn .ic{width:48px;height:48px}
+  .prep{padding:56px 0 64px}
+  .prep .tx{font-size:17px}
+  .faixa{font-size:14px;padding:13px 16px}
+  .core{padding:24px 24px 22px}
+  .quem{padding:64px 0 72px}
+  .quem p{font-size:17px}
+  .quem .btn{justify-self:start}
+}
+@media (min-width:900px) and (max-height:760px){.hero .wrap{padding:20px 48px}h1{font-size:clamp(30px,3vw,40px)}}
+/* ===== v2: formulário na 1ª dobra, vagas menor, lista de entregáveis, foto de autoridade ===== */
+.hero .copy{gap:9px;margin-top:-26px;padding-bottom:20px}
+.hero .banner{height:clamp(290px,36svh,320px)}
+.hero .banner img{object-position:50% 0%}
+.topo{flex-wrap:nowrap;gap:9px;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:6px}
+.topo .t{font-size:9px;letter-spacing:.1em;text-align:left;max-width:120px}
+.cont div{min-width:38px;padding:2px 3px 1px}.cont b{font-size:15px}.cont small{font-size:7px}
+.desk-img{display:none}
+.cabeca{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+.cabeca .selo{padding:3px 11px 3px 3px;font-size:9.5px}
+.cabeca .selo b{width:19px;height:19px;font-size:12px}
+.cabeca .logo{font-size:11.5px}
+.dataline{font-size:11.5px}
+.hero h1{font-size:clamp(23px,6.5vw,28px);line-height:1.1}
+.hero .sub{font-size:13px;line-height:1.4}
+.vagas-mini{justify-self:start;display:inline-flex;align-items:center;gap:7px;padding:4px 11px 4px 5px;border-radius:999px;border:1px solid rgba(210,168,94,.4);background:rgba(210,168,94,.07);font-size:11.5px;line-height:1.3;color:var(--soft)}
+.vagas-mini b{display:grid;place-items:center;min-width:24px;height:24px;padding:0 4px;border-radius:99px;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#2a0a10;font-size:12px;font-weight:800}
+.formshell{max-width:none;margin-top:2px}
+.formshell .core{padding:12px 12px 10px;gap:9px}
+.formshell .chamada{font-size:13.5px;line-height:1.3}
+.formshell form{gap:7px}
+.formshell label{font-size:10.5px}
+.formshell input{height:44px;font-size:16px}
+.formshell .btn{min-height:52px}
+.formshell .btn .ic{width:38px;height:38px}
+.formshell .micro{font-size:10.5px}
+
+/* lista de entregáveis */
+.oferta-card{max-width:680px}
+.oferta-card .core{padding:18px 14px 16px;gap:12px}
+.oferta .sub2{font-size:13px;color:var(--soft)}
+.stack{display:grid;gap:2px}
+.grp h3{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:12px 0 2px}
+.grp ul{list-style:none;padding:0}
+.grp li{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed rgba(236,210,155,.16)}
+.grp li:last-child{border-bottom:0}
+.grp .nm{font-size:13.5px;font-weight:600;line-height:1.3}
+.grp .nm small{display:block;margin-top:2px;font-size:11.5px;font-weight:400;color:var(--soft)}
+.grp li s{flex:none;font-size:13px;font-weight:600;color:var(--gold-2);text-decoration:none;white-space:nowrap;padding-top:1px}
+.grp li b{flex:none;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);border:1px solid rgba(210,168,94,.45);border-radius:99px;padding:3px 9px;white-space:nowrap}
+.grp.bonus li .nm{color:var(--gold-2)}
+.soma{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(210,168,94,.09);border:1px solid rgba(210,168,94,.35);font-size:13px;font-weight:700}
+.soma s{font-size:24px;font-weight:800;color:#ff9d9d;text-decoration-thickness:3px;letter-spacing:-.01em}
+.preco-bloco{border-bottom:0;padding:2px 0 0;gap:6px}
+.preco-bloco .pr{font-size:13px;font-weight:600;color:var(--soft)}
+.preco-bloco .blur{display:inline-block;margin-left:8px;font-size:30px;font-weight:800;color:var(--gold-2);filter:blur(8px);user-select:none;vertical-align:-3px}
+.preco-bloco i{display:block;width:max-content;margin:0 auto;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(210,168,94,.4);border-radius:99px;padding:3px 10px}
+
+/* foto de autoridade */
+.autoridade{position:relative;margin:2px auto 4px;width:100%;border-radius:26px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 30px 70px -30px rgba(0,0,0,.9);background:#14060a}
+.autoridade img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.autoridade figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 16px 14px;background:linear-gradient(180deg,transparent,rgba(11,9,6,.92));font-size:17px;font-weight:800;letter-spacing:.02em}
+.autoridade figcaption small{display:block;margin-top:2px;font-size:11.5px;font-weight:500;color:var(--gold-2);letter-spacing:.08em;text-transform:uppercase}
+
+@media (min-width:900px){
+  .topo .t{max-width:none;font-size:12px;text-align:center}
+  .hero .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,4vw,64px);padding:26px 48px;min-height:calc(100svh - 62px);align-items:center}
+  .hero .banner{display:none}
+  .hero .copy{margin-top:0;gap:13px;padding-bottom:0}
+  .cabeca .selo{font-size:11px;padding:4px 13px 4px 4px}.cabeca .selo b{width:22px;height:22px}
+  .cabeca .logo{font-size:14px}
+  .dataline{font-size:13.5px}
+  .hero h1{font-size:clamp(32px,3.1vw,46px)}
+  .hero .sub{font-size:16.5px;max-width:560px}
+  .vagas-mini{font-size:13px}
+  .formshell{max-width:600px}
+  .formshell .core{padding:18px 18px 14px;gap:11px}
+  .formshell .chamada{font-size:16px}
+  .formshell form{grid-template-columns:1fr 1fr;gap:9px 12px}
+  .formshell .c-email,.formshell .btn,.formshell .micro{grid-column:1/-1}
+  .formshell input{height:48px}
+  .formshell .btn{min-height:60px;max-width:none}
+  .desk-img{display:block;margin:0;padding:6px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--hair);box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+  .desk-img img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:24px}
+  .oferta-card .core{padding:26px 28px 22px}
+  .grp .nm{font-size:15px}.grp .nm small{font-size:12.5px}.grp li s{font-size:15px}.grp h3{font-size:11.5px}
+  .soma{font-size:15px;padding:14px 18px}.soma s{font-size:30px}
+  .oferta-card .btn{max-width:none}
+  .quem .wrap{max-width:860px}
+  .autoridade figcaption{font-size:22px;padding:60px 24px 20px}.autoridade figcaption small{font-size:13px}
+}
+@media (min-width:900px) and (max-height:780px){
+  .hero h1{font-size:clamp(28px,2.7vw,38px)}.hero .copy{gap:10px}.formshell .core{padding:14px 16px 12px}.formshell input{height:42px}.formshell .btn{min-height:54px}.hero .sub{font-size:15px}
+}
+
+/* ===== v3 ===== */
+/* frase das 37 vagas, abaixo do botão */
+.vagas-btn{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 0;padding:9px 12px;border-radius:14px;background:rgba(210,168,94,.08);border:1px solid rgba(210,168,94,.32);font-size:12.5px;line-height:1.35;color:var(--soft);text-align:left}
+.vagas-btn b{flex:none;display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:99px;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#2a0a10;font-size:15px;font-weight:800}
+.vagas-btn strong{color:var(--gold-2)}
+.formshell .vagas-btn{grid-column:1/-1}
+.oferta-card .vagas-btn{margin-top:4px}
+
+/* preço da Black Vitalícia: maior, verde, em destaque */
+.preco-bloco{padding:16px 12px 14px;border:1px solid rgba(74,222,128,.45);border-radius:18px;background:radial-gradient(120% 140% at 50% 0%,rgba(34,197,94,.22),rgba(34,197,94,.06) 70%);box-shadow:0 0 0 1px rgba(74,222,128,.12),0 18px 44px -20px rgba(34,197,94,.7);text-align:center;gap:2px}
+.preco-bloco .pr{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#86efac}
+.preco-bloco .blur{display:block;margin:2px 0 4px;font-size:clamp(48px,15vw,64px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:#4ade80;text-shadow:0 0 28px rgba(74,222,128,.55);filter:blur(9px);user-select:none}
+.preco-bloco i{color:#bbf7d0;border-color:rgba(74,222,128,.5);background:rgba(34,197,94,.12);font-weight:700}
+
+/* botão pulsando, com brilho */
+.btn.pulso{overflow:hidden;animation:pulso 1.7s ease-in-out infinite;will-change:transform}
+.btn.pulso::after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:brilho 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes pulso{
+  0%,100%{transform:scale(1);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 14px 34px -10px rgba(210,168,94,.75),0 0 0 0 rgba(236,210,155,.55)}
+  50%{transform:scale(1.035);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 20px 46px -8px rgba(236,210,155,.95),0 0 0 12px rgba(236,210,155,0)}
+}
+@keyframes brilho{0%,55%{left:-40%}100%{left:130%}}
+@media (prefers-reduced-motion:reduce){.btn.pulso,.btn.pulso::after{animation:none}}
+@media (min-width:900px){.vagas-btn{font-size:14px}.preco-bloco .blur{font-size:72px}}
+/* legenda fora da foto (não cobre as placas) e preço menos borrado */
+.autoridade{overflow:hidden}
+.autoridade figcaption{position:static;padding:12px 16px 14px;background:linear-gradient(180deg,#22090f,#14060a);display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:16px}
+.autoridade figcaption small{margin:0;font-size:11px}
+.preco-bloco .blur{filter:blur(6px)}
+@media (min-width:900px){.autoridade figcaption{padding:16px 24px;font-size:20px;position:static}.autoridade figcaption small{font-size:13px}}
+
+/* ===== presente: destaque especial ===== */
+.presente{position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:14px;margin:14px 0 4px;padding:26px 16px 18px;border-radius:22px;border:0;
+  background:linear-gradient(135deg,#5a1420 0%,#2a0a10 55%,#4a1220 100%);isolation:isolate;
+  box-shadow:0 0 0 1.5px rgba(236,210,155,.75),0 22px 50px -18px rgba(210,168,94,.85),inset 0 1px 0 rgba(255,255,255,.18)}
+.presente::before{content:"";position:absolute;inset:-3px;border-radius:25px;z-index:-1;background:conic-gradient(from 0deg,#b8821f,#f6d98c,#fff3c4,#e3b24f,#b8821f);animation:giro 5s linear infinite;opacity:.9}
+.presente::after{content:"";position:absolute;inset:0;border-radius:22px;z-index:-1;background:linear-gradient(135deg,#5a1420 0%,#2a0a10 55%,#4a1220 100%)}
+@keyframes giro{to{filter:hue-rotate(0deg);transform:rotate(0)}}
+.presente .fita{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:5px 16px;border-radius:99px;white-space:nowrap;font-size:11.5px;font-weight:800;letter-spacing:.16em;color:#2a0a10;background:linear-gradient(180deg,#fff3c4,#e3b24f);box-shadow:0 8px 20px -6px rgba(210,168,94,.9)}
+.presente .gift{width:58px;height:58px;padding:13px;border-radius:50%;color:#2a0a10;background:radial-gradient(circle at 30% 25%,#fff3c4,#e3b24f 70%);box-shadow:0 0 0 6px rgba(236,210,155,.18),0 0 34px rgba(236,210,155,.7);animation:flutua 2.4s ease-in-out infinite}
+@keyframes flutua{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-4px) rotate(4deg)}}
+.presente .pt{display:grid;gap:3px;font-size:14px;line-height:1.3;color:var(--soft)}
+.presente .pt strong{font-size:clamp(19px,5.6vw,23px);line-height:1.15;font-weight:800;color:#fff;letter-spacing:-.01em}
+.presente .pt em{font-style:normal;font-weight:800;font-size:1.25em;color:var(--gold-2);text-shadow:0 0 18px rgba(236,210,155,.6)}
+@media (prefers-reduced-motion:reduce){.presente .gift,.presente::before{animation:none}}
+@media (min-width:900px){.presente{padding:30px 26px 22px;gap:20px}.presente .gift{width:72px;height:72px;padding:16px}.presente .pt{font-size:16px}.presente .pt strong{font-size:28px}}
+
+/* ===== v4: formulário em pop-up, mockup maior no celular ===== */
+.hero .banner{height:clamp(380px,56svh,520px)}
+.hero .copy{margin-top:-30px}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px}
+.modal[hidden]{display:none}
+.modal-fundo{position:absolute;inset:0;background:rgba(10,2,4,.8);backdrop-filter:blur(4px)}
+.modal-caixa{position:relative;max-width:440px;max-height:calc(100svh - 32px);overflow:auto;animation:mIn .22s ease-out}
+.modal-caixa .core{padding:22px 16px 16px;gap:11px;position:relative}
+.modal-caixa .chamada{font-size:15px;line-height:1.3;padding-right:30px}
+.modal-caixa form{display:grid;gap:9px}
+.modal-caixa input{height:48px;font-size:16px}
+.modal-x{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:1px solid var(--hair);background:rgba(255,255,255,.06);color:var(--soft);font-size:22px;line-height:1;cursor:pointer}
+body.modal-aberto{overflow:hidden}
+@keyframes mIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.modal-caixa{animation:none}}
+@media (min-width:900px){.hero .copy .btn{max-width:440px}.modal-caixa .core{padding:26px 22px 20px}}
+
+/* ===== v5: banner horizontal (retrato + cursos), inteiro, sem corte ===== */
+.hero .banner{height:auto;aspect-ratio:16/9}
+.hero .banner img{object-position:50% 50%}
+.hero .copy{margin-top:8px}
+.desk-img img{aspect-ratio:16/9}
+@media (min-width:900px){.hero .copy{margin-top:0}.desk-img img{aspect-ratio:16/9}}
+
+
+/* ===== Oncoclass 2.0: ajustes ===== */
+h1 em,.quem h2 em{font-size:1.12em;line-height:1;font-variant-numeric:lining-nums}
+.grp li s{color:var(--gold-2)}
+.vagas-btn b{font-size:13px}
+.selo b{font-size:15px}
+</style>
+<script src="campanha.js?v=20261119"></script>
+</head>
+<body>
+
+<div class="topo" role="timer" aria-live="off">
+  <span class="t" id="topoTxt">As vagas abrem em</span>
+  <div class="cont" id="cont" hidden>
+    <div><b id="cd">00</b><small>dias</small></div>
+    <div><b id="ch">00</b><small>horas</small></div>
+    <div><b id="cm">00</b><small>min</small></div>
+    <div><b id="cs">00</b><small>seg</small></div>
+  </div>
+</div>
+
+<!-- DOBRA 1 -->
+<header class="sec hero">
+  <div class="wrap">
+    <div class="banner rv" style="--i:0">
+      <img src="img/banner.jpg?v=20261119" width="1600" height="900" alt="Ellen Mayara de blazer vinho: Black Oncoclass 2.0, abertura das vagas 30/11" fetchpriority="high">
+    </div>
+
+    <div class="copy">
+      <div class="cabeca rv" style="--i:1">
+        <span class="selo"><b aria-hidden="true">∞</b>Acesso vitalício</span>
+        <span class="logo">BLACK ONCOCLASS 2.0</span>
+      </div>
+      <div class="dataline rv" style="--i:2"><span id="dataTxt">30/11 às 19h30</span> | Abertura exclusiva no grupo VIP</div>
+
+      <h1 class="rv" style="--i:3">Pare de estudar Oncologia em pedaços. <em>De uma vez por todas.</em></h1>
+      <p class="sub rv" style="--i:4">A Oncoclass 2.0 abre com <strong>acesso vitalício aos conteúdos</strong>: aulas com professores convidados, aulas técnicas e mentoria de carreira ao vivo com a Ellen, todo mês.</p>
+
+      <button class="btn pulso rv" style="--i:6" type="button" data-ir><span class="t">QUERO ENTRAR NO GRUPO VIP</span><span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span></button>
+      <p class="vagas-btn rv" style="--i:7"><b>20</b><span>Os <strong>20 primeiros</strong> participam de uma <strong>imersão presencial</strong> com a Ellen em São Paulo</span></p>
+    </div>
+
+    <figure class="desk-img rv" style="--i:2">
+      <img src="img/banner.jpg?v=20261119" width="1600" height="900" alt="Ellen Mayara de blazer vinho: Black Oncoclass 2.0, abertura das vagas 30/11">
+    </figure>
+  </div>
+</header>
+
+<div class="modal" id="cadastro" role="dialog" aria-modal="true" aria-labelledby="mTit" hidden>
+  <div class="modal-fundo" data-fechar></div>
+  <div class="shell modal-caixa">
+    <div class="core">
+      <button class="modal-x" type="button" data-fechar aria-label="Fechar">&times;</button>
+      <p class="chamada" id="mTit">Informe seus dados para entrar no grupo VIP da Black Oncoclass 2.0</p>
+      <form id="f" novalidate>
+        <div class="campo c-nome">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" required>
+          <span class="erro">Digite seu nome.</span>
+        </div>
+        <div class="campo c-whats">
+          <label for="whats">WhatsApp</label>
+          <input id="whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
+          <span class="erro">Digite um WhatsApp com DDD.</span>
+        </div>
+        <button class="btn pulso" type="submit"><span class="t">QUERO ENTRAR NO GRUPO VIP</span><span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span></button>
+        <p class="micro">Você recebe o link do grupo VIP, onde as vagas abrem primeiro.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DOBRA 2 -->
+<section class="sec prep" id="entregaveis">
+  <div class="wrap">
+    <h2>PREPARE-SE</h2>
+    <p class="tx">Para a <strong>maior condição</strong> que a Ellen já abriu em 15 anos de farmácia oncológica: a Oncoclass 2.0 inteira, com acesso vitalício a todo o conteúdo.</p>
+  </div>
+  <p class="faixa" style="text-align:center;margin-top:18px">A ONCOCLASS 2.0 COM ACESSO VITALÍCIO</p>
+  <div class="wrap" style="margin-top:20px">
+    <div class="shell oferta-card">
+      <div class="core">
+        <div class="oferta">
+          <span class="lg">BLACK ONCOCLASS 2.0</span>
+          <span class="sub2">Tudo o que você leva, com o valor de cada parte</span>
+        </div>
+        <div class="stack">
+          <div class="grp"><h3>Todo mês, ao longo de 2027</h3><ul>
+            <li><span class="nm">12 aulas com professores convidados<small>referências em pesquisa clínica, inteligência artificial, oncopediatria, TMO e outros temas</small></span><s>R$ 1.997</s></li>
+            <li><span class="nm">12 aulas técnicas com a Ellen<small>protocolos específicos, análise de prescrição e pesquisa clínica</small></span><s>R$ 1.997</s></li>
+            <li><span class="nm">Mentoria em grupo com a Ellen<small>mentoria de carreira ao vivo, todo mês</small></span><s>R$ 2.997</s></li>
+          </ul></div>
+          <div class="grp"><h3>Suporte</h3><ul>
+            <li><span class="nm">Plantão de dúvidas trimestral<small>e suporte pelo WhatsApp</small></span><b>incluso</b></li>
+          </ul></div>
+          <div class="grp bonus"><h3>Bônus</h3><ul>
+            <li><span class="nm">Aula bônus: como estruturar seu CV e LinkedIn</span><s>R$ 497</s></li>
+            <li><span class="nm">Aula bônus: como se preparar para a prova da SOBRAFO</span><s>R$ 697</s></li>
+            <li><span class="nm">E-book com 100 questões comentadas de Oncologia</span><s>R$ 197</s></li>
+          </ul></div>
+        </div>
+        <div class="presente">
+          <span class="fita">SÓ PARA OS 20 PRIMEIROS</span>
+          <svg class="gift" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216 72h-35.08a37 37 0 0 0 3.08-14 36 36 0 0 0-36-36c-18.49 0-30.39 11.31-38.8 27.68C100.79 33.31 88.89 22 70.4 22a36 36 0 0 0-36 36 37 37 0 0 0 3.08 14H40a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16v64a16 16 0 0 0 16 16h144a16 16 0 0 0 16-16v-64a16 16 0 0 0 16-16V88a16 16 0 0 0-16-16Zm-72-34a20 20 0 0 1 20 20 20 20 0 0 1-20 20h-20.4C132 54.6 136 38 144 38ZM70.4 38c8 0 12 16.6 20.4 40H70.4a20 20 0 0 1 0-40ZM40 88h80v32H40Zm16 48h64v64H56Zm144 64h-64v-64h64Zm16-80h-80V88h80Z"/></svg>
+          <span class="pt"><strong>Imersão presencial</strong><span>os 20 primeiros participam de um dia com a Ellen em São Paulo</span></span>
+        </div>
+        <div class="soma">
+          <span>Tudo somado</span>
+          <s>R$ 8.382</s>
+        </div>
+        <div class="oferta preco-bloco">
+          <span class="pr">Preço na Black Vitalícia</span>
+          <span aria-hidden="true" class="blur">R$ 997</span>
+          <i>revelado no grupo VIP</i>
+        </div>
+        <a class="btn pulso" href="#cadastro" data-ir>
+          <span class="t">QUERO ENTRAR NO GRUPO VIP</span>
+          <span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span>
+        </a>
+        <p class="vagas-btn"><b>20</b><span>Os <strong>20 primeiros</strong> participam de uma <strong>imersão presencial</strong> com a Ellen em São Paulo</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOBRA 3 -->
+<section class="sec quem">
+  <div class="wrap">
+    <h2>Quem é a <em>Ellen Mayara?</em></h2>
+    <figure class="autoridade"><img src="img/ellen.jpg?v=20261119" width="1500" height="1000" loading="lazy" alt="Ellen Mayara Corrêa sorrindo, de blazer vinho"><figcaption>Ellen Mayara Corrêa<small>Farmacêutica, especialista e mestre em Oncologia</small></figcaption></figure>
+    <p>Foram <strong>15 anos dentro da farmácia oncológica hospitalar</strong>, validando prescrição, realizando intervenção farmacêutica e respondendo médico, antes de ensinar qualquer coisa.</p>
+    <p>Em 2022 ela se tornou <strong>especialista em Farmácia Oncológica pela SOBRAFO</strong>. Em 2024, <strong>mestre em Oncologia pelo A.C. Camargo Cancer Center</strong>. Hoje atua em pesquisa clínica.</p>
+    <div class="nums" aria-label="Números da Ellen">
+      <div><b>15 anos</b><span>de farmácia oncológica</span></div>
+      <div><b>32</b><span>farmacêuticos mentorados</span></div>
+      <div><b>+16 mil</b><span>profissionais nas redes</span></div>
+    </div>
+    <p>Professora de pós no ICTQ, Racine e FOC e coautora de dois livros. Mentorados dela saíram da farmácia hospitalar para <strong>multinacionais de pesquisa clínica</strong>.</p>
+    <p class="fecho">E agora ela vai abrir o que nunca abriu: a Oncoclass 2.0 inteira, com acesso vitalício aos conteúdos. Só na Black, e primeiro para quem estiver no grupo VIP.</p>
+    <a class="btn pulso" href="#cadastro" data-ir>
+      <span class="t">QUERO ENTRAR NO GRUPO VIP</span>
+      <span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span>
+    </a>
+  </div>
+</section>
+<footer class="rodape">© 2026 Ellen Mayara Corrêa · Black Oncoclass 2.0<br>Conteúdo educacional para profissionais de saúde. Não substitui protocolos institucionais nem a conduta médica.</footer>
+
+<script>
+(function(){
+  var C = window.OCB || {};
+  var UTMS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src'];
+  var q = new URLSearchParams(location.search);
+
+  /* visitante: 1 evento por carregamento (conversão da página) */
+  var VID = '';
+  try {
+    VID = localStorage.getItem('ocb_vid') || '';
+    if (!VID) { VID = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2); localStorage.setItem('ocb_vid', VID); }
+  } catch (e) { VID = ''; }
+  if (VID && window.ocbEnvia) {
+    var vis = {tipo:'visita', vid:VID, pagina:location.href};
+    UTMS.forEach(function(k){ if (q.get(k)) vis[k] = q.get(k); });
+    ocbEnvia(vis);
+  }
+
+  if (C.dataTexto) document.getElementById('dataTxt').textContent = C.dataTexto;
+
+  /* contador */
+  var alvo = C.abertura ? new Date(C.abertura).getTime() : NaN;
+  var cont = document.getElementById('cont'), topoTxt = document.getElementById('topoTxt');
+  function dois(n){ return (n < 10 ? '0' : '') + n; }
+  function tick(){
+    var s = Math.floor((alvo - Date.now()) / 1000);
+    if (s <= 0) { cont.hidden = true; topoTxt.textContent = 'As vagas estão abertas no grupo VIP'; return false; }
+    document.getElementById('cd').textContent = dois(Math.floor(s / 86400));
+    document.getElementById('ch').textContent = dois(Math.floor(s % 86400 / 3600));
+    document.getElementById('cm').textContent = dois(Math.floor(s % 3600 / 60));
+    document.getElementById('cs').textContent = dois(s % 60);
+    return true;
+  }
+  if (isFinite(alvo)) { cont.hidden = false; if (tick()) setInterval(tick, 1000); }
+  else topoTxt.textContent = 'As vagas abrem em breve';
+
+  /* pop-up */
+  var modal = document.getElementById('cadastro'), ultimo = null;
+  function abrir(){ ultimo = document.activeElement; modal.hidden = false; document.body.classList.add('modal-aberto'); setTimeout(function(){ document.getElementById('nome').focus(); }, 60); }
+  function fechar(){ modal.hidden = true; document.body.classList.remove('modal-aberto'); if (ultimo && ultimo.focus) ultimo.focus(); }
+  [].forEach.call(document.querySelectorAll('[data-ir]'), function(a){ a.addEventListener('click', function(e){ e.preventDefault(); abrir(); }); });
+  [].forEach.call(document.querySelectorAll('[data-fechar]'), function(a){ a.addEventListener('click', fechar); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) fechar(); });
+
+  var f = document.getElementById('f'), w = document.getElementById('whats');
+  w.addEventListener('input', function(){
+    var d = w.value.replace(/\D/g,''); if (d.length > 11 && d.indexOf('55') === 0) d = d.slice(2); if (d.length > 11 && d.charAt(0) === '0') d = d.slice(1); d = d.slice(0,11); var o = d;
+    if (d.length > 6) o = '(' + d.slice(0,2) + ') ' + d.slice(2, d.length > 10 ? 7 : 6) + '-' + d.slice(d.length > 10 ? 7 : 6);
+    else if (d.length > 2) o = '(' + d.slice(0,2) + ') ' + d.slice(2);
+    w.value = o;
+  });
+  function marca(el, ok){ el.setAttribute('aria-invalid', ok ? 'false' : 'true'); el.closest('.campo').classList.toggle('tem-erro', !ok); return ok; }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = f.nome, t = f.whatsapp;
+    var ok = [marca(n, n.value.trim().length >= 2), marca(t, t.value.replace(/\D/g,'').length >= 10)].every(Boolean);
+    if (!ok) { f.querySelector('[aria-invalid="true"]').focus(); return; }
+    var btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.querySelector('.t').textContent = 'ENVIANDO...';
+
+    var lid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+    var dados = {tipo:'lead', lead_id:lid, nome:n.value.trim(), whatsapp:t.value.replace(/\D/g,''), pagina:location.href, vid:VID};
+    var atrib = {}; UTMS.forEach(function(k){ if (q.get(k)) { dados[k] = q.get(k); atrib[k] = q.get(k); } });
+    try {
+      var lj = JSON.stringify({lead_id:lid, nome:dados.nome, whatsapp:dados.whatsapp}), aj = JSON.stringify(atrib);
+      sessionStorage.setItem('ocb_lead', lj); localStorage.setItem('ocb_lead', lj);
+      sessionStorage.setItem('ocb_atrib', aj); localStorage.setItem('ocb_atrib', aj);
+    } catch(e){}
+    if (window.ocbTrack) ocbTrack('Lead', lid);
+
+    var ir = function(){ var p = new URLSearchParams(location.search); p.set('lid', lid); location.href = 'obrigado/?' + p.toString(); };
+    if (!window.ocbEnvia || !C.url) { ir(); return; }
+    var travou = setTimeout(ir, 2500);
+    ocbEnvia(dados).finally(function(){ clearTimeout(travou); ir(); });
+  });
+})();
+</script>
+</body>
+</html>
