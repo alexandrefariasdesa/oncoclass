@@ -32,7 +32,7 @@ fbq('track','PageView');
    repasse de UTMs/fbclid. Falha de gravacao NUNCA bloqueia a compra: espera no maximo 3 s e segue pro checkout. */
 document.addEventListener('DOMContentLoaded',function(){
   var LEAD_URL='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/lead';
-  var planos={'6OI4kesAm4KyQNeaHVfe':{nome:'Oncoclass Mensal',valor:97},'kF2OkFJoac58amiuXLh3':{nome:'Oncoclass Trimestral',valor:247}};
+  var planos={'bHnqEZ8pjPktXl4nx1pY':{nome:'Oncoclass Mensal',valor:127},'kF2OkFJoac58amiuXLh3':{nome:'Oncoclass Trimestral',valor:397}};
   var qs=location.search.replace(/^\?/,'');
   var sp=new URLSearchParams(location.search), utm={};
   ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','src'].forEach(function(k){if(sp.get(k))utm[k]=sp.get(k);});
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded',function(){
    Um visitante = um id guardado no navegador (oc_vid). Falha de rede nunca afeta a pagina. Painel: /painel/ > aba Pagina. */
 (function(){
   var URL='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/evento', LP='vendas';
-  var PLANOS={'6OI4kesAm4KyQNeaHVfe':'mensal','kF2OkFJoac58amiuXLh3':'trimestral','Jpe1ROzDGo6GUmGfzUGm':'mensal','XmsrCNKPkvKiGWDnY8jJ':'trimestral'};
+  var PLANOS={'6OI4kesAm4KyQNeaHVfe':'mensal','kF2OkFJoac58amiuXLh3':'trimestral','Jpe1ROzDGo6GUmGfzUGm':'mensal','XmsrCNKPkvKiGWDnY8jJ':'trimestral','bHnqEZ8pjPktXl4nx1pY':'mensal','qiYnFcXuew0jJ8LZqp7V':'mensal'};
   var vid='';
   try{vid=localStorage.getItem('oc_vid')||'';if(!vid){vid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2);localStorage.setItem('oc_vid',vid);}}catch(e){vid='';}
   if(!vid)return;
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <a class="btn" href="#oferta">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
         <p class="legenda">
           <svg class="ico"><use href="#i-selo"/></svg>
-          Mensal R$ 97 · Trimestral R$ 247 · 7 dias de garantia
+          Mensal R$ 127 · Trimestral R$ 397 · 7 dias de garantia
         </p>
       </div>
     </div>
@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <div class="rev" style="--d:3;margin-top:44px;display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center">
       <a class="btn" href="#oferta">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
-      <p class="legenda"><svg class="ico"><use href="#i-selo"/></svg>Mensal R$ 97 · Trimestral R$ 247</p>
+      <p class="legenda"><svg class="ico"><use href="#i-selo"/></svg>Mensal R$ 127 · Trimestral R$ 397</p>
     </div>
   </div>
 </section>
@@ -1030,7 +1030,7 @@ document.addEventListener('DOMContentLoaded',function(){
             <span class="plano__rec">Recomendado</span>
           </div>
           <p class="ancora">As 12 aulas até 16/12, do primeiro ao último tema. Uma compra só, e o acervo de 2025 entra junto.</p>
-          <div class="valor"><b>R$ 247</b><span>ou 3x de R$ 82,33<br>economia de R$ 44 sobre 3 meses no mensal</span></div>
+          <div class="valor"><b>R$ 397</b><span>ou 12x de R$ 40,34 no cartão<br>com o acervo Oncoclass 2025 incluso</span></div>
           <ul>
             <li><svg class="ico"><use href="#i-check"/></svg>As 12 aulas até 16/12</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Gravação e PDF na área de membros</li>
@@ -1038,7 +1038,7 @@ document.addEventListener('DOMContentLoaded',function(){
             <li><svg class="ico"><use href="#i-check"/></svg>Grupo de assinantes</li>
             <li><svg class="ico"><use href="#i-check"/></svg><strong>Acervo Oncoclass 2025, 5 aulas gravadas</strong></li>
           </ul>
-          <!-- checkout Hubla, plano TRIMESTRAL (R$ 247) -->
+          <!-- checkout Hubla, plano TRIMESTRAL (R$ 397) -->
           <a class="btn btn--largo" href="https://pay.hub.la/kF2OkFJoac58amiuXLh3">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
           <p class="plano__pe">Uma compra só, válida até 16/12. Não renova sozinho.</p>
         </div>
@@ -1048,15 +1048,15 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="nucleo">
           <div class="plano__topo"><p class="plano__tipo">Mensal</p></div>
           <p class="ancora">Entra, testa o ritmo e decide mês a mês. Cada tema fecha sozinho.</p>
-          <div class="valor"><b>R$ 97</b><span>por mês</span></div>
+          <div class="valor"><b>R$ 127</b><span>por mês</span></div>
           <ul>
             <li><svg class="ico"><use href="#i-check"/></svg>Aula ao vivo toda quarta</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Gravação e PDF na área de membros</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Mapa da aula</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Grupo de assinantes</li>
           </ul>
-          <!-- checkout Hubla, plano MENSAL (R$ 97) -->
-          <a class="btn btn--largo" href="https://pay.hub.la/6OI4kesAm4KyQNeaHVfe">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
+          <!-- checkout Hubla, plano MENSAL (R$ 127) -->
+          <a class="btn btn--largo" href="https://pay.hub.la/bHnqEZ8pjPktXl4nx1pY">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
           <p class="plano__pe">Cancela quando quiser, sem multa.</p>
         </div>
       </article>
@@ -1227,7 +1227,7 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
     <p class="legenda rev" style="--d:5;justify-content:center">
       <svg class="ico"><use href="#i-agenda"/></svg>
-      Toda quarta · 20h · online e ao vivo · mensal R$ 97 ou trimestral R$ 247
+      Toda quarta · 20h · online e ao vivo · mensal R$ 127 ou trimestral R$ 397
     </p>
   </div>
 </section>
@@ -1244,7 +1244,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </footer>
 
 <div class="fixa" id="fixa">
-  <p class="fixa__t"><b>R$ 97/mês</b>ou R$ 247 no trimestral · 7 dias de garantia</p>
+  <p class="fixa__t"><b>R$ 127/mês</b>ou R$ 397 no trimestral · 7 dias de garantia</p>
   <a class="btn" href="#oferta">Quero entrar<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
 </div>
 

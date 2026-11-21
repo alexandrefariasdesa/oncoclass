@@ -30,7 +30,7 @@ fbq('track','PageView');
 <script>
 /* Clique no botao de compra: evento CliqueComprar (o InitiateCheckout oficial vem da Hubla), e repassa UTMs/fbclid pro checkout da Hubla */
 document.addEventListener('DOMContentLoaded',function(){
-  var planos={'Jpe1ROzDGo6GUmGfzUGm':{nome:'Oncoclass Mensal (oferta 87)',valor:87},'XmsrCNKPkvKiGWDnY8jJ':{nome:'Oncoclass Trimestral (oferta 87)',valor:237}};
+  var planos={'qiYnFcXuew0jJ8LZqp7V':{nome:'Oncoclass Mensal (oferta 97)',valor:97},'XmsrCNKPkvKiGWDnY8jJ':{nome:'Oncoclass Trimestral (oferta 97)',valor:347}};
   var qs=location.search.replace(/^\?/,'');
   document.querySelectorAll('a[href*="pay.hub.la/"]').forEach(function(a){
     var id=a.href.split('pay.hub.la/')[1].split(/[?#]/)[0], p=planos[id];
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded',function(){
    Um visitante = um id guardado no navegador (oc_vid). Falha de rede nunca afeta a pagina. Painel: /painel/ > aba Pagina. */
 (function(){
   var URL='https://kzcbqnatluknudrxhwqs.supabase.co/functions/v1/evento', LP='oferta87';
-  var PLANOS={'6OI4kesAm4KyQNeaHVfe':'mensal','kF2OkFJoac58amiuXLh3':'trimestral','Jpe1ROzDGo6GUmGfzUGm':'mensal','XmsrCNKPkvKiGWDnY8jJ':'trimestral'};
+  var PLANOS={'6OI4kesAm4KyQNeaHVfe':'mensal','kF2OkFJoac58amiuXLh3':'trimestral','Jpe1ROzDGo6GUmGfzUGm':'mensal','XmsrCNKPkvKiGWDnY8jJ':'trimestral','bHnqEZ8pjPktXl4nx1pY':'mensal','qiYnFcXuew0jJ8LZqp7V':'mensal'};
   var vid='';
   try{vid=localStorage.getItem('oc_vid')||'';if(!vid){vid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2);localStorage.setItem('oc_vid',vid);}}catch(e){vid='';}
   if(!vid)return;
@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <a class="btn" href="#oferta">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
         <p class="legenda">
           <svg class="ico"><use href="#i-selo"/></svg>
-          Mensal R$ 87 · Trimestral R$ 237 · 7 dias de garantia
+          Mensal R$ 97 · Trimestral R$ 347 · 7 dias de garantia
         </p>
       </div>
     </div>
@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <div class="rev" style="--d:3;margin-top:44px;display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center">
       <a class="btn" href="#oferta">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
-      <p class="legenda"><svg class="ico"><use href="#i-selo"/></svg>Mensal R$ 87 · Trimestral R$ 237</p>
+      <p class="legenda"><svg class="ico"><use href="#i-selo"/></svg>Mensal R$ 97 · Trimestral R$ 347</p>
     </div>
   </div>
 </section>
@@ -872,7 +872,7 @@ document.addEventListener('DOMContentLoaded',function(){
             <span class="plano__rec">Recomendado</span>
           </div>
           <p class="ancora">As 12 aulas até 16/12, do primeiro ao último tema. Uma compra só, e o acervo de 2025 entra junto.</p>
-          <div class="valor"><b>R$ 237</b><span>ou 3x de R$ 84,10 no cartão<br>acesso por 90 dias, uma compra só</span></div>
+          <div class="valor"><b>R$ 347</b><span>ou 12x de R$ 35,26 no cartão<br>acesso por 90 dias, uma compra só</span></div>
           <ul>
             <li><svg class="ico"><use href="#i-check"/></svg>As 12 aulas até 16/12</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Gravação e PDF na área de membros</li>
@@ -880,7 +880,7 @@ document.addEventListener('DOMContentLoaded',function(){
             <li><svg class="ico"><use href="#i-check"/></svg>Grupo de assinantes</li>
             <li><svg class="ico"><use href="#i-check"/></svg><strong>Acervo Oncoclass 2025, 5 aulas gravadas</strong></li>
           </ul>
-          <!-- checkout Hubla, plano TRIMESTRAL (R$ 237) -->
+          <!-- checkout Hubla, plano TRIMESTRAL (R$ 347) -->
           <a class="btn btn--largo" href="https://pay.hub.la/XmsrCNKPkvKiGWDnY8jJ">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
           <p class="plano__pe">Uma compra só, válida até 16/12. Não renova sozinho.</p>
         </div>
@@ -890,15 +890,15 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="nucleo">
           <div class="plano__topo"><p class="plano__tipo">Mensal</p></div>
           <p class="ancora">Entra, testa o ritmo e decide mês a mês. Cada tema fecha sozinho.</p>
-          <div class="valor"><b>R$ 87</b><span>por mês</span></div>
+          <div class="valor"><b>R$ 97</b><span>por mês</span></div>
           <ul>
             <li><svg class="ico"><use href="#i-check"/></svg>Aula ao vivo toda quarta</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Gravação e PDF na área de membros</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Mapa da aula</li>
             <li><svg class="ico"><use href="#i-check"/></svg>Grupo de assinantes</li>
           </ul>
-          <!-- checkout Hubla, plano MENSAL (R$ 87) -->
-          <a class="btn btn--largo" href="https://pay.hub.la/Jpe1ROzDGo6GUmGfzUGm">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
+          <!-- checkout Hubla, plano MENSAL (R$ 97) -->
+          <a class="btn btn--largo" href="https://pay.hub.la/qiYnFcXuew0jJ8LZqp7V">Quero entrar na Oncoclass<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
           <p class="plano__pe">Cancela quando quiser, sem multa.</p>
         </div>
       </article>
@@ -1046,7 +1046,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <details><summary>Tem certificado?</summary><p>A Oncoclass não tem. O certificado é do curso OncoIntelecto.</p></details>
       <details><summary>Por que pagar se tem conteúdo gratuito?</summary><p>A live gratuita mostra a didática. A Oncoclass entrega o tema completo, toda semana, com material, aplicação, gravação e grupo. É a diferença entre assistir e dominar.</p></details>
       <details><summary>Existe garantia?</summary><p>Sim, 7 dias incondicionais a partir da compra.</p></details>
-      <details><summary>Posso parcelar?</summary><p>O trimestral, sim: R$ 237 ou 3x de R$ 84,10 no cartão. O mensal é cobrado mês a mês.</p></details>
+      <details><summary>Posso parcelar?</summary><p>O trimestral, sim: R$ 347 ou 12x de R$ 35,26 no cartão. O mensal é cobrado mês a mês.</p></details>
     </div>
   </div>
 </section>
@@ -1069,7 +1069,7 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
     <p class="legenda rev" style="--d:5;justify-content:center">
       <svg class="ico"><use href="#i-agenda"/></svg>
-      Toda quarta · 20h · online e ao vivo · mensal R$ 87 ou trimestral R$ 237
+      Toda quarta · 20h · online e ao vivo · mensal R$ 97 ou trimestral R$ 347
     </p>
   </div>
 </section>
@@ -1086,7 +1086,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </footer>
 
 <div class="fixa" id="fixa">
-  <p class="fixa__t"><b>R$ 87/mês</b>ou R$ 237 no trimestral · 7 dias de garantia</p>
+  <p class="fixa__t"><b>R$ 97/mês</b>ou R$ 347 no trimestral · 7 dias de garantia</p>
   <a class="btn" href="#oferta">Quero entrar<span class="btn__i"><svg class="ico"><use href="#i-seta"/></svg></span></a>
 </div>
 
