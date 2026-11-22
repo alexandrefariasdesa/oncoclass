@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Falar com o time</title>
+<script>
+// 22/11: botão "dúvida" dos e-mails do ciclo do grupo -> WhatsApp oficial (X1 com IA). ?p=oc|start &g=7 &c=em|gr|...
+var q=new URLSearchParams(location.search),p=q.get("p")==="start"?"start":"oc",g=(q.get("g")||"").replace(/\D/g,""),c=(q.get("c")||"em").replace(/[^a-z]/gi,"").toUpperCase().slice(0,3);
+var t=p==="start"?"Oi! Tenho uma dúvida sobre o Onco Start (cód. ST-G"+g+c+")":"Oi! Tenho uma dúvida sobre a Oncoclass (cód. OC-G"+g+c+")";
+location.replace("https://wa.me/5511924652808?text="+encodeURIComponent(t));
+</script><a href="https://wa.me/5511924652808">Continuar no WhatsApp</a>
