@@ -353,6 +353,21 @@ body{background:var(--bg)}
 .core{background:linear-gradient(180deg,#341019,#200a10)}
 .rodape{color:#cdbdb3;background:#12050a}
 .nums span{color:var(--soft)}
+
+/* ===== v2 (23/11): formulário na dobra 1 + prova social ===== */
+.dataline span+span,.dataline span:last-child{color:var(--gold-2)}
+.hero .formshell{margin-top:4px}
+.hero .formshell .btn{max-width:none}
+.provas{padding:30px 0 26px;background:var(--bg)}
+.provas h2{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:800;text-align:center;text-wrap:balance}
+.provas h2 em{font-family:var(--serif);font-style:italic;color:var(--gold-2);font-size:1.12em}
+.provas .tx{margin-top:6px;text-align:center;font-size:13.5px;color:var(--soft)}
+.deps{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.deps::-webkit-scrollbar{display:none}
+.deps figure{flex:0 0 auto;margin:0;scroll-snap-align:center;padding:4px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--hair)}
+.deps img{display:block;height:300px;width:auto;max-width:78vw;object-fit:contain;border-radius:14px;background:#fff}
+.dica-lado{margin-top:6px;text-align:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+@media (min-width:900px){.deps{justify-content:safe center;padding:22px 24px 8px}.deps img{height:340px}.dica-lado{display:none}}
 </style>
 <script src="campanha.js?v=20261119"></script>
 </head>
@@ -371,7 +386,7 @@ body{background:var(--bg)}
 <!-- DOBRA 1 -->
 <header class="sec hero">
   <div class="wrap">
-    <div class="banner rv" style="--i:0">
+    <div class="banner rv" style="--i:0;cursor:pointer" data-ir>
       <img src="img/banner.jpg?v=20261119" width="1600" height="900" alt="Ellen Mayara de blazer vinho: Black Oncoclass 2.0, abertura das vagas 30/11" fetchpriority="high">
     </div>
 
@@ -380,44 +395,56 @@ body{background:var(--bg)}
         <span class="selo"><b aria-hidden="true">∞</b>Acesso vitalício</span>
         <span class="logo">BLACK ONCOCLASS 2.0</span>
       </div>
-      <div class="dataline rv" style="--i:2"><span id="dataTxt">30/11 às 19h30</span> | Abertura exclusiva no grupo VIP</div>
+      <div class="dataline rv" style="--i:2"><span id="dataTxt">30/11 às 19h30</span> | Grupo VIP <span>gratuito</span> no WhatsApp</div>
 
       <h1 class="rv" style="--i:3">Pare de estudar Oncologia em pedaços. <em>De uma vez por todas.</em></h1>
-      <p class="sub rv" style="--i:4">A Oncoclass 2.0 abre com <strong>acesso vitalício aos conteúdos</strong>: aulas com professores convidados, aulas técnicas e mentoria de carreira ao vivo com a Ellen.</p>
+      <p class="sub rv" style="--i:4">Para farmacêuticos em Oncologia: a Oncoclass 2.0 abre com <strong>acesso vitalício aos conteúdos</strong>. Entre no <strong>grupo VIP gratuito</strong>: o preço e as vagas abrem lá primeiro.</p>
 
-      <button class="btn pulso rv" style="--i:6" type="button" data-ir><span class="t">QUERO ENTRAR NO GRUPO VIP</span><span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span></button>
-      <p class="vagas-btn rv" style="--i:7"><b>20</b><span>Os <strong>20 primeiros</strong> participam de uma <strong>imersão presencial</strong> com a Ellen em São Paulo</span></p>
+      <div class="shell formshell rv" style="--i:5" id="cadastro">
+        <div class="core">
+          <p class="chamada" id="mTit">Entre no grupo VIP gratuito da Black Oncoclass 2.0</p>
+          <form id="f" novalidate>
+            <div class="campo c-nome">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" required>
+              <span class="erro">Digite seu nome.</span>
+            </div>
+            <div class="campo c-whats">
+              <label for="whats">WhatsApp</label>
+              <input id="whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
+              <span class="erro">Digite um WhatsApp com DDD.</span>
+            </div>
+            <button class="btn pulso" type="submit"><span class="t">QUERO ENTRAR NO GRUPO VIP</span><span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span></button>
+            <p class="micro">Grátis. Você recebe o link do grupo na hora.</p>
+          </form>
+        </div>
+      </div>
+      <p class="vagas-btn rv" style="--i:6"><b>20</b><span>Os <strong>20 primeiros</strong> participam de uma <strong>imersão presencial</strong> com a Ellen em São Paulo</span></p>
     </div>
 
-    <figure class="desk-img rv" style="--i:2">
+    <figure class="desk-img rv" style="--i:2;cursor:pointer" data-ir>
       <img src="img/banner.jpg?v=20261119" width="1600" height="900" alt="Ellen Mayara de blazer vinho: Black Oncoclass 2.0, abertura das vagas 30/11">
     </figure>
   </div>
 </header>
 
-<div class="modal" id="cadastro" role="dialog" aria-modal="true" aria-labelledby="mTit" hidden>
-  <div class="modal-fundo" data-fechar></div>
-  <div class="shell modal-caixa">
-    <div class="core">
-      <button class="modal-x" type="button" data-fechar aria-label="Fechar">&times;</button>
-      <p class="chamada" id="mTit">Informe seus dados para entrar no grupo VIP da Black Oncoclass 2.0</p>
-      <form id="f" novalidate>
-        <div class="campo c-nome">
-          <label for="nome">Nome</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" required>
-          <span class="erro">Digite seu nome.</span>
-        </div>
-        <div class="campo c-whats">
-          <label for="whats">WhatsApp</label>
-          <input id="whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" required>
-          <span class="erro">Digite um WhatsApp com DDD.</span>
-        </div>
-        <button class="btn pulso" type="submit"><span class="t">QUERO ENTRAR NO GRUPO VIP</span><span class="ic"><svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"/></svg></span></button>
-        <p class="micro">Você recebe o link do grupo VIP, onde as vagas abrem primeiro.</p>
-      </form>
-    </div>
+<!-- PROVA SOCIAL -->
+<section class="sec provas">
+  <div class="wrap">
+    <h2>Quem já estuda com a <em>Ellen</em></h2>
+    <p class="tx">Farmacêuticos que assistem às aulas da Oncoclass</p>
   </div>
-</div>
+  <div class="deps" role="region" aria-label="Depoimentos de alunos. Role para o lado para ver mais" tabindex="0">
+    <figure><img src="../grupo/img/dep-01.webp" width="739" height="1350" loading="lazy" alt="Mensagem de uma aluna agradecendo a aula, dizendo que o preço da Oncoclass é simbólico perto do valor entregue e pedindo para a Ellen fazer a mentoria"></figure>
+    <figure><img src="../grupo/img/dep-02.webp" width="589" height="1280" loading="lazy" alt="Grupo de alunos: uma aluna diz que comprou o curso e está adorando as aulas, outra comprou porque faz pós e não estava entendendo nada"></figure>
+    <figure><img src="../grupo/img/dep-11.webp" width="459" height="414" loading="lazy" alt="Chat da aula: alunos elogiando a didática e dizendo que precisavam da Ellen nas aulas da pós em Oncologia"></figure>
+    <figure><img src="../grupo/img/dep-05.webp" width="476" height="354" loading="lazy" alt="Chat da aula: aluna agradece e diz que a aula esclareceu várias dúvidas"></figure>
+    <figure><img src="../grupo/img/dep-03.webp" width="463" height="337" loading="lazy" alt="Aluno elogiando o e-book de mieloma múltiplo com mais de 20 páginas"></figure>
+    <figure><img src="../grupo/img/dep-09.webp" width="451" height="391" loading="lazy" alt="Chat da aula: aluna diz que amanhã já não é a mesma pessoa"></figure>
+    <figure><img src="../grupo/img/dep-07.webp" width="431" height="327" loading="lazy" alt="Chat da aula: aluna diz que a aula deu outra visão e que sai com vontade de estudar mais"></figure>
+  </div>
+  <div class="wrap"><p class="dica-lado">deslize para o lado →</p></div>
+</section>
 
 <!-- DOBRA 2 -->
 <section class="sec prep" id="entregaveis">
@@ -530,13 +557,13 @@ body{background:var(--bg)}
   if (isFinite(alvo)) { cont.hidden = false; if (tick()) setInterval(tick, 1000); }
   else topoTxt.textContent = 'As vagas abrem em breve';
 
-  /* pop-up */
-  var modal = document.getElementById('cadastro'), ultimo = null;
-  function abrir(){ ultimo = document.activeElement; modal.hidden = false; document.body.classList.add('modal-aberto'); setTimeout(function(){ document.getElementById('nome').focus(); }, 60); }
-  function fechar(){ modal.hidden = true; document.body.classList.remove('modal-aberto'); if (ultimo && ultimo.focus) ultimo.focus(); }
-  [].forEach.call(document.querySelectorAll('[data-ir]'), function(a){ a.addEventListener('click', function(e){ e.preventDefault(); abrir(); }); });
-  [].forEach.call(document.querySelectorAll('[data-fechar]'), function(a){ a.addEventListener('click', fechar); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) fechar(); });
+  /* botões de baixo: sobem até o formulário da dobra 1 */
+  var caixa = document.getElementById('cadastro');
+  [].forEach.call(document.querySelectorAll('[data-ir]'), function(a){ a.addEventListener('click', function(e){
+    e.preventDefault();
+    caixa.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center'});
+    setTimeout(function(){ document.getElementById('nome').focus({preventScroll: true}); }, 450);
+  }); });
 
   var f = document.getElementById('f'), w = document.getElementById('whats');
   w.addEventListener('input', function(){
