@@ -738,7 +738,7 @@ fbq('init','1606696444389111');fbq('track','PageView');
       var live=Date.now()<T.live;setTimeout(function(){try{fbq('track','InitiateCheckout');}catch(e){}location.href=(window.OC_UTM||String)(CHECKOUT[live?'aluna_live':'aluna_pos']);},900);},1400);
   });
   render();setInterval(render,1000);
-  if(location.hash==='#oferta'){var go=function(){var el=document.getElementById('oferta');if(el)el.scrollIntoView({block:'start'});};window.addEventListener('load',function(){setTimeout(go,60);});setTimeout(go,1200);}
+  if(location.hash==='#oferta'){document.querySelectorAll('img[loading=lazy]').forEach(function(i){i.loading='eager';});var go=function(){var el=document.getElementById('oferta');if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset,behavior:'instant'});};go();window.addEventListener('load',function(){go();setTimeout(go,300);});setTimeout(go,1500);setTimeout(go,3000);}
   var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.1}):null;
   document.querySelectorAll('.reveal').forEach(function(el){io?io.observe(el):el.classList.add('on');});
 })();
