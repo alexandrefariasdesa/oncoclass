@@ -261,6 +261,10 @@ footer .wrap{display:flex;flex-direction:column;gap:14px}
 .arw:hover{transform:scale(1.06)}.arw:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .arw.l{left:max(10px,calc((100vw - 1200px)/2))}.arw.r{right:max(10px,calc((100vw - 1200px)/2))}
 .strip{scroll-behavior:smooth}
+.of .soon{display:flex;flex-direction:column;align-items:center;gap:4px;margin:10px 0 6px;padding:18px 16px;border:1px dashed rgba(230,194,122,.45);border-radius:18px;background:rgba(0,0,0,.22)}
+.of .soon i{font-size:28px;color:var(--gold)}
+.of .soon b{font-family:var(--serif);font-size:clamp(28px,3.4vw,38px);color:var(--ivory);line-height:1.1}
+.of .soon span{font-size:14px;color:var(--gold);font-weight:700;letter-spacing:.04em}
 /* faixa das ofertas */
 .of .band{align-self:stretch;margin:calc(-1 * clamp(26px,3.5vw,40px)) calc(-1 * clamp(26px,3.5vw,40px)) 12px;padding:16px 18px;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;font-size:clamp(17px,1.8vw,20px);letter-spacing:.1em;text-transform:uppercase}
 .of .band i{font-size:24px}
@@ -668,7 +672,7 @@ fbq('init','1606696444389111');fbq('track','PageView');
 (function(){
   var SUP='https://wa.me/5592994305962';
   var CHECKOUT={black_live:'https://pay.hub.la/10z8697xrNVLxmw49dKz',black_pos:'https://pay.hub.la/5xhif7pwufyhIcBZLs4i',aluna_live:'https://pay.hub.la/VSvnyeilkSEJTWL8iOe2',aluna_pos:'https://pay.hub.la/fRzBRZ5oGFMQ4ds1vjKL'};
-  var T={live:Date.parse('2026-11-30T22:00:00-03:00'),fim:Date.parse('2026-12-04T23:59:59-03:00')};
+  var T={abre:Date.parse('2026-11-30T19:30:00-03:00'),live:Date.parse('2026-11-30T22:00:00-03:00'),fim:Date.parse('2026-12-04T23:59:59-03:00')};
   var BONUS=[
     {ate:'2026-11-30T22:00:00-03:00',quando:'Só na live',img:'b-imersao.jpg',t:'Um dia inteiro ao meu lado, presencialmente',d:'As 20 primeiras inscrições participam de um dia inteiro comigo em 2027: uma aula minha e uma do meu marido, especialista em manipulação de quimioterápicos.',v:1997},
     {ate:'2026-11-30T23:59:59-03:00',quando:'Até 30/11, 23h59',img:'b-linkedin.jpg',t:'Seu LinkedIn analisado por mim, ao vivo',d:'21/12, das 19h às 20h: análise de perfil e posicionamento no LinkedIn, em grupo, comigo.',v:997},
@@ -707,11 +711,17 @@ fbq('init','1606696444389111');fbq('track','PageView');
   function fmt(n){return n.toLocaleString('pt-BR');}
   var PARC={997:'101,30',1297:'131,79',1197:'121,63',1497:'152,11'};
   function render(){
-    var now=Date.now(), live=now<T.live, aberto=now<T.fim, fase=live?'live':'pos';
+    var now=Date.now(), antes=now<T.abre, live=now<T.live, aberto=now<T.fim, fase=antes?'antes':(live?'live':'pos');
     var off=document.getElementById('offers');
     if(!aberto){off.innerHTML='<div class="shell of ex" style="grid-column:1/-1"><div class="core"><span class="who">Inscrições encerradas</span><h3>Até a próxima turma</h3><p class="note">Quer ser avisado da próxima abertura? Me chama no WhatsApp.</p><a class="btn" href="'+SUP+'" target="_blank" rel="noopener">Falar comigo <span class="ic"><i class="ph-bold ph-arrow-up-right"></i></span></a></div></div>';document.getElementById('offLead').textContent='';}
     else{
-      document.getElementById('offLead').textContent=live?'Preço de live até as 22h de 30/11. Depois disso, os dois valores sobem R$ 300.':'As inscrições encerram sexta, 04/12, às 23h59.';
+      document.getElementById('offLead').textContent=antes?'As inscrições abrem ao vivo, segunda (30/11), às 19h30. O preço de live e os bônus eu revelo na hora.':live?'Preço de live até as 22h de 30/11. Depois disso, os dois valores sobem R$ 300.':'As inscrições encerram sexta, 04/12, às 23h59.';
+      function cardAntes(al){
+        return '<div class="shell of '+(al?'al':'ex')+' reveal on"><div class="core"><div class="band '+(al?'b-al':'b-ex')+'"><i class="ph-bold '+(al?'ph-seal-check':'ph-user-plus')+'"></i>'+(al?'Já sou aluno':'Ainda não sou aluno')+'</div><div class="tmr"><i class="ph-bold ph-timer"></i><span>A live começa em</span><b class="tm">--:--:--</b></div>'+
+        '<h3>'+(al?'Condição de aluno':'Oncoclass 2.0 · condição Black')+'</h3><p class="note">'+(al?'Para quem já comprou a Oncoclass ou o Onco Start.':'Para quem vai entrar na Oncoclass pela primeira vez.')+'</p>'+
+        '<p class="from">de <s class="red">R$ 11.179</s> por</p><div class="soon"><i class="ph-light ph-lock-simple"></i><b>Revelo ao vivo</b><span>segunda, 30/11, às 19h30</span></div>'+
+        '<p class="pay">O menor preço só existe durante a live.</p>'+
+        '<a class="btn" href="https://chat.whatsapp.com/KlG3CuNjFVPEnrS69Zedyw" target="_blank" rel="noopener">Entrar no grupo da Black <span class="ic"><i class="ph-bold ph-arrow-up-right"></i></span></a></div></div>';}
       function card(al){var v=al?(live?997:1297):(live?1197:1497),dep=al?1297:1497;
         return '<div class="shell of '+(al?'al':'ex')+' reveal on"><div class="core"><div class="band '+(al?'b-al':'b-ex')+'"><i class="ph-bold '+(al?'ph-seal-check':'ph-user-plus')+'"></i>'+(al?'Já sou aluno':'Ainda não sou aluno')+'</div><div class="tmr"><i class="ph-bold ph-timer"></i><span>'+(live?'Este preço sobe em':'Inscrições encerram em')+'</span><b class="tm">--:--:--</b></div>'+
         '<h3>'+(al?'Condição de aluno':'Oncoclass 2.0 · condição Black')+'</h3><p class="note">'+(al?'Para quem já comprou a Oncoclass ou o Onco Start. Você confirma o e-mail de compra antes do pagamento.':'Para quem vai entrar na Oncoclass pela primeira vez.')+'</p>'+
@@ -719,9 +729,9 @@ fbq('init','1606696444389111');fbq('track','PageView');
         (live?'<span class="after">Depois das 22h de 30/11: 12x de R$ '+PARC[dep]+'</span>':'')+
         (al?'<button class="btn" type="button" id="btnAluna">Entrar como aluno <span class="ic"><i class="ph-bold ph-arrow-up-right"></i></span></button>':'<a class="btn" href="'+CHECKOUT['black_'+fase]+'">Quero entrar <span class="ic"><i class="ph-bold ph-arrow-up-right"></i></span></a>')+'</div></div>';}
       var key=fase;
-      if(off.dataset.k!==key){off.innerHTML=card(true)+card(false);off.dataset.k=key;document.getElementById('btnAluna').addEventListener('click',abrirAluna);}
+      if(off.dataset.k!==key){if(antes){off.innerHTML=cardAntes(true)+cardAntes(false);}else{off.innerHTML=card(true)+card(false);document.getElementById('btnAluna').addEventListener('click',abrirAluna);}off.dataset.k=key;}
     }
-    var rest=Math.max(0,Math.floor(((live?T.live:T.fim)-now)/1000)),hh=Math.floor(rest/3600),mm=Math.floor(rest%3600/60),sc=rest%60,txt=(hh>=24?Math.floor(hh/24)+'d '+String(hh%24).padStart(2,'0'):String(hh).padStart(2,'0'))+':'+String(mm).padStart(2,'0')+':'+String(sc).padStart(2,'0');
+    var rest=Math.max(0,Math.floor(((antes?T.abre:live?T.live:T.fim)-now)/1000)),hh=Math.floor(rest/3600),mm=Math.floor(rest%3600/60),sc=rest%60,txt=(hh>=24?Math.floor(hh/24)+'d '+String(hh%24).padStart(2,'0'):String(hh).padStart(2,'0'))+':'+String(mm).padStart(2,'0')+':'+String(sc).padStart(2,'0');
     document.querySelectorAll('.tm').forEach(function(e){e.textContent=txt;});
     document.querySelectorAll('.js-buy').forEach(function(a){a.href=aberto?'#oferta':SUP;});
     var soma=0;
@@ -729,8 +739,8 @@ fbq('init','1606696444389111');fbq('track','PageView');
       var off=now>Date.parse(b.ate); if(!off) soma+=b.v;
       return '<article class="bn shell'+(off?' off':'')+'"><div class="core"><div class="img"><img src="img/'+b.img+'" alt="" loading="lazy"><span class="when"><i class="ph-bold '+(off?'ph-lock-simple':'ph-clock')+'"></i>'+(off?'Encerrado':b.quando)+'</span></div><div class="bd"><h3>'+b.t+'</h3><p>'+b.d+'</p><div class="val">Vale <s>R$ '+fmt(b.v)+'</s><em>'+(off?'Saiu da oferta':'Incluso')+'</em></div></div></div></article>';}).join('');
     document.getElementById('bsum').innerHTML=soma?'Hoje você ainda leva <b>R$ '+fmt(soma)+'</b> em bônus. Conforme o prazo passa, cada bônus fica cinza e sai da oferta.':'Os bônus com prazo já se encerraram.';
-    var alvo=live?T.live:T.fim;
-    document.getElementById('barLbl').textContent=!aberto?'Inscrições encerradas':(live?'Condição de live termina em':'Inscrições encerram em');
+    var alvo=antes?T.abre:live?T.live:T.fim;
+    document.getElementById('barLbl').textContent=!aberto?'Inscrições encerradas':antes?'A live de abertura começa em':(live?'Condição de live termina em':'Inscrições encerram em');
     var s=Math.max(0,Math.floor((alvo-now)/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),mi=Math.floor(s%3600/60),ss=s%60;
     document.getElementById('clock').innerHTML=aberto?[[d,'dias'],[h,'horas'],[mi,'min'],[ss,'seg']].map(function(x){return '<span>'+String(x[0]).padStart(2,'0')+'<small>'+x[1]+'</small></span>';}).join(''):'';
   }
